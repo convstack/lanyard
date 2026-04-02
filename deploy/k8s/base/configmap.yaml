@@ -7,3 +7,6 @@ data:
   APP_NAME: "Lanyard"
   NODE_ENV: "production"
   BETTER_AUTH_URL: "https://id.example.com"
+  S3_BUCKET: "lanyard"
+  S3_REGION: "auto"
+  S3_PUBLIC_URL: ""
