@@ -79,6 +79,8 @@ export const auth = betterAuth({
 		oidcProvider({
 			loginPage: "/login",
 			consentPage: "/oauth/consent",
+			accessTokenExpiresIn: 86400, // 24 hours
+			refreshTokenExpiresIn: 30 * 86400, // 30 days
 			getAdditionalUserInfoClaim: async (user) => ({
 				role: (user as { role?: string }).role ?? "user",
 			}),
