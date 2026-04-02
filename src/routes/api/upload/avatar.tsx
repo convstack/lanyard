@@ -2,8 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { isS3Configured, uploadFile } from "~/lib/s3";
 import { getAuthenticatedUser } from "~/lib/verify-access-token";
 
-const MAX_SIZE = 2 * 1024 * 1024; // 2MB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+
+async function getMaxSizeMb(): Promise<number> {
+	const { db } = await import("~/db");
+	const { appSettings } = await import("~/db/schema");
+	const [settings] = await db.select().from(appSettings).limit(1);
+	return settings?.avatarMaxSizeMb ?? 2;
+}
 
 export const Route = createFileRoute("/api/upload/avatar")({
 	server: {
@@ -43,9 +49,14 @@ export const Route = createFileRoute("/api/upload/avatar")({
 					);
 				}
 
-				if (file.size > MAX_SIZE) {
+				const maxSizeMb = await getMaxSizeMb();
+				const maxSize = maxSizeMb * 1024 * 1024;
+
+				if (file.size > maxSize) {
 					return new Response(
-						JSON.stringify({ error: "File too large. Maximum 2MB" }),
+						JSON.stringify({
+							error: `File too large. Maximum ${maxSizeMb}MB`,
+						}),
 						{ status: 400, headers: { "Content-Type": "application/json" } },
 					);
 				}

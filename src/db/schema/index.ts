@@ -4,4 +4,5 @@ export * from "./oidc";
 export * from "./organization";
 export * from "./passkey";
 export * from "./service-catalog";
+export * from "./settings";
 export * from "./two-factor";

@@ -138,6 +138,23 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 					endpoint: "/api/admin/settings",
 					config: { title: "System Configuration" },
 				},
+				{
+					type: "form",
+					endpoint: "/api/admin/settings",
+					config: {
+						title: "Upload Settings",
+						fields: [
+							{
+								key: "avatarMaxSizeMb",
+								label: "Avatar Max Size (MB)",
+								type: "number",
+								placeholder: "2",
+							},
+						],
+						submitLabel: "Save Settings",
+						method: "PUT",
+					},
+				},
 			],
 		},
 	],
