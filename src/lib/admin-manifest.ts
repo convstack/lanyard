@@ -126,7 +126,6 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 					type: "form",
 					endpoint: "/api/admin/users/:userId",
 					config: {
-						title: "Edit User",
 						fields: [
 							{ key: "name", label: "Display Name", type: "text" },
 							{ key: "email", label: "Email", type: "email" },
