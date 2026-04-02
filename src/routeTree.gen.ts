@@ -31,6 +31,7 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiAdminUsersRouteImport } from './routes/api/admin/users'
 import { Route as ApiAdminStatsRouteImport } from './routes/api/admin/stats'
 import { Route as ApiAdminSettingsRouteImport } from './routes/api/admin/settings'
+import { Route as ApiAdminServicesRouteImport } from './routes/api/admin/services'
 import { Route as ApiAdminClientsRouteImport } from './routes/api/admin/clients'
 import { Route as ApiAdminBrandingRouteImport } from './routes/api/admin/branding'
 import { Route as ApiAdminUsersUserIdRouteImport } from './routes/api/admin/users/$userId'
@@ -152,6 +153,11 @@ const ApiAdminSettingsRoute = ApiAdminSettingsRouteImport.update({
   path: '/api/admin/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminServicesRoute = ApiAdminServicesRouteImport.update({
+  id: '/api/admin/services',
+  path: '/api/admin/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminClientsRoute = ApiAdminClientsRouteImport.update({
   id: '/api/admin/clients',
   path: '/api/admin/clients',
@@ -224,6 +230,7 @@ export interface FileRoutesByFullPath {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
+  '/api/admin/services': typeof ApiAdminServicesRoute
   '/api/admin/settings': typeof ApiAdminSettingsRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
@@ -258,6 +265,7 @@ export interface FileRoutesByTo {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
+  '/api/admin/services': typeof ApiAdminServicesRoute
   '/api/admin/settings': typeof ApiAdminSettingsRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
@@ -294,6 +302,7 @@ export interface FileRoutesById {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
+  '/api/admin/services': typeof ApiAdminServicesRoute
   '/api/admin/settings': typeof ApiAdminSettingsRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
@@ -330,6 +339,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/api/admin/branding'
     | '/api/admin/clients'
+    | '/api/admin/services'
     | '/api/admin/settings'
     | '/api/admin/stats'
     | '/api/admin/users'
@@ -364,6 +374,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/api/admin/branding'
     | '/api/admin/clients'
+    | '/api/admin/services'
     | '/api/admin/settings'
     | '/api/admin/stats'
     | '/api/admin/users'
@@ -399,6 +410,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/api/admin/branding'
     | '/api/admin/clients'
+    | '/api/admin/services'
     | '/api/admin/settings'
     | '/api/admin/stats'
     | '/api/admin/users'
@@ -431,6 +443,7 @@ export interface RootRouteChildren {
   OauthConsentRoute: typeof OauthConsentRoute
   ApiAdminBrandingRoute: typeof ApiAdminBrandingRoute
   ApiAdminClientsRoute: typeof ApiAdminClientsRouteWithChildren
+  ApiAdminServicesRoute: typeof ApiAdminServicesRoute
   ApiAdminSettingsRoute: typeof ApiAdminSettingsRoute
   ApiAdminStatsRoute: typeof ApiAdminStatsRoute
   ApiAdminUsersRoute: typeof ApiAdminUsersRouteWithChildren
@@ -601,6 +614,13 @@ declare module '@tanstack/react-router' {
       path: '/api/admin/settings'
       fullPath: '/api/admin/settings'
       preLoaderRoute: typeof ApiAdminSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/services': {
+      id: '/api/admin/services'
+      path: '/api/admin/services'
+      fullPath: '/api/admin/services'
+      preLoaderRoute: typeof ApiAdminServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/clients': {
@@ -774,6 +794,7 @@ const rootRouteChildren: RootRouteChildren = {
   OauthConsentRoute: OauthConsentRoute,
   ApiAdminBrandingRoute: ApiAdminBrandingRoute,
   ApiAdminClientsRoute: ApiAdminClientsRouteWithChildren,
+  ApiAdminServicesRoute: ApiAdminServicesRoute,
   ApiAdminSettingsRoute: ApiAdminSettingsRoute,
   ApiAdminStatsRoute: ApiAdminStatsRoute,
   ApiAdminUsersRoute: ApiAdminUsersRouteWithChildren,

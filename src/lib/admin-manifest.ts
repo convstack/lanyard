@@ -67,7 +67,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 				{
 					type: "data-table",
 					endpoint: "/api/admin/clients",
-					config: { rowLink: "/clients/:id" },
+					config: { rowLink: "/clients/:clientId" },
 				},
 			],
 		},
@@ -88,7 +88,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			title: "Service Catalog",
 			layout: "default",
 			sections: [
-				{ type: "data-table", endpoint: "/api/services/catalog", config: {} },
+				{ type: "data-table", endpoint: "/api/admin/services", config: {} },
 			],
 		},
 		{
