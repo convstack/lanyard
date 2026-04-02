@@ -58,6 +58,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			path: "/users/new",
 			title: "Create User",
 			layout: "default",
+			showBack: true,
 			sections: [
 				{
 					type: "form",
@@ -119,6 +120,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			path: "/users/:userId/edit",
 			title: "Edit User",
 			layout: "default",
+			showBack: true,
 			sections: [
 				{
 					type: "form",
@@ -164,6 +166,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			path: "/clients/new",
 			title: "Register OIDC Client",
 			layout: "default",
+			showBack: true,
 			sections: [
 				{
 					type: "form",
@@ -236,6 +239,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			path: "/services/new",
 			title: "Register Service",
 			layout: "default",
+			showBack: true,
 			sections: [
 				{
 					type: "form",
