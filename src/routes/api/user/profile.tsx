@@ -19,17 +19,17 @@ export const Route = createFileRoute("/api/user/profile")({
 							{
 								key: "name",
 								label: "Display Name",
-								value: authedUser.name ?? "—",
+								value: authedUser.name ?? "",
 							},
 							{
 								key: "email",
 								label: "Email",
-								value: authedUser.email ?? "—",
+								value: authedUser.email ?? "",
 							},
 							{
 								key: "image",
 								label: "Avatar URL",
-								value: authedUser.image ?? "—",
+								value: authedUser.image ?? "",
 							},
 						],
 					}),
@@ -50,9 +50,10 @@ export const Route = createFileRoute("/api/user/profile")({
 				const { user } = await import("~/db/schema");
 				const { eq } = await import("drizzle-orm");
 
-				const updates: Record<string, string> = {};
-				if (typeof body.name === "string") updates.name = body.name;
-				if (typeof body.image === "string") updates.image = body.image;
+				const updates: Record<string, string | null> = {};
+				if (typeof body.name === "string" && body.name)
+					updates.name = body.name;
+				if (typeof body.image === "string") updates.image = body.image || null;
 
 				if (Object.keys(updates).length > 0) {
 					await db
