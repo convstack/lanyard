@@ -8,9 +8,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 		{ label: "Overview", path: "/", icon: "layout-dashboard" },
 		{ label: "Users", path: "/users", icon: "users" },
 		{ label: "OIDC Clients", path: "/clients", icon: "key-round" },
-		{ label: "Register Client", path: "/clients/new", icon: "plus" },
 		{ label: "Services", path: "/services", icon: "box" },
-		{ label: "Register Service", path: "/services/new", icon: "plus" },
 		{ label: "Branding", path: "/branding", icon: "palette" },
 		{ label: "Settings", path: "/settings", icon: "settings" },
 	],
@@ -69,7 +67,11 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 				{
 					type: "data-table",
 					endpoint: "/api/admin/clients",
-					config: { rowLink: "/clients/:clientId" },
+					config: {
+						rowLink: "/clients/:clientId",
+						createLink: "/clients/new",
+						createLabel: "Register Client",
+					},
 				},
 			],
 		},
@@ -137,7 +139,11 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 				{
 					type: "data-table",
 					endpoint: "/api/admin/services",
-					config: { rowLink: "/services/:id" },
+					config: {
+						rowLink: "/services/:id",
+						createLink: "/services/new",
+						createLabel: "Register Service",
+					},
 				},
 			],
 		},
