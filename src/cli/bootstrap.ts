@@ -39,18 +39,19 @@ async function main() {
 				);
 			} else {
 				const { nanoid } = await import("nanoid");
-				const { hash } = await import("bcryptjs");
-				const hashedSecret = await hash(clientSecret, 10);
 
+				// Store secret as plain text — Better Auth's default
+				// storeClientSecret mode uses plain text comparison
 				await db.insert(oauthApplication).values({
 					id: nanoid(),
 					name: "Convention Dashboard",
 					clientId,
-					clientSecret: hashedSecret,
-					redirectURLs: `${dashboardUrl}/callback`,
+					clientSecret,
+					redirectUrls: `${dashboardUrl}/callback`,
 					type: "confidential",
 					disabled: false,
 					createdAt: new Date(),
+					updatedAt: new Date(),
 				});
 
 				console.log("Dashboard OIDC client registered!\n");

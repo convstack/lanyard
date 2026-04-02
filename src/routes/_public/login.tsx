@@ -24,6 +24,18 @@ function LoginPage() {
 	const [showTwoFactor, setShowTwoFactor] = useState(false);
 	const [twoFactorCode, setTwoFactorCode] = useState("");
 
+	// If we arrived here from an OIDC authorize flow, redirect back to it after login
+	const getPostLoginRedirect = () => {
+		const params = new URLSearchParams(window.location.search);
+		const clientId = params.get("client_id");
+		const redirectUri = params.get("redirect_uri");
+		if (clientId && redirectUri) {
+			// Replay the original authorize request
+			return `/api/auth/oauth2/authorize?${params.toString()}`;
+		}
+		return dashboardUrl;
+	};
+
 	const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setError("");
@@ -49,7 +61,7 @@ function LoginPage() {
 			return;
 		}
 
-		window.location.href = dashboardUrl;
+		window.location.href = getPostLoginRedirect();
 	};
 
 	const handleTwoFactor = async (e: React.SubmitEvent) => {
@@ -67,13 +79,13 @@ function LoginPage() {
 			return;
 		}
 
-		window.location.href = dashboardUrl;
+		window.location.href = getPostLoginRedirect();
 	};
 
 	const handleSocialLogin = async (
 		provider: "discord" | "google" | "github",
 	) => {
-		await signIn.social({ provider, callbackURL: dashboardUrl });
+		await signIn.social({ provider, callbackURL: getPostLoginRedirect() });
 	};
 
 	const handlePasskeyLogin = async () => {
@@ -83,7 +95,7 @@ function LoginPage() {
 			setError(String(result.error.message || "Passkey login failed"));
 			return;
 		}
-		window.location.href = dashboardUrl;
+		window.location.href = getPostLoginRedirect();
 	};
 
 	if (showTwoFactor) {

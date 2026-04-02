@@ -7,11 +7,13 @@ export const oauthApplication = pgTable("oauth_application", {
 	icon: text("icon"),
 	clientId: text("client_id").notNull().unique(),
 	clientSecret: text("client_secret").notNull(),
-	redirectURLs: text("redirect_ur_ls").notNull(),
+	redirectUrls: text("redirect_ur_ls").notNull(),
 	type: text("type").notNull().default("confidential"),
+	metadata: text("metadata"),
 	disabled: boolean("disabled").default(false),
 	userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
+	updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export const oauthAccessToken = pgTable("oauth_access_token", {
@@ -36,6 +38,7 @@ export const oauthConsent = pgTable("oauth_consent", {
 		.references(() => user.id, { onDelete: "cascade" }),
 	clientId: text("client_id").notNull(),
 	scopes: text("scopes").notNull(),
+	consentGiven: boolean("consent_given").notNull().default(false),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });

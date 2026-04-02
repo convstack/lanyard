@@ -79,6 +79,9 @@ export const auth = betterAuth({
 		oidcProvider({
 			loginPage: "/login",
 			consentPage: "/oauth/consent",
+			getAdditionalUserInfoClaim: async (user) => ({
+				role: (user as { role?: string }).role ?? "user",
+			}),
 		}),
 		admin(),
 		twoFactor({

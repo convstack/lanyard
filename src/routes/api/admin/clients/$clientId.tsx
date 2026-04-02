@@ -47,9 +47,9 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 							{ key: "clientId", label: "Client ID", value: found.clientId },
 							{ key: "type", label: "Type", value: found.type },
 							{
-								key: "redirectURLs",
+								key: "redirectUrls",
 								label: "Redirect URLs",
-								value: found.redirectURLs,
+								value: found.redirectUrls,
 							},
 							{
 								key: "disabled",
