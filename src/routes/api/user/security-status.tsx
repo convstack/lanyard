@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { auth } from "~/lib/auth";
+import { getAuthenticatedUser } from "~/lib/verify-access-token";
 
 export const Route = createFileRoute("/api/user/security-status")({
 	server: {
 		handlers: {
 			GET: async ({ request }: { request: Request }) => {
-				const session = await auth.api.getSession({ headers: request.headers });
-				if (!session) {
+				const authedUser = await getAuthenticatedUser(request);
+				if (!authedUser) {
 					return new Response(JSON.stringify({ error: "Unauthorized" }), {
 						status: 401,
 						headers: { "Content-Type": "application/json" },
@@ -20,13 +20,13 @@ export const Route = createFileRoute("/api/user/security-status")({
 				const [userData] = await db
 					.select({ twoFactorEnabled: user.twoFactorEnabled })
 					.from(user)
-					.where(eq(user.id, session.user.id))
+					.where(eq(user.id, authedUser.id))
 					.limit(1);
 
 				const [passkeyCount] = await db
 					.select({ count: count() })
 					.from(passkey)
-					.where(eq(passkey.userId, session.user.id));
+					.where(eq(passkey.userId, authedUser.id));
 
 				return new Response(
 					JSON.stringify({

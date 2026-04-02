@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { hash } from "bcryptjs";
 import { nanoid } from "nanoid";
 import type { UIManifest } from "~/db/schema/service-catalog";
-import { auth } from "~/lib/auth";
 import { checkRateLimit, RATE_LIMITS } from "~/lib/security/rate-limiter";
 import { registerServiceSchema } from "~/lib/validators/service-catalog";
+import { getAuthenticatedUser } from "~/lib/verify-access-token";
 
 export const Route = createFileRoute("/api/services/register")({
 	server: {
@@ -23,10 +23,8 @@ export const Route = createFileRoute("/api/services/register")({
 				}
 
 				// Require admin session
-				const session = await auth.api.getSession({
-					headers: request.headers,
-				});
-				if (!session || session.user.role !== "admin") {
+				const authedUser = await getAuthenticatedUser(request);
+				if (!authedUser || authedUser.role !== "admin") {
 					return new Response(JSON.stringify({ error: "Unauthorized" }), {
 						status: 401,
 						headers: { "Content-Type": "application/json" },
@@ -98,7 +96,7 @@ export const Route = createFileRoute("/api/services/register")({
 					uiManifest: parsed.data.uiManifest as UIManifest,
 					apiKeyHash,
 					apiKeyPrefix,
-					registeredBy: session.user.id,
+					registeredBy: authedUser.id,
 				});
 
 				// Insert declared permissions
@@ -118,7 +116,7 @@ export const Route = createFileRoute("/api/services/register")({
 					serviceId,
 					action: "registered",
 					details: { name: parsed.data.name, slug: parsed.data.slug },
-					performedBy: session.user.id,
+					performedBy: authedUser.id,
 				});
 
 				return new Response(

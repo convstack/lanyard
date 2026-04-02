@@ -34,6 +34,20 @@ export const getDashboardUrlFn = createServerFn({ method: "GET" }).handler(
 	},
 );
 
+let selfRegistered = false;
+export const ensureSelfRegisteredFn = createServerFn({
+	method: "GET",
+}).handler(async () => {
+	if (selfRegistered) return;
+	selfRegistered = true;
+	const { registerLanyardAsService } = await import(
+		"~/server/services/self-register"
+	);
+	await registerLanyardAsService().catch((err) =>
+		console.warn("Failed to self-register:", err),
+	);
+});
+
 export const getBrandingFn = createServerFn({ method: "GET" }).handler(
 	async () => {
 		const { db } = await import("~/db");

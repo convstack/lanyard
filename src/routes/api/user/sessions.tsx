@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { auth } from "~/lib/auth";
+import { getAuthenticatedUser } from "~/lib/verify-access-token";
 
 export const Route = createFileRoute("/api/user/sessions")({
 	server: {
 		handlers: {
 			GET: async ({ request }: { request: Request }) => {
-				const session = await auth.api.getSession({ headers: request.headers });
-				if (!session) {
+				const user = await getAuthenticatedUser(request);
+				if (!user) {
 					return new Response(JSON.stringify({ error: "Unauthorized" }), {
 						status: 401,
 						headers: { "Content-Type": "application/json" },
@@ -30,7 +30,7 @@ export const Route = createFileRoute("/api/user/sessions")({
 						createdAt: sessionTable.createdAt,
 					})
 					.from(sessionTable)
-					.where(eq(sessionTable.userId, session.user.id))
+					.where(eq(sessionTable.userId, user.id))
 					.orderBy(desc(sessionTable.createdAt));
 
 				const rows = sessions.map((s) => ({

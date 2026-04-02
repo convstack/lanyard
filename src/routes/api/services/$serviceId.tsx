@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { nanoid } from "nanoid";
-import { auth } from "~/lib/auth";
 import { updateServiceSchema } from "~/lib/validators/service-catalog";
+import { getAuthenticatedUser } from "~/lib/verify-access-token";
 
 export const Route = createFileRoute("/api/services/$serviceId")({
 	server: {
@@ -13,8 +13,8 @@ export const Route = createFileRoute("/api/services/$serviceId")({
 				request: Request;
 				params: { serviceId: string };
 			}) => {
-				const session = await auth.api.getSession({ headers: request.headers });
-				if (!session || session.user.role !== "admin") {
+				const authedUser = await getAuthenticatedUser(request);
+				if (!authedUser || authedUser.role !== "admin") {
 					return new Response(JSON.stringify({ error: "Unauthorized" }), {
 						status: 401,
 						headers: { "Content-Type": "application/json" },
@@ -64,8 +64,8 @@ export const Route = createFileRoute("/api/services/$serviceId")({
 				request: Request;
 				params: { serviceId: string };
 			}) => {
-				const session = await auth.api.getSession({ headers: request.headers });
-				if (!session || session.user.role !== "admin") {
+				const authedUser = await getAuthenticatedUser(request);
+				if (!authedUser || authedUser.role !== "admin") {
 					return new Response(JSON.stringify({ error: "Unauthorized" }), {
 						status: 401,
 						headers: { "Content-Type": "application/json" },
@@ -156,7 +156,7 @@ export const Route = createFileRoute("/api/services/$serviceId")({
 					details: {
 						fields: Object.keys(updates).filter((k) => k !== "updatedAt"),
 					},
-					performedBy: session.user.id,
+					performedBy: authedUser.id,
 				});
 
 				return new Response(JSON.stringify({ success: true }), {
@@ -172,8 +172,8 @@ export const Route = createFileRoute("/api/services/$serviceId")({
 				request: Request;
 				params: { serviceId: string };
 			}) => {
-				const session = await auth.api.getSession({ headers: request.headers });
-				if (!session || session.user.role !== "admin") {
+				const authedUser = await getAuthenticatedUser(request);
+				if (!authedUser || authedUser.role !== "admin") {
 					return new Response(JSON.stringify({ error: "Unauthorized" }), {
 						status: 401,
 						headers: { "Content-Type": "application/json" },

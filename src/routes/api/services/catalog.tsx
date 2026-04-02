@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { auth } from "~/lib/auth";
 import { checkRateLimit } from "~/lib/security/rate-limiter";
+import { getAuthenticatedUser } from "~/lib/verify-access-token";
 
 export const Route = createFileRoute("/api/services/catalog")({
 	server: {
@@ -21,11 +21,8 @@ export const Route = createFileRoute("/api/services/catalog")({
 					});
 				}
 
-				// Require authenticated user (session or bearer token)
-				const session = await auth.api.getSession({
-					headers: request.headers,
-				});
-				if (!session) {
+				const user = await getAuthenticatedUser(request);
+				if (!user) {
 					return new Response(JSON.stringify({ error: "Unauthorized" }), {
 						status: 401,
 						headers: { "Content-Type": "application/json" },
@@ -36,7 +33,6 @@ export const Route = createFileRoute("/api/services/catalog")({
 				const { serviceCatalogEntry } = await import("~/db/schema");
 				const { eq, and } = await import("drizzle-orm");
 
-				// Fetch all active, non-disabled services
 				const services = await db
 					.select({
 						id: serviceCatalogEntry.id,
@@ -54,9 +50,8 @@ export const Route = createFileRoute("/api/services/catalog")({
 					.from(serviceCatalogEntry)
 					.where(and(eq(serviceCatalogEntry.disabled, false)));
 
-				// Filter out inactive services for non-admin users
 				const filtered =
-					session.user.role === "admin"
+					user.role === "admin"
 						? services
 						: services.filter((s) => s.status !== "inactive");
 

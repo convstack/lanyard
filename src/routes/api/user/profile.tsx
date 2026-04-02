@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { auth } from "~/lib/auth";
+import { getAuthenticatedUser } from "~/lib/verify-access-token";
 
 export const Route = createFileRoute("/api/user/profile")({
 	server: {
 		handlers: {
 			GET: async ({ request }: { request: Request }) => {
-				const session = await auth.api.getSession({ headers: request.headers });
-				if (!session) {
+				const authedUser = await getAuthenticatedUser(request);
+				if (!authedUser) {
 					return new Response(JSON.stringify({ error: "Unauthorized" }), {
 						status: 401,
 						headers: { "Content-Type": "application/json" },
@@ -19,17 +19,17 @@ export const Route = createFileRoute("/api/user/profile")({
 							{
 								key: "name",
 								label: "Display Name",
-								value: session.user.name ?? "—",
+								value: authedUser.name ?? "—",
 							},
 							{
 								key: "email",
 								label: "Email",
-								value: session.user.email ?? "—",
+								value: authedUser.email ?? "—",
 							},
 							{
 								key: "image",
 								label: "Avatar URL",
-								value: session.user.image ?? "—",
+								value: authedUser.image ?? "—",
 							},
 						],
 					}),
@@ -37,8 +37,8 @@ export const Route = createFileRoute("/api/user/profile")({
 				);
 			},
 			PUT: async ({ request }: { request: Request }) => {
-				const session = await auth.api.getSession({ headers: request.headers });
-				if (!session) {
+				const authedUser = await getAuthenticatedUser(request);
+				if (!authedUser) {
 					return new Response(JSON.stringify({ error: "Unauthorized" }), {
 						status: 401,
 						headers: { "Content-Type": "application/json" },
@@ -58,7 +58,7 @@ export const Route = createFileRoute("/api/user/profile")({
 					await db
 						.update(user)
 						.set({ ...updates, updatedAt: new Date() })
-						.where(eq(user.id, session.user.id));
+						.where(eq(user.id, authedUser.id));
 				}
 
 				return new Response(JSON.stringify({ success: true }), {
