@@ -109,6 +109,18 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 						fields: [
 							{ key: "appName", label: "App Name", type: "text" },
 							{
+								key: "logoUrl",
+								label: "Logo URL",
+								type: "text",
+								placeholder: "https://...",
+							},
+							{
+								key: "faviconUrl",
+								label: "Favicon URL",
+								type: "text",
+								placeholder: "https://...",
+							},
+							{
 								key: "primaryColor",
 								label: "Primary Color (oklch)",
 								type: "text",
@@ -119,6 +131,36 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 								label: "Accent Color (oklch)",
 								type: "text",
 								placeholder: "0.205 0.064 285.885",
+							},
+							{
+								key: "backgroundColor",
+								label: "Background Color (oklch)",
+								type: "text",
+								placeholder: "1 0 0",
+							},
+							{
+								key: "foregroundColor",
+								label: "Foreground Color (oklch)",
+								type: "text",
+								placeholder: "0.145 0 0",
+							},
+							{
+								key: "mutedColor",
+								label: "Muted Color (oklch)",
+								type: "text",
+								placeholder: "0.97 0 0",
+							},
+							{
+								key: "destructiveColor",
+								label: "Destructive Color (oklch)",
+								type: "text",
+								placeholder: "0.577 0.245 27.325",
+							},
+							{
+								key: "borderRadius",
+								label: "Border Radius",
+								type: "text",
+								placeholder: "0.5rem",
 							},
 							{ key: "customCss", label: "Custom CSS", type: "textarea" },
 						],
