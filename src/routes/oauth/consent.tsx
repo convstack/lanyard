@@ -48,15 +48,28 @@ export const Route = createFileRoute("/oauth/consent")({
 function ConsentPage() {
 	const { info, search } = Route.useLoaderData();
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState("");
 
 	const handleConsent = async (accept: boolean) => {
 		setLoading(true);
+		setError("");
 		const result = await authClient.oauth2.consent({
 			consent_code: search.consent_code,
 			accept,
 		});
+		if (result.error) {
+			setError(
+				result.error.message ||
+					"Authorization failed. Please try signing in again.",
+			);
+			setLoading(false);
+			return;
+		}
 		if (result.data?.redirectURI) {
 			window.location.href = result.data.redirectURI;
+		} else {
+			setError("Authorization failed. Please try signing in again.");
+			setLoading(false);
 		}
 	};
 
@@ -101,6 +114,12 @@ function ConsentPage() {
 				<p className="text-xs text-center text-(--muted-foreground)">
 					Signed in as <strong>{info.userName || info.userEmail}</strong>
 				</p>
+
+				{error && (
+					<div className="rounded-md bg-red-50 p-3 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">
+						{error}
+					</div>
+				)}
 
 				<div className="flex gap-3">
 					<button
