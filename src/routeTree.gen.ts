@@ -37,6 +37,7 @@ import { Route as ApiAdminServicesRouteImport } from './routes/api/admin/service
 import { Route as ApiAdminClientsRouteImport } from './routes/api/admin/clients'
 import { Route as ApiAdminBrandingRouteImport } from './routes/api/admin/branding'
 import { Route as ApiUser2faStatusRouteImport } from './routes/api/user/2fa/status'
+import { Route as ApiAdminUsersCreateRouteImport } from './routes/api/admin/users/create'
 import { Route as ApiAdminUsersUserIdRouteImport } from './routes/api/admin/users/$userId'
 import { Route as ApiAdminServicesServiceIdRouteImport } from './routes/api/admin/services/$serviceId'
 import { Route as ApiAdminClientsRegisterRouteImport } from './routes/api/admin/clients/register'
@@ -193,6 +194,11 @@ const ApiUser2faStatusRoute = ApiUser2faStatusRouteImport.update({
   path: '/api/user/2fa/status',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminUsersCreateRoute = ApiAdminUsersCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => ApiAdminUsersRoute,
+} as any)
 const ApiAdminUsersUserIdRoute = ApiAdminUsersUserIdRouteImport.update({
   id: '/$userId',
   path: '/$userId',
@@ -317,6 +323,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
   '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
+  '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
   '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
@@ -362,6 +369,7 @@ export interface FileRoutesByTo {
   '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
   '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
+  '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
   '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
@@ -409,6 +417,7 @@ export interface FileRoutesById {
   '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
   '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
+  '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
   '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
@@ -456,6 +465,7 @@ export interface FileRouteTypes {
     | '/api/admin/clients/register'
     | '/api/admin/services/$serviceId'
     | '/api/admin/users/$userId'
+    | '/api/admin/users/create'
     | '/api/user/2fa/status'
     | '/api/admin/clients/$clientId/actions'
     | '/api/admin/services/$serviceId/actions'
@@ -501,6 +511,7 @@ export interface FileRouteTypes {
     | '/api/admin/clients/register'
     | '/api/admin/services/$serviceId'
     | '/api/admin/users/$userId'
+    | '/api/admin/users/create'
     | '/api/user/2fa/status'
     | '/api/admin/clients/$clientId/actions'
     | '/api/admin/services/$serviceId/actions'
@@ -547,6 +558,7 @@ export interface FileRouteTypes {
     | '/api/admin/clients/register'
     | '/api/admin/services/$serviceId'
     | '/api/admin/users/$userId'
+    | '/api/admin/users/create'
     | '/api/user/2fa/status'
     | '/api/admin/clients/$clientId/actions'
     | '/api/admin/services/$serviceId/actions'
@@ -787,6 +799,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiUser2faStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/users/create': {
+      id: '/api/admin/users/create'
+      path: '/create'
+      fullPath: '/api/admin/users/create'
+      preLoaderRoute: typeof ApiAdminUsersCreateRouteImport
+      parentRoute: typeof ApiAdminUsersRoute
+    }
     '/api/admin/users/$userId': {
       id: '/api/admin/users/$userId'
       path: '/$userId'
@@ -998,10 +1017,12 @@ const ApiAdminUsersUserIdRouteWithChildren =
 
 interface ApiAdminUsersRouteChildren {
   ApiAdminUsersUserIdRoute: typeof ApiAdminUsersUserIdRouteWithChildren
+  ApiAdminUsersCreateRoute: typeof ApiAdminUsersCreateRoute
 }
 
 const ApiAdminUsersRouteChildren: ApiAdminUsersRouteChildren = {
   ApiAdminUsersUserIdRoute: ApiAdminUsersUserIdRouteWithChildren,
+  ApiAdminUsersCreateRoute: ApiAdminUsersCreateRoute,
 }
 
 const ApiAdminUsersRouteWithChildren = ApiAdminUsersRoute._addFileChildren(

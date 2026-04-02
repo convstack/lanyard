@@ -43,7 +43,7 @@ export const Route = createFileRoute("/api/admin/users/$userId")({
 				return new Response(
 					JSON.stringify({
 						fields: [
-							{ key: "name", label: "Name", value: found.name },
+							{ key: "name", label: "Name", value: found.name ?? "" },
 							{ key: "email", label: "Email", value: found.email },
 							{
 								key: "emailVerified",
@@ -57,6 +57,42 @@ export const Route = createFileRoute("/api/admin/users/$userId")({
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);
+			},
+
+			PUT: async ({
+				request,
+				params,
+			}: {
+				request: Request;
+				params: { userId: string };
+			}) => {
+				const admin = await getAuthenticatedUser(request);
+				if (!admin || admin.role !== "admin") {
+					return new Response(JSON.stringify({ error: "Unauthorized" }), {
+						status: 401,
+						headers: { "Content-Type": "application/json" },
+					});
+				}
+
+				const body = await request.json();
+				const { db } = await import("~/db");
+				const { user } = await import("~/db/schema");
+				const { eq } = await import("drizzle-orm");
+
+				const updates: Record<string, unknown> = { updatedAt: new Date() };
+				if (typeof body.name === "string" && body.name)
+					updates.name = body.name;
+				if (typeof body.email === "string" && body.email)
+					updates.email = body.email;
+				if (typeof body.role === "string" && body.role)
+					updates.role = body.role;
+
+				await db.update(user).set(updates).where(eq(user.id, params.userId));
+
+				return new Response(JSON.stringify({ success: true }), {
+					status: 200,
+					headers: { "Content-Type": "application/json" },
+				});
 			},
 		},
 	},

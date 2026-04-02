@@ -46,7 +46,55 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 				{
 					type: "data-table",
 					endpoint: "/api/admin/users",
-					config: { rowLink: "/users/:id" },
+					config: {
+						rowLink: "/users/:id",
+						createLink: "/users/new",
+						createLabel: "Create User",
+					},
+				},
+			],
+		},
+		{
+			path: "/users/new",
+			title: "Create User",
+			layout: "default",
+			sections: [
+				{
+					type: "form",
+					endpoint: "/api/admin/users/create",
+					config: {
+						title: "Create a New User",
+						fields: [
+							{
+								key: "name",
+								label: "Display Name",
+								type: "text",
+								required: true,
+							},
+							{
+								key: "email",
+								label: "Email",
+								type: "email",
+								required: true,
+							},
+							{
+								key: "password",
+								label: "Password",
+								type: "password",
+								required: true,
+							},
+							{
+								key: "role",
+								label: "Role",
+								type: "select",
+								options: [
+									{ label: "User", value: "user" },
+									{ label: "Admin", value: "admin" },
+								],
+							},
+						],
+						submitLabel: "Create User",
+					},
 				},
 			],
 		},
@@ -59,6 +107,28 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 					type: "detail",
 					endpoint: "/api/admin/users/:userId",
 					config: { title: "Account Information" },
+				},
+				{
+					type: "form",
+					endpoint: "/api/admin/users/:userId",
+					config: {
+						title: "Edit User",
+						fields: [
+							{ key: "name", label: "Display Name", type: "text" },
+							{ key: "email", label: "Email", type: "email" },
+							{
+								key: "role",
+								label: "Role",
+								type: "select",
+								options: [
+									{ label: "User", value: "user" },
+									{ label: "Admin", value: "admin" },
+								],
+							},
+						],
+						submitLabel: "Save Changes",
+						method: "PUT",
+					},
 				},
 				{
 					type: "action-bar",
