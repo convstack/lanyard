@@ -1,19 +1,24 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { authClient, signIn } from "~/lib/auth-client";
-import { getEnabledProvidersFn } from "~/server/functions/auth";
+import {
+	getDashboardUrlFn,
+	getEnabledProvidersFn,
+} from "~/server/functions/auth";
 
 export const Route = createFileRoute("/_public/login")({
 	loader: async () => {
-		const providers = await getEnabledProvidersFn();
-		return { providers };
+		const [providers, dashboardUrl] = await Promise.all([
+			getEnabledProvidersFn(),
+			getDashboardUrlFn(),
+		]);
+		return { providers, dashboardUrl };
 	},
 	component: LoginPage,
 });
 
 function LoginPage() {
-	const navigate = useNavigate();
-	const { providers } = Route.useLoaderData();
+	const { providers, dashboardUrl } = Route.useLoaderData();
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [showTwoFactor, setShowTwoFactor] = useState(false);
@@ -44,7 +49,7 @@ function LoginPage() {
 			return;
 		}
 
-		navigate({ to: "/profile/security" });
+		window.location.href = dashboardUrl;
 	};
 
 	const handleTwoFactor = async (e: React.SubmitEvent) => {
@@ -62,13 +67,13 @@ function LoginPage() {
 			return;
 		}
 
-		navigate({ to: "/profile/security" });
+		window.location.href = dashboardUrl;
 	};
 
 	const handleSocialLogin = async (
 		provider: "discord" | "google" | "github",
 	) => {
-		await signIn.social({ provider, callbackURL: "/profile/security" });
+		await signIn.social({ provider, callbackURL: dashboardUrl });
 	};
 
 	const handlePasskeyLogin = async () => {
@@ -78,7 +83,7 @@ function LoginPage() {
 			setError(String(result.error.message || "Passkey login failed"));
 			return;
 		}
-		navigate({ to: "/profile/security" });
+		window.location.href = dashboardUrl;
 	};
 
 	if (showTwoFactor) {

@@ -48,9 +48,11 @@ const pageSectionSchema = z.object({
 		"detail",
 		"widget-grid",
 		"action-bar",
+		"two-factor",
+		"passkey-manager",
 		"custom",
 	]),
-	endpoint: z.string().min(1).max(500),
+	endpoint: z.string().max(500),
 	config: z.record(z.string(), jsonValueSchema),
 });
 

@@ -28,6 +28,12 @@ export const getEnabledProvidersFn = createServerFn({
 	};
 });
 
+export const getDashboardUrlFn = createServerFn({ method: "GET" }).handler(
+	async () => {
+		return process.env.DASHBOARD_URL || "http://localhost:4000";
+	},
+);
+
 export const getBrandingFn = createServerFn({ method: "GET" }).handler(
 	async () => {
 		const { db } = await import("~/db");

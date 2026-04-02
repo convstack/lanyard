@@ -1,9 +1,5 @@
 import type { UIManifest } from "~/db/schema/service-catalog";
 
-const LANYARD_URL =
-	process.env.LANYARD_BASE_URL ||
-	`http://localhost:${process.env.PORT || 3000}`;
-
 export const MY_ACCOUNT_MANIFEST: UIManifest = {
 	name: "My Account",
 	icon: "circle-user",
@@ -15,10 +11,9 @@ export const MY_ACCOUNT_MANIFEST: UIManifest = {
 		{ label: "Organizations", path: "/organizations", icon: "building-2" },
 		{ label: "Change Password", path: "/password", icon: "lock" },
 		{
-			label: "2FA & Passkeys",
+			label: "Security",
 			path: "/security",
 			icon: "shield-check",
-			href: `${LANYARD_URL}/profile/security`,
 		},
 	],
 	widgets: [],
@@ -140,6 +135,23 @@ export const MY_ACCOUNT_MANIFEST: UIManifest = {
 					type: "detail",
 					endpoint: "/api/user/security-status",
 					config: { title: "Security Status" },
+				},
+			],
+		},
+		{
+			path: "/security",
+			title: "Security",
+			layout: "default",
+			sections: [
+				{
+					type: "two-factor",
+					endpoint: "",
+					config: {},
+				},
+				{
+					type: "passkey-manager",
+					endpoint: "",
+					config: {},
 				},
 			],
 		},

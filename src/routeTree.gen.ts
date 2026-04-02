@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicRouteImport } from './routes/_public'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OauthConsentRouteImport } from './routes/oauth/consent'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
@@ -34,7 +33,6 @@ import { Route as ApiAdminStatsRouteImport } from './routes/api/admin/stats'
 import { Route as ApiAdminSettingsRouteImport } from './routes/api/admin/settings'
 import { Route as ApiAdminClientsRouteImport } from './routes/api/admin/clients'
 import { Route as ApiAdminBrandingRouteImport } from './routes/api/admin/branding'
-import { Route as AuthenticatedProfileSecurityRouteImport } from './routes/_authenticated/profile/security'
 import { Route as ApiAdminUsersUserIdRouteImport } from './routes/api/admin/users/$userId'
 import { Route as ApiAdminClientsClientIdRouteImport } from './routes/api/admin/clients/$clientId'
 import { Route as ApiUserSessionsSessionIdRevokeRouteImport } from './routes/api/user/sessions/$sessionId/revoke'
@@ -47,10 +45,6 @@ import { Route as ApiAdminUsersUserIdActionsRouteImport } from './routes/api/adm
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedRoute = AuthenticatedRouteImport.update({
-  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -168,12 +162,6 @@ const ApiAdminBrandingRoute = ApiAdminBrandingRouteImport.update({
   path: '/api/admin/branding',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedProfileSecurityRoute =
-  AuthenticatedProfileSecurityRouteImport.update({
-    id: '/profile/security',
-    path: '/profile/security',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
 const ApiAdminUsersUserIdRoute = ApiAdminUsersUserIdRouteImport.update({
   id: '/$userId',
   path: '/$userId',
@@ -234,7 +222,6 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof PublicResetPasswordRoute
   '/api/health': typeof ApiHealthRoute
   '/oauth/consent': typeof OauthConsentRoute
-  '/profile/security': typeof AuthenticatedProfileSecurityRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
   '/api/admin/settings': typeof ApiAdminSettingsRoute
@@ -269,7 +256,6 @@ export interface FileRoutesByTo {
   '/reset-password': typeof PublicResetPasswordRoute
   '/api/health': typeof ApiHealthRoute
   '/oauth/consent': typeof OauthConsentRoute
-  '/profile/security': typeof AuthenticatedProfileSecurityRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
   '/api/admin/settings': typeof ApiAdminSettingsRoute
@@ -299,7 +285,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
   '/_public/forgot-password': typeof PublicForgotPasswordRoute
   '/_public/login': typeof PublicLoginRoute
@@ -307,7 +292,6 @@ export interface FileRoutesById {
   '/_public/reset-password': typeof PublicResetPasswordRoute
   '/api/health': typeof ApiHealthRoute
   '/oauth/consent': typeof OauthConsentRoute
-  '/_authenticated/profile/security': typeof AuthenticatedProfileSecurityRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
   '/api/admin/settings': typeof ApiAdminSettingsRoute
@@ -344,7 +328,6 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/api/health'
     | '/oauth/consent'
-    | '/profile/security'
     | '/api/admin/branding'
     | '/api/admin/clients'
     | '/api/admin/settings'
@@ -379,7 +362,6 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/api/health'
     | '/oauth/consent'
-    | '/profile/security'
     | '/api/admin/branding'
     | '/api/admin/clients'
     | '/api/admin/settings'
@@ -408,7 +390,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/_authenticated'
     | '/_public'
     | '/_public/forgot-password'
     | '/_public/login'
@@ -416,7 +397,6 @@ export interface FileRouteTypes {
     | '/_public/reset-password'
     | '/api/health'
     | '/oauth/consent'
-    | '/_authenticated/profile/security'
     | '/api/admin/branding'
     | '/api/admin/clients'
     | '/api/admin/settings'
@@ -446,7 +426,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   PublicRoute: typeof PublicRouteWithChildren
   ApiHealthRoute: typeof ApiHealthRoute
   OauthConsentRoute: typeof OauthConsentRoute
@@ -475,13 +454,6 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof PublicRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -645,13 +617,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminBrandingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/profile/security': {
-      id: '/_authenticated/profile/security'
-      path: '/profile/security'
-      fullPath: '/profile/security'
-      preLoaderRoute: typeof AuthenticatedProfileSecurityRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/api/admin/users/$userId': {
       id: '/api/admin/users/$userId'
       path: '/$userId'
@@ -717,18 +682,6 @@ declare module '@tanstack/react-router' {
     }
   }
 }
-
-interface AuthenticatedRouteChildren {
-  AuthenticatedProfileSecurityRoute: typeof AuthenticatedProfileSecurityRoute
-}
-
-const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedProfileSecurityRoute: AuthenticatedProfileSecurityRoute,
-}
-
-const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren,
-)
 
 interface PublicRouteChildren {
   PublicForgotPasswordRoute: typeof PublicForgotPasswordRoute
@@ -816,7 +769,6 @@ const ApiUserSessionsRouteWithChildren = ApiUserSessionsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
   ApiHealthRoute: ApiHealthRoute,
   OauthConsentRoute: OauthConsentRoute,
