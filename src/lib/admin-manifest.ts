@@ -28,6 +28,14 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			layout: "default",
 			sections: [
 				{ type: "widget-grid", endpoint: "/api/admin/stats", config: {} },
+				{
+					type: "data-table",
+					endpoint: "/api/admin/services",
+					config: {
+						title: "Connected Services",
+						rowLink: "/services/:id",
+					},
+				},
 			],
 		},
 		{
