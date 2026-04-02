@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lanyard
+  namespace: lanyard
+  labels:
+    app: lanyard
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lanyard
+  template:
+    metadata:
+      labels:
+        app: lanyard
+    spec:
+      initContainers:
+        - name: migrate
+          image: ghcr.io/headpat/lanyard:latest
+          command: ["node", "src/db/migrate.ts"]
+          envFrom:
+            - configMapRef:
+                name: lanyard-config
+            - secretRef:
+                name: lanyard-secret
+      containers:
+        - name: lanyard
+          image: ghcr.io/headpat/lanyard:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: lanyard-config
+            - secretRef:
+                name: lanyard-secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /api/auth/ok
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /api/auth/ok
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10

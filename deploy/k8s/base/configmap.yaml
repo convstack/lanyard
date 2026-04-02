@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lanyard-config
+  namespace: lanyard
+data:
+  APP_NAME: "Lanyard"
+  NODE_ENV: "production"
+  BETTER_AUTH_URL: "https://id.example.com"
