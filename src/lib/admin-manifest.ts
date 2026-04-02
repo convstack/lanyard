@@ -128,6 +128,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 						],
 						submitLabel: "Save Changes",
 						method: "PUT",
+						collapsed: true,
 					},
 				},
 				{
