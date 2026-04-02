@@ -53,7 +53,8 @@ export const Route = createFileRoute("/api/user/profile")({
 				const updates: Record<string, string | null> = {};
 				if (typeof body.name === "string" && body.name)
 					updates.name = body.name;
-				if (typeof body.image === "string") updates.image = body.image || null;
+				if (typeof body.image === "string" && body.image)
+					updates.image = body.image;
 
 				if (Object.keys(updates).length > 0) {
 					await db
