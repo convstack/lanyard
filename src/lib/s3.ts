@@ -1,4 +1,8 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import {
+	DeleteObjectCommand,
+	PutObjectCommand,
+	S3Client,
+} from "@aws-sdk/client-s3";
 import { nanoid } from "nanoid";
 
 function getS3Config() {
@@ -67,6 +71,29 @@ export async function uploadFile(
 		return `${config.publicUrl}/${fileKey}`;
 	}
 	return `${config.endpoint}/${config.bucket}/${fileKey}`;
+}
+
+export async function deleteFile(fileUrl: string): Promise<void> {
+	const s3 = getClient();
+	const config = getS3Config();
+	if (!s3 || !config) return;
+
+	// Extract key from URL
+	let key: string | null = null;
+	if (config.publicUrl && fileUrl.startsWith(config.publicUrl)) {
+		key = fileUrl.slice(config.publicUrl.length + 1);
+	} else if (fileUrl.startsWith(`${config.endpoint}/${config.bucket}/`)) {
+		key = fileUrl.slice(`${config.endpoint}/${config.bucket}/`.length);
+	}
+
+	if (!key) return;
+
+	await s3.send(
+		new DeleteObjectCommand({
+			Bucket: config.bucket,
+			Key: key,
+		}),
+	);
 }
 
 export function isS3Configured(): boolean {

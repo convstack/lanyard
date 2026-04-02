@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { isS3Configured, uploadFile } from "~/lib/s3";
+import { deleteFile, isS3Configured, uploadFile } from "~/lib/s3";
 import { getAuthenticatedUser } from "~/lib/verify-access-token";
 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"];
@@ -80,6 +80,16 @@ export const Route = createFileRoute("/api/upload/avatar")({
 				const { db } = await import("~/db");
 				const { user: userTable } = await import("~/db/schema");
 				const { eq } = await import("drizzle-orm");
+
+				// Delete old avatar if exists
+				const [current] = await db
+					.select({ image: userTable.image })
+					.from(userTable)
+					.where(eq(userTable.id, user.id))
+					.limit(1);
+				if (current?.image) {
+					await deleteFile(current.image).catch(() => {});
+				}
 
 				await db
 					.update(userTable)
