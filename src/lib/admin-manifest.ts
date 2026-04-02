@@ -123,6 +123,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 							{ key: "customCss", label: "Custom CSS", type: "textarea" },
 						],
 						submitLabel: "Save Branding",
+						method: "PUT",
 					},
 				},
 			],
