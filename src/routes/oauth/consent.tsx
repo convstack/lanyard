@@ -25,6 +25,7 @@ const getConsentInfoFn = createServerFn({ method: "GET" })
 			clientIcon: client?.icon || null,
 			scopes: data.scope.split(" ").filter(Boolean),
 			userName: session.user.name,
+			userEmail: session.user.email,
 		};
 	});
 
@@ -50,16 +51,12 @@ function ConsentPage() {
 
 	const handleConsent = async (accept: boolean) => {
 		setLoading(true);
-		if (accept) {
-			await authClient.oauth2.consent({
-				consent_code: search.consent_code,
-				accept: true,
-			});
-		} else {
-			await authClient.oauth2.consent({
-				consent_code: search.consent_code,
-				accept: false,
-			});
+		const result = await authClient.oauth2.consent({
+			consent_code: search.consent_code,
+			accept,
+		});
+		if (result.data?.redirectURI) {
+			window.location.href = result.data.redirectURI;
 		}
 	};
 
@@ -102,7 +99,7 @@ function ConsentPage() {
 				</div>
 
 				<p className="text-xs text-center text-(--muted-foreground)">
-					Signed in as <strong>{info.userName}</strong>
+					Signed in as <strong>{info.userName || info.userEmail}</strong>
 				</p>
 
 				<div className="flex gap-3">
