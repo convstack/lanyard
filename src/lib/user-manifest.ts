@@ -37,9 +37,10 @@ export const MY_ACCOUNT_MANIFEST: UIManifest = {
 							{ key: "name", label: "Display Name", type: "text" },
 							{
 								key: "image",
-								label: "Avatar URL",
-								type: "text",
-								placeholder: "https://...",
+								label: "Avatar",
+								type: "file",
+								uploadEndpoint: "/api/upload/avatar",
+								accept: "image/jpeg,image/png,image/gif,image/webp",
 							},
 						],
 						submitLabel: "Save Changes",
