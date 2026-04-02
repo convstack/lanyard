@@ -109,6 +109,18 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 					config: { title: "Account Information" },
 				},
 				{
+					type: "action-bar",
+					endpoint: "/api/admin/users/:userId/actions",
+					config: {},
+				},
+			],
+		},
+		{
+			path: "/users/:userId/edit",
+			title: "Edit User",
+			layout: "default",
+			sections: [
+				{
 					type: "form",
 					endpoint: "/api/admin/users/:userId",
 					config: {
@@ -128,13 +140,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 						],
 						submitLabel: "Save Changes",
 						method: "PUT",
-						collapsed: true,
 					},
-				},
-				{
-					type: "action-bar",
-					endpoint: "/api/admin/users/:userId/actions",
-					config: {},
 				},
 			],
 		},

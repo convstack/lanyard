@@ -46,7 +46,24 @@ export const Route = createFileRoute("/api/admin/users/$userId/actions")({
 					method: string;
 					variant?: string;
 					confirm?: string;
+					link?: string;
 				}> = [];
+
+				// Edit action (navigates to edit page)
+				actions.push({
+					label: "Edit User",
+					endpoint: "",
+					method: "POST",
+					link: `/users/${params.userId}/edit`,
+				});
+
+				if (!found.emailVerified) {
+					actions.push({
+						label: "Verify Email",
+						endpoint: `/api/admin/users/${params.userId}/verify-email`,
+						method: "POST",
+					});
+				}
 
 				if (found.banned) {
 					actions.push({
@@ -78,14 +95,6 @@ export const Route = createFileRoute("/api/admin/users/$userId/actions")({
 						endpoint: `/api/admin/users/${params.userId}/set-role`,
 						method: "POST",
 						confirm: "Grant admin privileges to this user?",
-					});
-				}
-
-				if (!found.emailVerified) {
-					actions.push({
-						label: "Verify Email",
-						endpoint: `/api/admin/users/${params.userId}/verify-email`,
-						method: "POST",
 					});
 				}
 
