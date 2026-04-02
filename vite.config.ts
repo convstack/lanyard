@@ -16,5 +16,18 @@ export default defineConfig({
       srcDirectory: "src",
     }),
     viteReact(),
+    {
+      name: "lanyard-dev-init",
+      configureServer(server) {
+        server.httpServer?.once("listening", async () => {
+          try {
+            const mod = await server.ssrLoadModule("~/server/services/self-register");
+            await mod.registerLanyardAsService();
+          } catch (err) {
+            console.warn("Failed to self-register in dev:", err);
+          }
+        });
+      },
+    },
   ],
 });

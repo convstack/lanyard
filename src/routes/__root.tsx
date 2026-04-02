@@ -8,7 +8,7 @@ import {
 	generateBrandingCss,
 	ThemeProvider,
 } from "~/lib/theming/theme-provider";
-import { ensureSelfRegisteredFn, getBrandingFn } from "~/server/functions/auth";
+import { getBrandingFn } from "~/server/functions/auth";
 import appCss from "~/styles/app.css?url";
 
 export const Route = createRootRoute({
@@ -24,10 +24,7 @@ export const Route = createRootRoute({
 		],
 	}),
 	loader: async () => {
-		const [branding] = await Promise.all([
-			getBrandingFn(),
-			ensureSelfRegisteredFn(),
-		]);
+		const branding = await getBrandingFn();
 		return { branding };
 	},
 	component: RootComponent,
