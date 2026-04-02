@@ -36,6 +36,8 @@ import { Route as ApiAdminServicesRouteImport } from './routes/api/admin/service
 import { Route as ApiAdminClientsRouteImport } from './routes/api/admin/clients'
 import { Route as ApiAdminBrandingRouteImport } from './routes/api/admin/branding'
 import { Route as ApiAdminUsersUserIdRouteImport } from './routes/api/admin/users/$userId'
+import { Route as ApiAdminServicesServiceIdRouteImport } from './routes/api/admin/services/$serviceId'
+import { Route as ApiAdminClientsRegisterRouteImport } from './routes/api/admin/clients/register'
 import { Route as ApiAdminClientsClientIdRouteImport } from './routes/api/admin/clients/$clientId'
 import { Route as ApiUserSessionsSessionIdRevokeRouteImport } from './routes/api/user/sessions/$sessionId/revoke'
 import { Route as ApiUserConnectedAppsConsentIdRevokeRouteImport } from './routes/api/user/connected-apps/$consentId/revoke'
@@ -44,6 +46,10 @@ import { Route as ApiAdminUsersUserIdUnbanRouteImport } from './routes/api/admin
 import { Route as ApiAdminUsersUserIdSetRoleRouteImport } from './routes/api/admin/users/$userId/set-role'
 import { Route as ApiAdminUsersUserIdBanRouteImport } from './routes/api/admin/users/$userId/ban'
 import { Route as ApiAdminUsersUserIdActionsRouteImport } from './routes/api/admin/users/$userId/actions'
+import { Route as ApiAdminServicesServiceIdToggleRouteImport } from './routes/api/admin/services/$serviceId/toggle'
+import { Route as ApiAdminServicesServiceIdDeleteRouteImport } from './routes/api/admin/services/$serviceId/delete'
+import { Route as ApiAdminServicesServiceIdActionsRouteImport } from './routes/api/admin/services/$serviceId/actions'
+import { Route as ApiAdminClientsClientIdActionsRouteImport } from './routes/api/admin/clients/$clientId/actions'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -179,6 +185,17 @@ const ApiAdminUsersUserIdRoute = ApiAdminUsersUserIdRouteImport.update({
   path: '/$userId',
   getParentRoute: () => ApiAdminUsersRoute,
 } as any)
+const ApiAdminServicesServiceIdRoute =
+  ApiAdminServicesServiceIdRouteImport.update({
+    id: '/$serviceId',
+    path: '/$serviceId',
+    getParentRoute: () => ApiAdminServicesRoute,
+  } as any)
+const ApiAdminClientsRegisterRoute = ApiAdminClientsRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => ApiAdminClientsRoute,
+} as any)
 const ApiAdminClientsClientIdRoute = ApiAdminClientsClientIdRouteImport.update({
   id: '/$clientId',
   path: '/$clientId',
@@ -225,6 +242,30 @@ const ApiAdminUsersUserIdActionsRoute =
     path: '/actions',
     getParentRoute: () => ApiAdminUsersUserIdRoute,
   } as any)
+const ApiAdminServicesServiceIdToggleRoute =
+  ApiAdminServicesServiceIdToggleRouteImport.update({
+    id: '/toggle',
+    path: '/toggle',
+    getParentRoute: () => ApiAdminServicesServiceIdRoute,
+  } as any)
+const ApiAdminServicesServiceIdDeleteRoute =
+  ApiAdminServicesServiceIdDeleteRouteImport.update({
+    id: '/delete',
+    path: '/delete',
+    getParentRoute: () => ApiAdminServicesServiceIdRoute,
+  } as any)
+const ApiAdminServicesServiceIdActionsRoute =
+  ApiAdminServicesServiceIdActionsRouteImport.update({
+    id: '/actions',
+    path: '/actions',
+    getParentRoute: () => ApiAdminServicesServiceIdRoute,
+  } as any)
+const ApiAdminClientsClientIdActionsRoute =
+  ApiAdminClientsClientIdActionsRouteImport.update({
+    id: '/actions',
+    path: '/actions',
+    getParentRoute: () => ApiAdminClientsClientIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -236,7 +277,7 @@ export interface FileRoutesByFullPath {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
-  '/api/admin/services': typeof ApiAdminServicesRoute
+  '/api/admin/services': typeof ApiAdminServicesRouteWithChildren
   '/api/admin/settings': typeof ApiAdminSettingsRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
@@ -252,8 +293,14 @@ export interface FileRoutesByFullPath {
   '/api/user/profile': typeof ApiUserProfileRoute
   '/api/user/security-status': typeof ApiUserSecurityStatusRoute
   '/api/user/sessions': typeof ApiUserSessionsRouteWithChildren
-  '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRoute
+  '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRouteWithChildren
+  '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
+  '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
+  '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
+  '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
+  '/api/admin/services/$serviceId/delete': typeof ApiAdminServicesServiceIdDeleteRoute
+  '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
   '/api/admin/users/$userId/set-role': typeof ApiAdminUsersUserIdSetRoleRoute
@@ -272,7 +319,7 @@ export interface FileRoutesByTo {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
-  '/api/admin/services': typeof ApiAdminServicesRoute
+  '/api/admin/services': typeof ApiAdminServicesRouteWithChildren
   '/api/admin/settings': typeof ApiAdminSettingsRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
@@ -288,8 +335,14 @@ export interface FileRoutesByTo {
   '/api/user/profile': typeof ApiUserProfileRoute
   '/api/user/security-status': typeof ApiUserSecurityStatusRoute
   '/api/user/sessions': typeof ApiUserSessionsRouteWithChildren
-  '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRoute
+  '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRouteWithChildren
+  '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
+  '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
+  '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
+  '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
+  '/api/admin/services/$serviceId/delete': typeof ApiAdminServicesServiceIdDeleteRoute
+  '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
   '/api/admin/users/$userId/set-role': typeof ApiAdminUsersUserIdSetRoleRoute
@@ -310,7 +363,7 @@ export interface FileRoutesById {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
-  '/api/admin/services': typeof ApiAdminServicesRoute
+  '/api/admin/services': typeof ApiAdminServicesRouteWithChildren
   '/api/admin/settings': typeof ApiAdminSettingsRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
@@ -326,8 +379,14 @@ export interface FileRoutesById {
   '/api/user/profile': typeof ApiUserProfileRoute
   '/api/user/security-status': typeof ApiUserSecurityStatusRoute
   '/api/user/sessions': typeof ApiUserSessionsRouteWithChildren
-  '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRoute
+  '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRouteWithChildren
+  '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
+  '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
+  '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
+  '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
+  '/api/admin/services/$serviceId/delete': typeof ApiAdminServicesServiceIdDeleteRoute
+  '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
   '/api/admin/users/$userId/set-role': typeof ApiAdminUsersUserIdSetRoleRoute
@@ -365,7 +424,13 @@ export interface FileRouteTypes {
     | '/api/user/security-status'
     | '/api/user/sessions'
     | '/api/admin/clients/$clientId'
+    | '/api/admin/clients/register'
+    | '/api/admin/services/$serviceId'
     | '/api/admin/users/$userId'
+    | '/api/admin/clients/$clientId/actions'
+    | '/api/admin/services/$serviceId/actions'
+    | '/api/admin/services/$serviceId/delete'
+    | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
     | '/api/admin/users/$userId/set-role'
@@ -401,7 +466,13 @@ export interface FileRouteTypes {
     | '/api/user/security-status'
     | '/api/user/sessions'
     | '/api/admin/clients/$clientId'
+    | '/api/admin/clients/register'
+    | '/api/admin/services/$serviceId'
     | '/api/admin/users/$userId'
+    | '/api/admin/clients/$clientId/actions'
+    | '/api/admin/services/$serviceId/actions'
+    | '/api/admin/services/$serviceId/delete'
+    | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
     | '/api/admin/users/$userId/set-role'
@@ -438,7 +509,13 @@ export interface FileRouteTypes {
     | '/api/user/security-status'
     | '/api/user/sessions'
     | '/api/admin/clients/$clientId'
+    | '/api/admin/clients/register'
+    | '/api/admin/services/$serviceId'
     | '/api/admin/users/$userId'
+    | '/api/admin/clients/$clientId/actions'
+    | '/api/admin/services/$serviceId/actions'
+    | '/api/admin/services/$serviceId/delete'
+    | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
     | '/api/admin/users/$userId/set-role'
@@ -455,7 +532,7 @@ export interface RootRouteChildren {
   OauthConsentRoute: typeof OauthConsentRoute
   ApiAdminBrandingRoute: typeof ApiAdminBrandingRoute
   ApiAdminClientsRoute: typeof ApiAdminClientsRouteWithChildren
-  ApiAdminServicesRoute: typeof ApiAdminServicesRoute
+  ApiAdminServicesRoute: typeof ApiAdminServicesRouteWithChildren
   ApiAdminSettingsRoute: typeof ApiAdminSettingsRoute
   ApiAdminStatsRoute: typeof ApiAdminStatsRoute
   ApiAdminUsersRoute: typeof ApiAdminUsersRouteWithChildren
@@ -664,6 +741,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminUsersUserIdRouteImport
       parentRoute: typeof ApiAdminUsersRoute
     }
+    '/api/admin/services/$serviceId': {
+      id: '/api/admin/services/$serviceId'
+      path: '/$serviceId'
+      fullPath: '/api/admin/services/$serviceId'
+      preLoaderRoute: typeof ApiAdminServicesServiceIdRouteImport
+      parentRoute: typeof ApiAdminServicesRoute
+    }
+    '/api/admin/clients/register': {
+      id: '/api/admin/clients/register'
+      path: '/register'
+      fullPath: '/api/admin/clients/register'
+      preLoaderRoute: typeof ApiAdminClientsRegisterRouteImport
+      parentRoute: typeof ApiAdminClientsRoute
+    }
     '/api/admin/clients/$clientId': {
       id: '/api/admin/clients/$clientId'
       path: '/$clientId'
@@ -720,6 +811,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminUsersUserIdActionsRouteImport
       parentRoute: typeof ApiAdminUsersUserIdRoute
     }
+    '/api/admin/services/$serviceId/toggle': {
+      id: '/api/admin/services/$serviceId/toggle'
+      path: '/toggle'
+      fullPath: '/api/admin/services/$serviceId/toggle'
+      preLoaderRoute: typeof ApiAdminServicesServiceIdToggleRouteImport
+      parentRoute: typeof ApiAdminServicesServiceIdRoute
+    }
+    '/api/admin/services/$serviceId/delete': {
+      id: '/api/admin/services/$serviceId/delete'
+      path: '/delete'
+      fullPath: '/api/admin/services/$serviceId/delete'
+      preLoaderRoute: typeof ApiAdminServicesServiceIdDeleteRouteImport
+      parentRoute: typeof ApiAdminServicesServiceIdRoute
+    }
+    '/api/admin/services/$serviceId/actions': {
+      id: '/api/admin/services/$serviceId/actions'
+      path: '/actions'
+      fullPath: '/api/admin/services/$serviceId/actions'
+      preLoaderRoute: typeof ApiAdminServicesServiceIdActionsRouteImport
+      parentRoute: typeof ApiAdminServicesServiceIdRoute
+    }
+    '/api/admin/clients/$clientId/actions': {
+      id: '/api/admin/clients/$clientId/actions'
+      path: '/actions'
+      fullPath: '/api/admin/clients/$clientId/actions'
+      preLoaderRoute: typeof ApiAdminClientsClientIdActionsRouteImport
+      parentRoute: typeof ApiAdminClientsClientIdRoute
+    }
   }
 }
 
@@ -740,17 +859,63 @@ const PublicRouteChildren: PublicRouteChildren = {
 const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren)
 
+interface ApiAdminClientsClientIdRouteChildren {
+  ApiAdminClientsClientIdActionsRoute: typeof ApiAdminClientsClientIdActionsRoute
+}
+
+const ApiAdminClientsClientIdRouteChildren: ApiAdminClientsClientIdRouteChildren =
+  {
+    ApiAdminClientsClientIdActionsRoute: ApiAdminClientsClientIdActionsRoute,
+  }
+
+const ApiAdminClientsClientIdRouteWithChildren =
+  ApiAdminClientsClientIdRoute._addFileChildren(
+    ApiAdminClientsClientIdRouteChildren,
+  )
+
 interface ApiAdminClientsRouteChildren {
-  ApiAdminClientsClientIdRoute: typeof ApiAdminClientsClientIdRoute
+  ApiAdminClientsClientIdRoute: typeof ApiAdminClientsClientIdRouteWithChildren
+  ApiAdminClientsRegisterRoute: typeof ApiAdminClientsRegisterRoute
 }
 
 const ApiAdminClientsRouteChildren: ApiAdminClientsRouteChildren = {
-  ApiAdminClientsClientIdRoute: ApiAdminClientsClientIdRoute,
+  ApiAdminClientsClientIdRoute: ApiAdminClientsClientIdRouteWithChildren,
+  ApiAdminClientsRegisterRoute: ApiAdminClientsRegisterRoute,
 }
 
 const ApiAdminClientsRouteWithChildren = ApiAdminClientsRoute._addFileChildren(
   ApiAdminClientsRouteChildren,
 )
+
+interface ApiAdminServicesServiceIdRouteChildren {
+  ApiAdminServicesServiceIdActionsRoute: typeof ApiAdminServicesServiceIdActionsRoute
+  ApiAdminServicesServiceIdDeleteRoute: typeof ApiAdminServicesServiceIdDeleteRoute
+  ApiAdminServicesServiceIdToggleRoute: typeof ApiAdminServicesServiceIdToggleRoute
+}
+
+const ApiAdminServicesServiceIdRouteChildren: ApiAdminServicesServiceIdRouteChildren =
+  {
+    ApiAdminServicesServiceIdActionsRoute:
+      ApiAdminServicesServiceIdActionsRoute,
+    ApiAdminServicesServiceIdDeleteRoute: ApiAdminServicesServiceIdDeleteRoute,
+    ApiAdminServicesServiceIdToggleRoute: ApiAdminServicesServiceIdToggleRoute,
+  }
+
+const ApiAdminServicesServiceIdRouteWithChildren =
+  ApiAdminServicesServiceIdRoute._addFileChildren(
+    ApiAdminServicesServiceIdRouteChildren,
+  )
+
+interface ApiAdminServicesRouteChildren {
+  ApiAdminServicesServiceIdRoute: typeof ApiAdminServicesServiceIdRouteWithChildren
+}
+
+const ApiAdminServicesRouteChildren: ApiAdminServicesRouteChildren = {
+  ApiAdminServicesServiceIdRoute: ApiAdminServicesServiceIdRouteWithChildren,
+}
+
+const ApiAdminServicesRouteWithChildren =
+  ApiAdminServicesRoute._addFileChildren(ApiAdminServicesRouteChildren)
 
 interface ApiAdminUsersUserIdRouteChildren {
   ApiAdminUsersUserIdActionsRoute: typeof ApiAdminUsersUserIdActionsRoute
@@ -814,7 +979,7 @@ const rootRouteChildren: RootRouteChildren = {
   OauthConsentRoute: OauthConsentRoute,
   ApiAdminBrandingRoute: ApiAdminBrandingRoute,
   ApiAdminClientsRoute: ApiAdminClientsRouteWithChildren,
-  ApiAdminServicesRoute: ApiAdminServicesRoute,
+  ApiAdminServicesRoute: ApiAdminServicesRouteWithChildren,
   ApiAdminSettingsRoute: ApiAdminSettingsRoute,
   ApiAdminStatsRoute: ApiAdminStatsRoute,
   ApiAdminUsersRoute: ApiAdminUsersRouteWithChildren,

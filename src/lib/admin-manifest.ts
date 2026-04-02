@@ -8,7 +8,9 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 		{ label: "Overview", path: "/", icon: "layout-dashboard" },
 		{ label: "Users", path: "/users", icon: "users" },
 		{ label: "OIDC Clients", path: "/clients", icon: "key-round" },
+		{ label: "Register Client", path: "/clients/new", icon: "plus" },
 		{ label: "Services", path: "/services", icon: "box" },
+		{ label: "Register Service", path: "/services/new", icon: "plus" },
 		{ label: "Branding", path: "/branding", icon: "palette" },
 		{ label: "Settings", path: "/settings", icon: "settings" },
 	],
@@ -72,6 +74,45 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			],
 		},
 		{
+			path: "/clients/new",
+			title: "Register OIDC Client",
+			layout: "default",
+			sections: [
+				{
+					type: "form",
+					endpoint: "/api/admin/clients/register",
+					config: {
+						title: "Register a New OIDC Client",
+						fields: [
+							{
+								key: "name",
+								label: "Client Name",
+								type: "text",
+								required: true,
+							},
+							{
+								key: "redirectUrls",
+								label: "Redirect URLs (comma separated)",
+								type: "text",
+								required: true,
+								placeholder: "http://localhost:4000/callback",
+							},
+							{
+								key: "type",
+								label: "Type",
+								type: "select",
+								options: [
+									{ label: "Confidential", value: "confidential" },
+									{ label: "Public", value: "public" },
+								],
+							},
+						],
+						submitLabel: "Register Client",
+					},
+				},
+			],
+		},
+		{
 			path: "/clients/:clientId",
 			title: "Client Detail",
 			layout: "default",
@@ -81,6 +122,11 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 					endpoint: "/api/admin/clients/:clientId",
 					config: {},
 				},
+				{
+					type: "action-bar",
+					endpoint: "/api/admin/clients/:clientId/actions",
+					config: {},
+				},
 			],
 		},
 		{
@@ -88,7 +134,79 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			title: "Service Catalog",
 			layout: "default",
 			sections: [
-				{ type: "data-table", endpoint: "/api/admin/services", config: {} },
+				{
+					type: "data-table",
+					endpoint: "/api/admin/services",
+					config: { rowLink: "/services/:id" },
+				},
+			],
+		},
+		{
+			path: "/services/new",
+			title: "Register Service",
+			layout: "default",
+			sections: [
+				{
+					type: "form",
+					endpoint: "/api/services/register",
+					config: {
+						title: "Register a New Service",
+						fields: [
+							{
+								key: "name",
+								label: "Service Name",
+								type: "text",
+								required: true,
+							},
+							{
+								key: "slug",
+								label: "Slug",
+								type: "text",
+								required: true,
+								placeholder: "my-service",
+							},
+							{
+								key: "type",
+								label: "Type",
+								type: "text",
+								required: true,
+								placeholder: "service",
+							},
+							{ key: "description", label: "Description", type: "textarea" },
+							{
+								key: "baseUrl",
+								label: "Base URL",
+								type: "text",
+								required: true,
+								placeholder: "http://localhost:5000",
+							},
+							{
+								key: "healthCheckPath",
+								label: "Health Check Path",
+								type: "text",
+								placeholder: "/health",
+							},
+						],
+						submitLabel: "Register Service",
+					},
+				},
+			],
+		},
+		{
+			path: "/services/:serviceId",
+			title: "Service Detail",
+			layout: "default",
+			sections: [
+				{
+					type: "detail",
+					endpoint: "/api/admin/services/:serviceId",
+					config: {},
+				},
+				{
+					type: "action-bar",
+					endpoint: "/api/admin/services/:serviceId/actions",
+					config: {},
+				},
 			],
 		},
 		{

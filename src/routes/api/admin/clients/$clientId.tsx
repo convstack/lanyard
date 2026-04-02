@@ -62,6 +62,48 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);
 			},
+
+			DELETE: async ({
+				request,
+				params,
+			}: {
+				request: Request;
+				params: { clientId: string };
+			}) => {
+				const user = await getAuthenticatedUser(request);
+				if (!user || user.role !== "admin") {
+					return new Response(JSON.stringify({ error: "Unauthorized" }), {
+						status: 401,
+						headers: { "Content-Type": "application/json" },
+					});
+				}
+
+				const { db } = await import("~/db");
+				const { oauthApplication } = await import("~/db/schema");
+				const { eq } = await import("drizzle-orm");
+
+				const [found] = await db
+					.select({ id: oauthApplication.id })
+					.from(oauthApplication)
+					.where(eq(oauthApplication.clientId, params.clientId))
+					.limit(1);
+
+				if (!found) {
+					return new Response(JSON.stringify({ error: "Client not found" }), {
+						status: 404,
+						headers: { "Content-Type": "application/json" },
+					});
+				}
+
+				await db
+					.delete(oauthApplication)
+					.where(eq(oauthApplication.clientId, params.clientId));
+
+				return new Response(JSON.stringify({ success: true }), {
+					status: 200,
+					headers: { "Content-Type": "application/json" },
+				});
+			},
 		},
 	},
 });

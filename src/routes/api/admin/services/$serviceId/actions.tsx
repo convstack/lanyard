@@ -1,0 +1,66 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { getAuthenticatedUser } from "~/lib/verify-access-token";
+
+export const Route = createFileRoute("/api/admin/services/$serviceId/actions")({
+	server: {
+		handlers: {
+			GET: async ({
+				request,
+				params,
+			}: {
+				request: Request;
+				params: { serviceId: string };
+			}) => {
+				const user = await getAuthenticatedUser(request);
+				if (!user || user.role !== "admin") {
+					return new Response(JSON.stringify({ error: "Unauthorized" }), {
+						status: 401,
+						headers: { "Content-Type": "application/json" },
+					});
+				}
+
+				const { db } = await import("~/db");
+				const { serviceCatalogEntry } = await import("~/db/schema");
+				const { eq } = await import("drizzle-orm");
+
+				const [found] = await db
+					.select({
+						id: serviceCatalogEntry.id,
+						disabled: serviceCatalogEntry.disabled,
+					})
+					.from(serviceCatalogEntry)
+					.where(eq(serviceCatalogEntry.id, params.serviceId))
+					.limit(1);
+
+				if (!found) {
+					return new Response(JSON.stringify({ error: "Service not found" }), {
+						status: 404,
+						headers: { "Content-Type": "application/json" },
+					});
+				}
+
+				const actions = [
+					{
+						label: found.disabled ? "Enable Service" : "Disable Service",
+						endpoint: `/api/admin/services/${params.serviceId}/toggle`,
+						method: "POST",
+						variant: found.disabled ? "default" : "danger",
+					},
+					{
+						label: "Delete Service",
+						endpoint: `/api/admin/services/${params.serviceId}/delete`,
+						method: "POST",
+						variant: "danger",
+						confirm:
+							"Are you sure you want to delete this service? This action cannot be undone.",
+					},
+				];
+
+				return new Response(JSON.stringify({ actions }), {
+					status: 200,
+					headers: { "Content-Type": "application/json" },
+				});
+			},
+		},
+	},
+});
