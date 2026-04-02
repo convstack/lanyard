@@ -16,7 +16,12 @@ export const Route = createFileRoute("/api/admin/settings")({
 
 				const { db } = await import("~/db");
 				const { appSettings } = await import("~/db/schema");
-				const [s] = await db.select().from(appSettings).limit(1);
+				let s = null;
+				try {
+					[s] = await db.select().from(appSettings).limit(1);
+				} catch {
+					// Table may not exist yet
+				}
 
 				return new Response(
 					JSON.stringify({
@@ -82,7 +87,12 @@ export const Route = createFileRoute("/api/admin/settings")({
 				const { db } = await import("~/db");
 				const { appSettings } = await import("~/db/schema");
 
-				const [existing] = await db.select().from(appSettings).limit(1);
+				let existing = null;
+				try {
+					[existing] = await db.select().from(appSettings).limit(1);
+				} catch {
+					// Table may not exist yet
+				}
 
 				const updates: Record<string, unknown> = {
 					updatedAt: new Date(),
