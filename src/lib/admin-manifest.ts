@@ -1,7 +1,7 @@
 import type { UIManifest } from "~/db/schema/service-catalog";
 
 export const LANYARD_ADMIN_MANIFEST: UIManifest = {
-	name: "Administration",
+	name: "Lanyard Admin",
 	icon: "shield",
 	version: "1.0.0",
 	navigation: [
@@ -184,13 +184,43 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 					type: "form",
 					endpoint: "/api/admin/settings",
 					config: {
-						title: "Upload Settings",
+						title: "Settings (restart required for OAuth changes)",
 						fields: [
 							{
 								key: "avatarMaxSizeMb",
 								label: "Avatar Max Size (MB)",
 								type: "number",
 								placeholder: "2",
+							},
+							{
+								key: "discordClientId",
+								label: "Discord Client ID",
+								type: "text",
+							},
+							{
+								key: "discordClientSecret",
+								label: "Discord Client Secret",
+								type: "password",
+							},
+							{
+								key: "googleClientId",
+								label: "Google Client ID",
+								type: "text",
+							},
+							{
+								key: "googleClientSecret",
+								label: "Google Client Secret",
+								type: "password",
+							},
+							{
+								key: "githubClientId",
+								label: "GitHub Client ID",
+								type: "text",
+							},
+							{
+								key: "githubClientSecret",
+								label: "GitHub Client Secret",
+								type: "password",
 							},
 						],
 						submitLabel: "Save Settings",

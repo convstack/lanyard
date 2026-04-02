@@ -14,27 +14,54 @@ import { db } from "../db";
 import * as schema from "../db/schema";
 import { sendEmail } from "./email";
 
+// Load OAuth settings from DB (falls back to env vars)
+let dbSettings: {
+	discordClientId?: string | null;
+	discordClientSecret?: string | null;
+	googleClientId?: string | null;
+	googleClientSecret?: string | null;
+	githubClientId?: string | null;
+	githubClientSecret?: string | null;
+} = {};
+
+try {
+	const { appSettings } = await import("~/db/schema");
+	const [row] = await db.select().from(appSettings).limit(1);
+	if (row) dbSettings = row;
+} catch {
+	// DB not ready yet (e.g. first run before migrations)
+}
+
 function buildSocialProviders(): BetterAuthOptions["socialProviders"] {
 	const providers: BetterAuthOptions["socialProviders"] = {};
 
-	if (process.env.DISCORD_CLIENT_ID && process.env.DISCORD_CLIENT_SECRET) {
+	const discordId = dbSettings.discordClientId || process.env.DISCORD_CLIENT_ID;
+	const discordSecret =
+		dbSettings.discordClientSecret || process.env.DISCORD_CLIENT_SECRET;
+	if (discordId && discordSecret) {
 		providers.discord = {
-			clientId: process.env.DISCORD_CLIENT_ID,
-			clientSecret: process.env.DISCORD_CLIENT_SECRET,
+			clientId: discordId,
+			clientSecret: discordSecret,
 		};
 	}
 
-	if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+	const googleId = dbSettings.googleClientId || process.env.GOOGLE_CLIENT_ID;
+	const googleSecret =
+		dbSettings.googleClientSecret || process.env.GOOGLE_CLIENT_SECRET;
+	if (googleId && googleSecret) {
 		providers.google = {
-			clientId: process.env.GOOGLE_CLIENT_ID,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+			clientId: googleId,
+			clientSecret: googleSecret,
 		};
 	}
 
-	if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+	const githubId = dbSettings.githubClientId || process.env.GITHUB_CLIENT_ID;
+	const githubSecret =
+		dbSettings.githubClientSecret || process.env.GITHUB_CLIENT_SECRET;
+	if (githubId && githubSecret) {
 		providers.github = {
-			clientId: process.env.GITHUB_CLIENT_ID,
-			clientSecret: process.env.GITHUB_CLIENT_SECRET,
+			clientId: githubId,
+			clientSecret: githubSecret,
 		};
 	}
 

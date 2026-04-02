@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { clearSettingsCache } from "~/lib/get-settings";
 import { getAuthenticatedUser } from "~/lib/verify-access-token";
 
 export const Route = createFileRoute("/api/admin/settings")({
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/api/admin/settings")({
 
 				const { db } = await import("~/db");
 				const { appSettings } = await import("~/db/schema");
-				const [settings] = await db.select().from(appSettings).limit(1);
+				const [s] = await db.select().from(appSettings).limit(1);
 
 				return new Response(
 					JSON.stringify({
@@ -23,22 +24,37 @@ export const Route = createFileRoute("/api/admin/settings")({
 							{
 								key: "avatarMaxSizeMb",
 								label: "Avatar Max Size (MB)",
-								value: settings?.avatarMaxSizeMb ?? 2,
+								value: s?.avatarMaxSizeMb ?? 2,
 							},
 							{
-								key: "discordAuth",
-								label: "Discord OAuth",
-								value: Boolean(process.env.DISCORD_CLIENT_ID),
+								key: "discordClientId",
+								label: "Discord Client ID",
+								value: s?.discordClientId ?? "",
 							},
 							{
-								key: "googleAuth",
-								label: "Google OAuth",
-								value: Boolean(process.env.GOOGLE_CLIENT_ID),
+								key: "discordClientSecret",
+								label: "Discord Client Secret",
+								value: s?.discordClientSecret ?? "",
 							},
 							{
-								key: "githubAuth",
-								label: "GitHub OAuth",
-								value: Boolean(process.env.GITHUB_CLIENT_ID),
+								key: "googleClientId",
+								label: "Google Client ID",
+								value: s?.googleClientId ?? "",
+							},
+							{
+								key: "googleClientSecret",
+								label: "Google Client Secret",
+								value: s?.googleClientSecret ?? "",
+							},
+							{
+								key: "githubClientId",
+								label: "GitHub Client ID",
+								value: s?.githubClientId ?? "",
+							},
+							{
+								key: "githubClientSecret",
+								label: "GitHub Client Secret",
+								value: s?.githubClientSecret ?? "",
 							},
 							{
 								key: "emailEnabled",
@@ -47,8 +63,6 @@ export const Route = createFileRoute("/api/admin/settings")({
 									process.env.SMTP_HOST ?? process.env.RESEND_API_KEY,
 								),
 							},
-							{ key: "rateLimit", label: "Rate Limiting", value: true },
-							{ key: "twoFactor", label: "Two-Factor Auth", value: true },
 						],
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
@@ -73,9 +87,20 @@ export const Route = createFileRoute("/api/admin/settings")({
 				const updates: Record<string, unknown> = {
 					updatedAt: new Date(),
 				};
-				if (body.avatarMaxSizeMb) {
+				if (body.avatarMaxSizeMb)
 					updates.avatarMaxSizeMb = Number(body.avatarMaxSizeMb) || 2;
-				}
+				if (body.discordClientId !== undefined)
+					updates.discordClientId = body.discordClientId || null;
+				if (body.discordClientSecret !== undefined)
+					updates.discordClientSecret = body.discordClientSecret || null;
+				if (body.googleClientId !== undefined)
+					updates.googleClientId = body.googleClientId || null;
+				if (body.googleClientSecret !== undefined)
+					updates.googleClientSecret = body.googleClientSecret || null;
+				if (body.githubClientId !== undefined)
+					updates.githubClientId = body.githubClientId || null;
+				if (body.githubClientSecret !== undefined)
+					updates.githubClientSecret = body.githubClientSecret || null;
 
 				if (existing) {
 					const { eq } = await import("drizzle-orm");
@@ -88,10 +113,18 @@ export const Route = createFileRoute("/api/admin/settings")({
 					await db.insert(appSettings).values({
 						id: nanoid(),
 						avatarMaxSizeMb: Number(body.avatarMaxSizeMb) || 2,
+						discordClientId: body.discordClientId || null,
+						discordClientSecret: body.discordClientSecret || null,
+						googleClientId: body.googleClientId || null,
+						googleClientSecret: body.googleClientSecret || null,
+						githubClientId: body.githubClientId || null,
+						githubClientSecret: body.githubClientSecret || null,
 						createdAt: new Date(),
 						updatedAt: new Date(),
 					});
 				}
+
+				clearSettingsCache();
 
 				return new Response(JSON.stringify({ success: true }), {
 					status: 200,
