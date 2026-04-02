@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { auth } from "~/lib/auth";
 import { getAuthenticatedUser } from "~/lib/verify-access-token";
 
 export const Route = createFileRoute("/api/user/sessions/$sessionId/revoke")({
@@ -24,8 +23,9 @@ export const Route = createFileRoute("/api/user/sessions/$sessionId/revoke")({
 				const { session: sessionTable } = await import("~/db/schema");
 				const { and, eq } = await import("drizzle-orm");
 
-				const [targetSession] = await db
-					.select({ id: sessionTable.id, token: sessionTable.token })
+				// Verify the session belongs to this user
+				const [target] = await db
+					.select({ id: sessionTable.id })
 					.from(sessionTable)
 					.where(
 						and(
@@ -35,17 +35,17 @@ export const Route = createFileRoute("/api/user/sessions/$sessionId/revoke")({
 					)
 					.limit(1);
 
-				if (!targetSession) {
+				if (!target) {
 					return new Response(JSON.stringify({ error: "Session not found" }), {
 						status: 404,
 						headers: { "Content-Type": "application/json" },
 					});
 				}
 
-				await auth.api.revokeSession({
-					body: { token: targetSession.token },
-					headers: request.headers,
-				});
+				// Delete the session directly
+				await db
+					.delete(sessionTable)
+					.where(eq(sessionTable.id, params.sessionId));
 
 				return new Response(JSON.stringify({ success: true }), {
 					status: 200,
