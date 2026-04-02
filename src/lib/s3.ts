@@ -59,6 +59,7 @@ export async function uploadFile(
 			Key: fileKey,
 			Body: data,
 			ContentType: options.contentType,
+			ACL: "public-read",
 		}),
 	);
 
