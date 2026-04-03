@@ -81,20 +81,29 @@ export const Route = createFileRoute("/api/admin/users/$userId/actions")({
 					});
 				}
 
-				if (found.role === "admin") {
+				if (found.role !== "staff") {
 					actions.push({
-						label: "Demote to User",
-						endpoint: `/api/admin/users/${params.userId}/set-role`,
+						label: "Set as Staff",
+						endpoint: `/api/admin/users/${params.userId}/set-role?role=staff`,
 						method: "POST",
-						variant: "danger",
-						confirm: "Are you sure you want to remove admin privileges?",
+						confirm: "Set this user as staff?",
 					});
-				} else {
+				}
+				if (found.role !== "admin") {
 					actions.push({
 						label: "Promote to Admin",
-						endpoint: `/api/admin/users/${params.userId}/set-role`,
+						endpoint: `/api/admin/users/${params.userId}/set-role?role=admin`,
 						method: "POST",
 						confirm: "Grant admin privileges to this user?",
+					});
+				}
+				if (found.role !== "user") {
+					actions.push({
+						label: "Demote to User",
+						endpoint: `/api/admin/users/${params.userId}/set-role?role=user`,
+						method: "POST",
+						variant: "danger",
+						confirm: "Remove all privileges from this user?",
 					});
 				}
 

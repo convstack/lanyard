@@ -91,6 +91,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 								type: "select",
 								options: [
 									{ label: "User", value: "user" },
+									{ label: "Staff", value: "staff" },
 									{ label: "Admin", value: "admin" },
 								],
 							},
@@ -186,6 +187,11 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 								required: true,
 								placeholder: "security",
 							},
+							{
+								key: "metadata",
+								label: "Description",
+								type: "textarea",
+							},
 						],
 						submitLabel: "Create Department",
 					},
@@ -241,6 +247,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 						fields: [
 							{ key: "name", label: "Department Name", type: "text" },
 							{ key: "slug", label: "Slug", type: "text" },
+							{ key: "metadata", label: "Description", type: "textarea" },
 						],
 						submitLabel: "Save Changes",
 						method: "PUT",
@@ -487,6 +494,16 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 								label: "Restrict to Department (ID)",
 								type: "text",
 								placeholder: "Leave empty for public access",
+							},
+							{
+								key: "visibility",
+								label: "Visibility",
+								type: "select",
+								options: [
+									{ label: "Everyone", value: "all" },
+									{ label: "Staff Only", value: "staff" },
+									{ label: "Admins Only", value: "admin" },
+								],
 							},
 						],
 						submitLabel: "Register Service",

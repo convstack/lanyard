@@ -13,6 +13,7 @@ import { Route as PublicRouteImport } from './routes/_public'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OauthConsentRouteImport } from './routes/oauth/consent'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
+import { Route as ApiDepartmentsRouteImport } from './routes/api/departments'
 import { Route as PublicResetPasswordRouteImport } from './routes/_public/reset-password'
 import { Route as PublicRegisterRouteImport } from './routes/_public/register'
 import { Route as PublicLoginRouteImport } from './routes/_public/login'
@@ -30,6 +31,8 @@ import { Route as ApiServicesRegisterRouteImport } from './routes/api/services/r
 import { Route as ApiServicesHeartbeatRouteImport } from './routes/api/services/heartbeat'
 import { Route as ApiServicesCatalogRouteImport } from './routes/api/services/catalog'
 import { Route as ApiServicesServiceIdRouteImport } from './routes/api/services/$serviceId'
+import { Route as ApiDepartmentsUsersSearchRouteImport } from './routes/api/departments/users-search'
+import { Route as ApiDepartmentsSlugRouteImport } from './routes/api/departments/$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiAdminUsersRouteImport } from './routes/api/admin/users'
 import { Route as ApiAdminStatsRouteImport } from './routes/api/admin/stats'
@@ -40,6 +43,9 @@ import { Route as ApiAdminClientsRouteImport } from './routes/api/admin/clients'
 import { Route as ApiAdminBrandingRouteImport } from './routes/api/admin/branding'
 import { Route as ApiUserDepartmentsDepartmentIdRouteImport } from './routes/api/user/departments/$departmentId'
 import { Route as ApiUser2faStatusRouteImport } from './routes/api/user/2fa/status'
+import { Route as ApiDepartmentsSlugTeamsRouteImport } from './routes/api/departments/$slug/teams'
+import { Route as ApiDepartmentsSlugMembersRouteImport } from './routes/api/departments/$slug/members'
+import { Route as ApiDepartmentsSlugActionsRouteImport } from './routes/api/departments/$slug/actions'
 import { Route as ApiAdminUsersSearchRouteImport } from './routes/api/admin/users/search'
 import { Route as ApiAdminUsersCreateRouteImport } from './routes/api/admin/users/create'
 import { Route as ApiAdminUsersUserIdRouteImport } from './routes/api/admin/users/$userId'
@@ -52,6 +58,7 @@ import { Route as ApiUserSessionsSessionIdRevokeRouteImport } from './routes/api
 import { Route as ApiUserPasskeysPasskeyIdDeleteRouteImport } from './routes/api/user/passkeys/$passkeyId/delete'
 import { Route as ApiUserDepartmentsDepartmentIdTeamsRouteImport } from './routes/api/user/departments/$departmentId/teams'
 import { Route as ApiUserConnectedAppsConsentIdRevokeRouteImport } from './routes/api/user/connected-apps/$consentId/revoke'
+import { Route as ApiDepartmentsSlugTeamsTeamIdRouteImport } from './routes/api/departments/$slug/teams/$teamId'
 import { Route as ApiAdminUsersUserIdVerifyEmailRouteImport } from './routes/api/admin/users/$userId/verify-email'
 import { Route as ApiAdminUsersUserIdUnbanRouteImport } from './routes/api/admin/users/$userId/unban'
 import { Route as ApiAdminUsersUserIdSetRoleRouteImport } from './routes/api/admin/users/$userId/set-role'
@@ -65,10 +72,16 @@ import { Route as ApiAdminDepartmentsDepartmentIdMembersRouteImport } from './ro
 import { Route as ApiAdminDepartmentsDepartmentIdDeleteRouteImport } from './routes/api/admin/departments/$departmentId/delete'
 import { Route as ApiAdminDepartmentsDepartmentIdActionsRouteImport } from './routes/api/admin/departments/$departmentId/actions'
 import { Route as ApiAdminClientsClientIdActionsRouteImport } from './routes/api/admin/clients/$clientId/actions'
+import { Route as ApiDepartmentsSlugTeamsTeamIdMembersRouteImport } from './routes/api/departments/$slug/teams/$teamId/members'
+import { Route as ApiDepartmentsSlugTeamsTeamIdDeleteRouteImport } from './routes/api/departments/$slug/teams/$teamId/delete'
+import { Route as ApiDepartmentsSlugTeamsTeamIdActionsRouteImport } from './routes/api/departments/$slug/teams/$teamId/actions'
+import { Route as ApiDepartmentsSlugMembersMemberIdRoleRouteImport } from './routes/api/departments/$slug/members/$memberId/role'
+import { Route as ApiDepartmentsSlugMembersMemberIdRemoveRouteImport } from './routes/api/departments/$slug/members/$memberId/remove'
 import { Route as ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRouteImport } from './routes/api/admin/departments/$departmentId/teams/$teamId/members'
 import { Route as ApiAdminDepartmentsDepartmentIdTeamsTeamIdDeleteRouteImport } from './routes/api/admin/departments/$departmentId/teams/$teamId/delete'
 import { Route as ApiAdminDepartmentsDepartmentIdMembersMemberIdRoleRouteImport } from './routes/api/admin/departments/$departmentId/members/$memberId/role'
 import { Route as ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRouteImport } from './routes/api/admin/departments/$departmentId/members/$memberId/remove'
+import { Route as ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRouteImport } from './routes/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove'
 import { Route as ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRouteImport } from './routes/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove'
 
 const PublicRoute = PublicRouteImport.update({
@@ -88,6 +101,11 @@ const OauthConsentRoute = OauthConsentRouteImport.update({
 const ApiHealthRoute = ApiHealthRouteImport.update({
   id: '/api/health',
   path: '/api/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDepartmentsRoute = ApiDepartmentsRouteImport.update({
+  id: '/api/departments',
+  path: '/api/departments',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PublicResetPasswordRoute = PublicResetPasswordRouteImport.update({
@@ -175,6 +193,17 @@ const ApiServicesServiceIdRoute = ApiServicesServiceIdRouteImport.update({
   path: '/api/services/$serviceId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiDepartmentsUsersSearchRoute =
+  ApiDepartmentsUsersSearchRouteImport.update({
+    id: '/users-search',
+    path: '/users-search',
+    getParentRoute: () => ApiDepartmentsRoute,
+  } as any)
+const ApiDepartmentsSlugRoute = ApiDepartmentsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ApiDepartmentsRoute,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -226,6 +255,23 @@ const ApiUser2faStatusRoute = ApiUser2faStatusRouteImport.update({
   path: '/api/user/2fa/status',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiDepartmentsSlugTeamsRoute = ApiDepartmentsSlugTeamsRouteImport.update({
+  id: '/teams',
+  path: '/teams',
+  getParentRoute: () => ApiDepartmentsSlugRoute,
+} as any)
+const ApiDepartmentsSlugMembersRoute =
+  ApiDepartmentsSlugMembersRouteImport.update({
+    id: '/members',
+    path: '/members',
+    getParentRoute: () => ApiDepartmentsSlugRoute,
+  } as any)
+const ApiDepartmentsSlugActionsRoute =
+  ApiDepartmentsSlugActionsRouteImport.update({
+    id: '/actions',
+    path: '/actions',
+    getParentRoute: () => ApiDepartmentsSlugRoute,
+  } as any)
 const ApiAdminUsersSearchRoute = ApiAdminUsersSearchRouteImport.update({
   id: '/search',
   path: '/search',
@@ -292,6 +338,12 @@ const ApiUserConnectedAppsConsentIdRevokeRoute =
     id: '/$consentId/revoke',
     path: '/$consentId/revoke',
     getParentRoute: () => ApiUserConnectedAppsRoute,
+  } as any)
+const ApiDepartmentsSlugTeamsTeamIdRoute =
+  ApiDepartmentsSlugTeamsTeamIdRouteImport.update({
+    id: '/$teamId',
+    path: '/$teamId',
+    getParentRoute: () => ApiDepartmentsSlugTeamsRoute,
   } as any)
 const ApiAdminUsersUserIdVerifyEmailRoute =
   ApiAdminUsersUserIdVerifyEmailRouteImport.update({
@@ -370,6 +422,36 @@ const ApiAdminClientsClientIdActionsRoute =
     path: '/actions',
     getParentRoute: () => ApiAdminClientsClientIdRoute,
   } as any)
+const ApiDepartmentsSlugTeamsTeamIdMembersRoute =
+  ApiDepartmentsSlugTeamsTeamIdMembersRouteImport.update({
+    id: '/members',
+    path: '/members',
+    getParentRoute: () => ApiDepartmentsSlugTeamsTeamIdRoute,
+  } as any)
+const ApiDepartmentsSlugTeamsTeamIdDeleteRoute =
+  ApiDepartmentsSlugTeamsTeamIdDeleteRouteImport.update({
+    id: '/delete',
+    path: '/delete',
+    getParentRoute: () => ApiDepartmentsSlugTeamsTeamIdRoute,
+  } as any)
+const ApiDepartmentsSlugTeamsTeamIdActionsRoute =
+  ApiDepartmentsSlugTeamsTeamIdActionsRouteImport.update({
+    id: '/actions',
+    path: '/actions',
+    getParentRoute: () => ApiDepartmentsSlugTeamsTeamIdRoute,
+  } as any)
+const ApiDepartmentsSlugMembersMemberIdRoleRoute =
+  ApiDepartmentsSlugMembersMemberIdRoleRouteImport.update({
+    id: '/$memberId/role',
+    path: '/$memberId/role',
+    getParentRoute: () => ApiDepartmentsSlugMembersRoute,
+  } as any)
+const ApiDepartmentsSlugMembersMemberIdRemoveRoute =
+  ApiDepartmentsSlugMembersMemberIdRemoveRouteImport.update({
+    id: '/$memberId/remove',
+    path: '/$memberId/remove',
+    getParentRoute: () => ApiDepartmentsSlugMembersRoute,
+  } as any)
 const ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRoute =
   ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRouteImport.update({
     id: '/$teamId/members',
@@ -394,6 +476,12 @@ const ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRoute =
     path: '/$memberId/remove',
     getParentRoute: () => ApiAdminDepartmentsDepartmentIdMembersRoute,
   } as any)
+const ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRoute =
+  ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRouteImport.update({
+    id: '/$teamMemberId/remove',
+    path: '/$teamMemberId/remove',
+    getParentRoute: () => ApiDepartmentsSlugTeamsTeamIdMembersRoute,
+  } as any)
 const ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRoute =
   ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRouteImport.update(
     {
@@ -410,6 +498,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof PublicLoginRoute
   '/register': typeof PublicRegisterRoute
   '/reset-password': typeof PublicResetPasswordRoute
+  '/api/departments': typeof ApiDepartmentsRouteWithChildren
   '/api/health': typeof ApiHealthRoute
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
@@ -420,6 +509,8 @@ export interface FileRoutesByFullPath {
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/departments/$slug': typeof ApiDepartmentsSlugRouteWithChildren
+  '/api/departments/users-search': typeof ApiDepartmentsUsersSearchRoute
   '/api/services/$serviceId': typeof ApiServicesServiceIdRoute
   '/api/services/catalog': typeof ApiServicesCatalogRoute
   '/api/services/heartbeat': typeof ApiServicesHeartbeatRoute
@@ -441,6 +532,9 @@ export interface FileRoutesByFullPath {
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
   '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
   '/api/admin/users/search': typeof ApiAdminUsersSearchRoute
+  '/api/departments/$slug/actions': typeof ApiDepartmentsSlugActionsRoute
+  '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
+  '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
@@ -456,14 +550,21 @@ export interface FileRoutesByFullPath {
   '/api/admin/users/$userId/set-role': typeof ApiAdminUsersUserIdSetRoleRoute
   '/api/admin/users/$userId/unban': typeof ApiAdminUsersUserIdUnbanRoute
   '/api/admin/users/$userId/verify-email': typeof ApiAdminUsersUserIdVerifyEmailRoute
+  '/api/departments/$slug/teams/$teamId': typeof ApiDepartmentsSlugTeamsTeamIdRouteWithChildren
   '/api/user/connected-apps/$consentId/revoke': typeof ApiUserConnectedAppsConsentIdRevokeRoute
   '/api/user/departments/$departmentId/teams': typeof ApiUserDepartmentsDepartmentIdTeamsRoute
   '/api/user/passkeys/$passkeyId/delete': typeof ApiUserPasskeysPasskeyIdDeleteRoute
   '/api/user/sessions/$sessionId/revoke': typeof ApiUserSessionsSessionIdRevokeRoute
+  '/api/departments/$slug/members/$memberId/remove': typeof ApiDepartmentsSlugMembersMemberIdRemoveRoute
+  '/api/departments/$slug/members/$memberId/role': typeof ApiDepartmentsSlugMembersMemberIdRoleRoute
+  '/api/departments/$slug/teams/$teamId/actions': typeof ApiDepartmentsSlugTeamsTeamIdActionsRoute
+  '/api/departments/$slug/teams/$teamId/delete': typeof ApiDepartmentsSlugTeamsTeamIdDeleteRoute
+  '/api/departments/$slug/teams/$teamId/members': typeof ApiDepartmentsSlugTeamsTeamIdMembersRouteWithChildren
   '/api/admin/departments/$departmentId/members/$memberId/remove': typeof ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRoute
   '/api/admin/departments/$departmentId/members/$memberId/role': typeof ApiAdminDepartmentsDepartmentIdMembersMemberIdRoleRoute
   '/api/admin/departments/$departmentId/teams/$teamId/delete': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdDeleteRoute
   '/api/admin/departments/$departmentId/teams/$teamId/members': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRouteWithChildren
+  '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove': typeof ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRoute
   '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRoute
 }
 export interface FileRoutesByTo {
@@ -472,6 +573,7 @@ export interface FileRoutesByTo {
   '/login': typeof PublicLoginRoute
   '/register': typeof PublicRegisterRoute
   '/reset-password': typeof PublicResetPasswordRoute
+  '/api/departments': typeof ApiDepartmentsRouteWithChildren
   '/api/health': typeof ApiHealthRoute
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
@@ -482,6 +584,8 @@ export interface FileRoutesByTo {
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/departments/$slug': typeof ApiDepartmentsSlugRouteWithChildren
+  '/api/departments/users-search': typeof ApiDepartmentsUsersSearchRoute
   '/api/services/$serviceId': typeof ApiServicesServiceIdRoute
   '/api/services/catalog': typeof ApiServicesCatalogRoute
   '/api/services/heartbeat': typeof ApiServicesHeartbeatRoute
@@ -503,6 +607,9 @@ export interface FileRoutesByTo {
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
   '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
   '/api/admin/users/search': typeof ApiAdminUsersSearchRoute
+  '/api/departments/$slug/actions': typeof ApiDepartmentsSlugActionsRoute
+  '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
+  '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
@@ -518,14 +625,21 @@ export interface FileRoutesByTo {
   '/api/admin/users/$userId/set-role': typeof ApiAdminUsersUserIdSetRoleRoute
   '/api/admin/users/$userId/unban': typeof ApiAdminUsersUserIdUnbanRoute
   '/api/admin/users/$userId/verify-email': typeof ApiAdminUsersUserIdVerifyEmailRoute
+  '/api/departments/$slug/teams/$teamId': typeof ApiDepartmentsSlugTeamsTeamIdRouteWithChildren
   '/api/user/connected-apps/$consentId/revoke': typeof ApiUserConnectedAppsConsentIdRevokeRoute
   '/api/user/departments/$departmentId/teams': typeof ApiUserDepartmentsDepartmentIdTeamsRoute
   '/api/user/passkeys/$passkeyId/delete': typeof ApiUserPasskeysPasskeyIdDeleteRoute
   '/api/user/sessions/$sessionId/revoke': typeof ApiUserSessionsSessionIdRevokeRoute
+  '/api/departments/$slug/members/$memberId/remove': typeof ApiDepartmentsSlugMembersMemberIdRemoveRoute
+  '/api/departments/$slug/members/$memberId/role': typeof ApiDepartmentsSlugMembersMemberIdRoleRoute
+  '/api/departments/$slug/teams/$teamId/actions': typeof ApiDepartmentsSlugTeamsTeamIdActionsRoute
+  '/api/departments/$slug/teams/$teamId/delete': typeof ApiDepartmentsSlugTeamsTeamIdDeleteRoute
+  '/api/departments/$slug/teams/$teamId/members': typeof ApiDepartmentsSlugTeamsTeamIdMembersRouteWithChildren
   '/api/admin/departments/$departmentId/members/$memberId/remove': typeof ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRoute
   '/api/admin/departments/$departmentId/members/$memberId/role': typeof ApiAdminDepartmentsDepartmentIdMembersMemberIdRoleRoute
   '/api/admin/departments/$departmentId/teams/$teamId/delete': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdDeleteRoute
   '/api/admin/departments/$departmentId/teams/$teamId/members': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRouteWithChildren
+  '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove': typeof ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRoute
   '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRoute
 }
 export interface FileRoutesById {
@@ -536,6 +650,7 @@ export interface FileRoutesById {
   '/_public/login': typeof PublicLoginRoute
   '/_public/register': typeof PublicRegisterRoute
   '/_public/reset-password': typeof PublicResetPasswordRoute
+  '/api/departments': typeof ApiDepartmentsRouteWithChildren
   '/api/health': typeof ApiHealthRoute
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
@@ -546,6 +661,8 @@ export interface FileRoutesById {
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/departments/$slug': typeof ApiDepartmentsSlugRouteWithChildren
+  '/api/departments/users-search': typeof ApiDepartmentsUsersSearchRoute
   '/api/services/$serviceId': typeof ApiServicesServiceIdRoute
   '/api/services/catalog': typeof ApiServicesCatalogRoute
   '/api/services/heartbeat': typeof ApiServicesHeartbeatRoute
@@ -567,6 +684,9 @@ export interface FileRoutesById {
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
   '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
   '/api/admin/users/search': typeof ApiAdminUsersSearchRoute
+  '/api/departments/$slug/actions': typeof ApiDepartmentsSlugActionsRoute
+  '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
+  '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
@@ -582,14 +702,21 @@ export interface FileRoutesById {
   '/api/admin/users/$userId/set-role': typeof ApiAdminUsersUserIdSetRoleRoute
   '/api/admin/users/$userId/unban': typeof ApiAdminUsersUserIdUnbanRoute
   '/api/admin/users/$userId/verify-email': typeof ApiAdminUsersUserIdVerifyEmailRoute
+  '/api/departments/$slug/teams/$teamId': typeof ApiDepartmentsSlugTeamsTeamIdRouteWithChildren
   '/api/user/connected-apps/$consentId/revoke': typeof ApiUserConnectedAppsConsentIdRevokeRoute
   '/api/user/departments/$departmentId/teams': typeof ApiUserDepartmentsDepartmentIdTeamsRoute
   '/api/user/passkeys/$passkeyId/delete': typeof ApiUserPasskeysPasskeyIdDeleteRoute
   '/api/user/sessions/$sessionId/revoke': typeof ApiUserSessionsSessionIdRevokeRoute
+  '/api/departments/$slug/members/$memberId/remove': typeof ApiDepartmentsSlugMembersMemberIdRemoveRoute
+  '/api/departments/$slug/members/$memberId/role': typeof ApiDepartmentsSlugMembersMemberIdRoleRoute
+  '/api/departments/$slug/teams/$teamId/actions': typeof ApiDepartmentsSlugTeamsTeamIdActionsRoute
+  '/api/departments/$slug/teams/$teamId/delete': typeof ApiDepartmentsSlugTeamsTeamIdDeleteRoute
+  '/api/departments/$slug/teams/$teamId/members': typeof ApiDepartmentsSlugTeamsTeamIdMembersRouteWithChildren
   '/api/admin/departments/$departmentId/members/$memberId/remove': typeof ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRoute
   '/api/admin/departments/$departmentId/members/$memberId/role': typeof ApiAdminDepartmentsDepartmentIdMembersMemberIdRoleRoute
   '/api/admin/departments/$departmentId/teams/$teamId/delete': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdDeleteRoute
   '/api/admin/departments/$departmentId/teams/$teamId/members': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRouteWithChildren
+  '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove': typeof ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRoute
   '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRoute
 }
 export interface FileRouteTypes {
@@ -600,6 +727,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/api/departments'
     | '/api/health'
     | '/oauth/consent'
     | '/api/admin/branding'
@@ -610,6 +738,8 @@ export interface FileRouteTypes {
     | '/api/admin/stats'
     | '/api/admin/users'
     | '/api/auth/$'
+    | '/api/departments/$slug'
+    | '/api/departments/users-search'
     | '/api/services/$serviceId'
     | '/api/services/catalog'
     | '/api/services/heartbeat'
@@ -631,6 +761,9 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId'
     | '/api/admin/users/create'
     | '/api/admin/users/search'
+    | '/api/departments/$slug/actions'
+    | '/api/departments/$slug/members'
+    | '/api/departments/$slug/teams'
     | '/api/user/2fa/status'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
@@ -646,14 +779,21 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId/set-role'
     | '/api/admin/users/$userId/unban'
     | '/api/admin/users/$userId/verify-email'
+    | '/api/departments/$slug/teams/$teamId'
     | '/api/user/connected-apps/$consentId/revoke'
     | '/api/user/departments/$departmentId/teams'
     | '/api/user/passkeys/$passkeyId/delete'
     | '/api/user/sessions/$sessionId/revoke'
+    | '/api/departments/$slug/members/$memberId/remove'
+    | '/api/departments/$slug/members/$memberId/role'
+    | '/api/departments/$slug/teams/$teamId/actions'
+    | '/api/departments/$slug/teams/$teamId/delete'
+    | '/api/departments/$slug/teams/$teamId/members'
     | '/api/admin/departments/$departmentId/members/$memberId/remove'
     | '/api/admin/departments/$departmentId/members/$memberId/role'
     | '/api/admin/departments/$departmentId/teams/$teamId/delete'
     | '/api/admin/departments/$departmentId/teams/$teamId/members'
+    | '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove'
     | '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -662,6 +802,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/api/departments'
     | '/api/health'
     | '/oauth/consent'
     | '/api/admin/branding'
@@ -672,6 +813,8 @@ export interface FileRouteTypes {
     | '/api/admin/stats'
     | '/api/admin/users'
     | '/api/auth/$'
+    | '/api/departments/$slug'
+    | '/api/departments/users-search'
     | '/api/services/$serviceId'
     | '/api/services/catalog'
     | '/api/services/heartbeat'
@@ -693,6 +836,9 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId'
     | '/api/admin/users/create'
     | '/api/admin/users/search'
+    | '/api/departments/$slug/actions'
+    | '/api/departments/$slug/members'
+    | '/api/departments/$slug/teams'
     | '/api/user/2fa/status'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
@@ -708,14 +854,21 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId/set-role'
     | '/api/admin/users/$userId/unban'
     | '/api/admin/users/$userId/verify-email'
+    | '/api/departments/$slug/teams/$teamId'
     | '/api/user/connected-apps/$consentId/revoke'
     | '/api/user/departments/$departmentId/teams'
     | '/api/user/passkeys/$passkeyId/delete'
     | '/api/user/sessions/$sessionId/revoke'
+    | '/api/departments/$slug/members/$memberId/remove'
+    | '/api/departments/$slug/members/$memberId/role'
+    | '/api/departments/$slug/teams/$teamId/actions'
+    | '/api/departments/$slug/teams/$teamId/delete'
+    | '/api/departments/$slug/teams/$teamId/members'
     | '/api/admin/departments/$departmentId/members/$memberId/remove'
     | '/api/admin/departments/$departmentId/members/$memberId/role'
     | '/api/admin/departments/$departmentId/teams/$teamId/delete'
     | '/api/admin/departments/$departmentId/teams/$teamId/members'
+    | '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove'
     | '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove'
   id:
     | '__root__'
@@ -725,6 +878,7 @@ export interface FileRouteTypes {
     | '/_public/login'
     | '/_public/register'
     | '/_public/reset-password'
+    | '/api/departments'
     | '/api/health'
     | '/oauth/consent'
     | '/api/admin/branding'
@@ -735,6 +889,8 @@ export interface FileRouteTypes {
     | '/api/admin/stats'
     | '/api/admin/users'
     | '/api/auth/$'
+    | '/api/departments/$slug'
+    | '/api/departments/users-search'
     | '/api/services/$serviceId'
     | '/api/services/catalog'
     | '/api/services/heartbeat'
@@ -756,6 +912,9 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId'
     | '/api/admin/users/create'
     | '/api/admin/users/search'
+    | '/api/departments/$slug/actions'
+    | '/api/departments/$slug/members'
+    | '/api/departments/$slug/teams'
     | '/api/user/2fa/status'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
@@ -771,20 +930,28 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId/set-role'
     | '/api/admin/users/$userId/unban'
     | '/api/admin/users/$userId/verify-email'
+    | '/api/departments/$slug/teams/$teamId'
     | '/api/user/connected-apps/$consentId/revoke'
     | '/api/user/departments/$departmentId/teams'
     | '/api/user/passkeys/$passkeyId/delete'
     | '/api/user/sessions/$sessionId/revoke'
+    | '/api/departments/$slug/members/$memberId/remove'
+    | '/api/departments/$slug/members/$memberId/role'
+    | '/api/departments/$slug/teams/$teamId/actions'
+    | '/api/departments/$slug/teams/$teamId/delete'
+    | '/api/departments/$slug/teams/$teamId/members'
     | '/api/admin/departments/$departmentId/members/$memberId/remove'
     | '/api/admin/departments/$departmentId/members/$memberId/role'
     | '/api/admin/departments/$departmentId/teams/$teamId/delete'
     | '/api/admin/departments/$departmentId/teams/$teamId/members'
+    | '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove'
     | '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PublicRoute: typeof PublicRouteWithChildren
+  ApiDepartmentsRoute: typeof ApiDepartmentsRouteWithChildren
   ApiHealthRoute: typeof ApiHealthRoute
   OauthConsentRoute: typeof OauthConsentRoute
   ApiAdminBrandingRoute: typeof ApiAdminBrandingRoute
@@ -839,6 +1006,13 @@ declare module '@tanstack/react-router' {
       path: '/api/health'
       fullPath: '/api/health'
       preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/departments': {
+      id: '/api/departments'
+      path: '/api/departments'
+      fullPath: '/api/departments'
+      preLoaderRoute: typeof ApiDepartmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_public/reset-password': {
@@ -960,6 +1134,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiServicesServiceIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/departments/users-search': {
+      id: '/api/departments/users-search'
+      path: '/users-search'
+      fullPath: '/api/departments/users-search'
+      preLoaderRoute: typeof ApiDepartmentsUsersSearchRouteImport
+      parentRoute: typeof ApiDepartmentsRoute
+    }
+    '/api/departments/$slug': {
+      id: '/api/departments/$slug'
+      path: '/$slug'
+      fullPath: '/api/departments/$slug'
+      preLoaderRoute: typeof ApiDepartmentsSlugRouteImport
+      parentRoute: typeof ApiDepartmentsRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -1029,6 +1217,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/user/2fa/status'
       preLoaderRoute: typeof ApiUser2faStatusRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/api/departments/$slug/teams': {
+      id: '/api/departments/$slug/teams'
+      path: '/teams'
+      fullPath: '/api/departments/$slug/teams'
+      preLoaderRoute: typeof ApiDepartmentsSlugTeamsRouteImport
+      parentRoute: typeof ApiDepartmentsSlugRoute
+    }
+    '/api/departments/$slug/members': {
+      id: '/api/departments/$slug/members'
+      path: '/members'
+      fullPath: '/api/departments/$slug/members'
+      preLoaderRoute: typeof ApiDepartmentsSlugMembersRouteImport
+      parentRoute: typeof ApiDepartmentsSlugRoute
+    }
+    '/api/departments/$slug/actions': {
+      id: '/api/departments/$slug/actions'
+      path: '/actions'
+      fullPath: '/api/departments/$slug/actions'
+      preLoaderRoute: typeof ApiDepartmentsSlugActionsRouteImport
+      parentRoute: typeof ApiDepartmentsSlugRoute
     }
     '/api/admin/users/search': {
       id: '/api/admin/users/search'
@@ -1113,6 +1322,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/user/connected-apps/$consentId/revoke'
       preLoaderRoute: typeof ApiUserConnectedAppsConsentIdRevokeRouteImport
       parentRoute: typeof ApiUserConnectedAppsRoute
+    }
+    '/api/departments/$slug/teams/$teamId': {
+      id: '/api/departments/$slug/teams/$teamId'
+      path: '/$teamId'
+      fullPath: '/api/departments/$slug/teams/$teamId'
+      preLoaderRoute: typeof ApiDepartmentsSlugTeamsTeamIdRouteImport
+      parentRoute: typeof ApiDepartmentsSlugTeamsRoute
     }
     '/api/admin/users/$userId/verify-email': {
       id: '/api/admin/users/$userId/verify-email'
@@ -1205,6 +1421,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminClientsClientIdActionsRouteImport
       parentRoute: typeof ApiAdminClientsClientIdRoute
     }
+    '/api/departments/$slug/teams/$teamId/members': {
+      id: '/api/departments/$slug/teams/$teamId/members'
+      path: '/members'
+      fullPath: '/api/departments/$slug/teams/$teamId/members'
+      preLoaderRoute: typeof ApiDepartmentsSlugTeamsTeamIdMembersRouteImport
+      parentRoute: typeof ApiDepartmentsSlugTeamsTeamIdRoute
+    }
+    '/api/departments/$slug/teams/$teamId/delete': {
+      id: '/api/departments/$slug/teams/$teamId/delete'
+      path: '/delete'
+      fullPath: '/api/departments/$slug/teams/$teamId/delete'
+      preLoaderRoute: typeof ApiDepartmentsSlugTeamsTeamIdDeleteRouteImport
+      parentRoute: typeof ApiDepartmentsSlugTeamsTeamIdRoute
+    }
+    '/api/departments/$slug/teams/$teamId/actions': {
+      id: '/api/departments/$slug/teams/$teamId/actions'
+      path: '/actions'
+      fullPath: '/api/departments/$slug/teams/$teamId/actions'
+      preLoaderRoute: typeof ApiDepartmentsSlugTeamsTeamIdActionsRouteImport
+      parentRoute: typeof ApiDepartmentsSlugTeamsTeamIdRoute
+    }
+    '/api/departments/$slug/members/$memberId/role': {
+      id: '/api/departments/$slug/members/$memberId/role'
+      path: '/$memberId/role'
+      fullPath: '/api/departments/$slug/members/$memberId/role'
+      preLoaderRoute: typeof ApiDepartmentsSlugMembersMemberIdRoleRouteImport
+      parentRoute: typeof ApiDepartmentsSlugMembersRoute
+    }
+    '/api/departments/$slug/members/$memberId/remove': {
+      id: '/api/departments/$slug/members/$memberId/remove'
+      path: '/$memberId/remove'
+      fullPath: '/api/departments/$slug/members/$memberId/remove'
+      preLoaderRoute: typeof ApiDepartmentsSlugMembersMemberIdRemoveRouteImport
+      parentRoute: typeof ApiDepartmentsSlugMembersRoute
+    }
     '/api/admin/departments/$departmentId/teams/$teamId/members': {
       id: '/api/admin/departments/$departmentId/teams/$teamId/members'
       path: '/$teamId/members'
@@ -1233,6 +1484,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRouteImport
       parentRoute: typeof ApiAdminDepartmentsDepartmentIdMembersRoute
     }
+    '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove': {
+      id: '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove'
+      path: '/$teamMemberId/remove'
+      fullPath: '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove'
+      preLoaderRoute: typeof ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRouteImport
+      parentRoute: typeof ApiDepartmentsSlugTeamsTeamIdMembersRoute
+    }
     '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove': {
       id: '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove'
       path: '/$teamMemberId/remove'
@@ -1259,6 +1517,104 @@ const PublicRouteChildren: PublicRouteChildren = {
 
 const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren)
+
+interface ApiDepartmentsSlugMembersRouteChildren {
+  ApiDepartmentsSlugMembersMemberIdRemoveRoute: typeof ApiDepartmentsSlugMembersMemberIdRemoveRoute
+  ApiDepartmentsSlugMembersMemberIdRoleRoute: typeof ApiDepartmentsSlugMembersMemberIdRoleRoute
+}
+
+const ApiDepartmentsSlugMembersRouteChildren: ApiDepartmentsSlugMembersRouteChildren =
+  {
+    ApiDepartmentsSlugMembersMemberIdRemoveRoute:
+      ApiDepartmentsSlugMembersMemberIdRemoveRoute,
+    ApiDepartmentsSlugMembersMemberIdRoleRoute:
+      ApiDepartmentsSlugMembersMemberIdRoleRoute,
+  }
+
+const ApiDepartmentsSlugMembersRouteWithChildren =
+  ApiDepartmentsSlugMembersRoute._addFileChildren(
+    ApiDepartmentsSlugMembersRouteChildren,
+  )
+
+interface ApiDepartmentsSlugTeamsTeamIdMembersRouteChildren {
+  ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRoute: typeof ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRoute
+}
+
+const ApiDepartmentsSlugTeamsTeamIdMembersRouteChildren: ApiDepartmentsSlugTeamsTeamIdMembersRouteChildren =
+  {
+    ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRoute:
+      ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRoute,
+  }
+
+const ApiDepartmentsSlugTeamsTeamIdMembersRouteWithChildren =
+  ApiDepartmentsSlugTeamsTeamIdMembersRoute._addFileChildren(
+    ApiDepartmentsSlugTeamsTeamIdMembersRouteChildren,
+  )
+
+interface ApiDepartmentsSlugTeamsTeamIdRouteChildren {
+  ApiDepartmentsSlugTeamsTeamIdActionsRoute: typeof ApiDepartmentsSlugTeamsTeamIdActionsRoute
+  ApiDepartmentsSlugTeamsTeamIdDeleteRoute: typeof ApiDepartmentsSlugTeamsTeamIdDeleteRoute
+  ApiDepartmentsSlugTeamsTeamIdMembersRoute: typeof ApiDepartmentsSlugTeamsTeamIdMembersRouteWithChildren
+}
+
+const ApiDepartmentsSlugTeamsTeamIdRouteChildren: ApiDepartmentsSlugTeamsTeamIdRouteChildren =
+  {
+    ApiDepartmentsSlugTeamsTeamIdActionsRoute:
+      ApiDepartmentsSlugTeamsTeamIdActionsRoute,
+    ApiDepartmentsSlugTeamsTeamIdDeleteRoute:
+      ApiDepartmentsSlugTeamsTeamIdDeleteRoute,
+    ApiDepartmentsSlugTeamsTeamIdMembersRoute:
+      ApiDepartmentsSlugTeamsTeamIdMembersRouteWithChildren,
+  }
+
+const ApiDepartmentsSlugTeamsTeamIdRouteWithChildren =
+  ApiDepartmentsSlugTeamsTeamIdRoute._addFileChildren(
+    ApiDepartmentsSlugTeamsTeamIdRouteChildren,
+  )
+
+interface ApiDepartmentsSlugTeamsRouteChildren {
+  ApiDepartmentsSlugTeamsTeamIdRoute: typeof ApiDepartmentsSlugTeamsTeamIdRouteWithChildren
+}
+
+const ApiDepartmentsSlugTeamsRouteChildren: ApiDepartmentsSlugTeamsRouteChildren =
+  {
+    ApiDepartmentsSlugTeamsTeamIdRoute:
+      ApiDepartmentsSlugTeamsTeamIdRouteWithChildren,
+  }
+
+const ApiDepartmentsSlugTeamsRouteWithChildren =
+  ApiDepartmentsSlugTeamsRoute._addFileChildren(
+    ApiDepartmentsSlugTeamsRouteChildren,
+  )
+
+interface ApiDepartmentsSlugRouteChildren {
+  ApiDepartmentsSlugActionsRoute: typeof ApiDepartmentsSlugActionsRoute
+  ApiDepartmentsSlugMembersRoute: typeof ApiDepartmentsSlugMembersRouteWithChildren
+  ApiDepartmentsSlugTeamsRoute: typeof ApiDepartmentsSlugTeamsRouteWithChildren
+}
+
+const ApiDepartmentsSlugRouteChildren: ApiDepartmentsSlugRouteChildren = {
+  ApiDepartmentsSlugActionsRoute: ApiDepartmentsSlugActionsRoute,
+  ApiDepartmentsSlugMembersRoute: ApiDepartmentsSlugMembersRouteWithChildren,
+  ApiDepartmentsSlugTeamsRoute: ApiDepartmentsSlugTeamsRouteWithChildren,
+}
+
+const ApiDepartmentsSlugRouteWithChildren =
+  ApiDepartmentsSlugRoute._addFileChildren(ApiDepartmentsSlugRouteChildren)
+
+interface ApiDepartmentsRouteChildren {
+  ApiDepartmentsSlugRoute: typeof ApiDepartmentsSlugRouteWithChildren
+  ApiDepartmentsUsersSearchRoute: typeof ApiDepartmentsUsersSearchRoute
+}
+
+const ApiDepartmentsRouteChildren: ApiDepartmentsRouteChildren = {
+  ApiDepartmentsSlugRoute: ApiDepartmentsSlugRouteWithChildren,
+  ApiDepartmentsUsersSearchRoute: ApiDepartmentsUsersSearchRoute,
+}
+
+const ApiDepartmentsRouteWithChildren = ApiDepartmentsRoute._addFileChildren(
+  ApiDepartmentsRouteChildren,
+)
 
 interface ApiAdminClientsClientIdRouteChildren {
   ApiAdminClientsClientIdActionsRoute: typeof ApiAdminClientsClientIdActionsRoute
@@ -1508,6 +1864,7 @@ const ApiUserSessionsRouteWithChildren = ApiUserSessionsRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PublicRoute: PublicRouteWithChildren,
+  ApiDepartmentsRoute: ApiDepartmentsRouteWithChildren,
   ApiHealthRoute: ApiHealthRoute,
   OauthConsentRoute: OauthConsentRoute,
   ApiAdminBrandingRoute: ApiAdminBrandingRoute,

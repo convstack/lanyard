@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getAuthenticatedUser } from "~/lib/verify-access-token";
 
+const VALID_ROLES = ["user", "staff", "admin"];
+
 export const Route = createFileRoute("/api/admin/users/$userId/set-role")({
 	server: {
 		handlers: {
@@ -19,24 +21,21 @@ export const Route = createFileRoute("/api/admin/users/$userId/set-role")({
 					});
 				}
 
+				const url = new URL(request.url);
+				const newRole = url.searchParams.get("role");
+
+				if (!newRole || !VALID_ROLES.includes(newRole)) {
+					return new Response(
+						JSON.stringify({
+							error: "Invalid role. Must be: user, staff, or admin",
+						}),
+						{ status: 400, headers: { "Content-Type": "application/json" } },
+					);
+				}
+
 				const { db } = await import("~/db");
 				const { user } = await import("~/db/schema");
 				const { eq } = await import("drizzle-orm");
-
-				const [existing] = await db
-					.select({ id: user.id, role: user.role })
-					.from(user)
-					.where(eq(user.id, params.userId))
-					.limit(1);
-
-				if (!existing) {
-					return new Response(JSON.stringify({ error: "User not found" }), {
-						status: 404,
-						headers: { "Content-Type": "application/json" },
-					});
-				}
-
-				const newRole = existing.role === "admin" ? "user" : "admin";
 
 				await db
 					.update(user)

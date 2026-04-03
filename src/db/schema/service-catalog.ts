@@ -90,6 +90,7 @@ export const serviceCatalogEntry = pgTable("service_catalog_entry", {
 	registeredBy: text("registered_by").references(() => user.id, {
 		onDelete: "set null",
 	}),
+	visibility: text("visibility").notNull().default("all"),
 	disabled: boolean("disabled").notNull().default(false),
 	frontchannelLogoutUrl: text("frontchannel_logout_url"),
 	backchannelLogoutUrl: text("backchannel_logout_url"),

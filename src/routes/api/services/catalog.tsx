@@ -49,17 +49,25 @@ export const Route = createFileRoute("/api/services/catalog")({
 						status: serviceCatalogEntry.status,
 						lastHealthCheck: serviceCatalogEntry.lastHealthCheck,
 						lastHealthStatus: serviceCatalogEntry.lastHealthStatus,
+						visibility: serviceCatalogEntry.visibility,
 						requiredOrganizationId: serviceCatalogEntry.requiredOrganizationId,
 					})
 					.from(serviceCatalogEntry)
 					.where(and(eq(serviceCatalogEntry.disabled, false)));
 
-				const filtered =
-					user.role === "admin"
-						? services
-						: services.filter(
-								(s) => s.status !== "inactive" && s.type !== "admin",
-							);
+				// Filter by visibility based on user role
+				const userRole = user.role ?? "user";
+				const filtered = services.filter((s) => {
+					if (s.status === "inactive" && userRole !== "admin") return false;
+					if (s.visibility === "admin" && userRole !== "admin") return false;
+					if (
+						s.visibility === "staff" &&
+						userRole !== "admin" &&
+						userRole !== "staff"
+					)
+						return false;
+					return true;
+				});
 
 				// Get user's org memberships for visibility filtering
 				const userOrgIds =

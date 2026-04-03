@@ -85,6 +85,8 @@ export const Route = createFileRoute("/api/services/register")({
 
 				const requiredOrganizationId =
 					parsed.data.requiredOrganizationId || null;
+				const visibility =
+					(parsed.data as { visibility?: string }).visibility || "all";
 
 				// Insert service
 				await db.insert(serviceCatalogEntry).values({
@@ -92,6 +94,7 @@ export const Route = createFileRoute("/api/services/register")({
 					name: parsed.data.name,
 					slug: parsed.data.slug,
 					type: parsed.data.type,
+					visibility,
 					description: parsed.data.description ?? null,
 					version: parsed.data.version ?? null,
 					baseUrl: parsed.data.baseUrl,

@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { user } from "./auth";
 
 export const organization = pgTable("organization", {
@@ -7,6 +7,7 @@ export const organization = pgTable("organization", {
 	slug: text("slug").notNull().unique(),
 	logo: text("logo"),
 	metadata: text("metadata"),
+	private: boolean("private").notNull().default(false),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
@@ -41,6 +42,7 @@ export const invitation = pgTable("invitation", {
 export const team = pgTable("team", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
+	description: text("description"),
 	organizationId: text("organization_id")
 		.notNull()
 		.references(() => organization.id, { onDelete: "cascade" }),

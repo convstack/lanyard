@@ -14,7 +14,7 @@ export const Route = createFileRoute("/api/admin/departments/create")({
 				}
 
 				const body = await request.json();
-				const { name, slug } = body;
+				const { name, slug, metadata } = body;
 
 				if (!name || !slug) {
 					return new Response(
@@ -49,11 +49,17 @@ export const Route = createFileRoute("/api/admin/departments/create")({
 					id,
 					name,
 					slug,
+					metadata: metadata || null,
+					private: body.private === true || body.private === "true",
 					createdAt: new Date(),
 				});
 
 				return new Response(
-					JSON.stringify({ success: true, departmentId: id }),
+					JSON.stringify({
+						success: true,
+						departmentId: id,
+						redirect: `/departments/${slug}`,
+					}),
 					{ status: 201, headers: { "Content-Type": "application/json" } },
 				);
 			},
