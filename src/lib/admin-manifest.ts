@@ -472,9 +472,13 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 							{
 								key: "type",
 								label: "Type",
-								type: "text",
+								type: "select",
 								required: true,
-								placeholder: "service",
+								options: [
+									{ label: "Service", value: "service" },
+									{ label: "Admin", value: "admin" },
+									{ label: "User", value: "user" },
+								],
 							},
 							{ key: "description", label: "Description", type: "textarea" },
 							{

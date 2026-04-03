@@ -52,7 +52,9 @@ export const Route = createFileRoute(
 					);
 				}
 
-				const body = (await request.json()) as { note?: string };
+				const body = (await request.json().catch(() => ({}))) as {
+					note?: string;
+				};
 				const now = new Date();
 
 				await db

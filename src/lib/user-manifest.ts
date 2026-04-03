@@ -155,6 +155,11 @@ export const MY_ACCOUNT_MANIFEST: UIManifest = {
 					config: { title: "Deletion Request Status" },
 				},
 				{
+					type: "action-bar",
+					endpoint: "/api/user/data-deletion/actions",
+					config: {},
+				},
+				{
 					type: "form",
 					endpoint: "/api/user/data-deletion",
 					config: {

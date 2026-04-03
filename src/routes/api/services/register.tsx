@@ -99,7 +99,7 @@ export const Route = createFileRoute("/api/services/register")({
 					version: parsed.data.version ?? null,
 					baseUrl: parsed.data.baseUrl,
 					healthCheckPath: parsed.data.healthCheckPath,
-					uiManifest: parsed.data.uiManifest as UIManifest,
+					uiManifest: (parsed.data.uiManifest as UIManifest) ?? null,
 					apiKeyHash,
 					apiKeyPrefix,
 					registeredBy: authedUser.id,
@@ -107,7 +107,7 @@ export const Route = createFileRoute("/api/services/register")({
 				});
 
 				// Insert declared permissions
-				if (parsed.data.uiManifest.permissions.length > 0) {
+				if (parsed.data.uiManifest?.permissions?.length) {
 					await db.insert(servicePermission).values(
 						parsed.data.uiManifest.permissions.map((perm) => ({
 							id: nanoid(),

@@ -89,7 +89,7 @@ export const registerServiceSchema = z.object({
 	version: z.string().max(20).optional(),
 	baseUrl: z.string().url("Base URL must be a valid URL"),
 	healthCheckPath: z.string().max(200).default("/health"),
-	uiManifest: uiManifestSchema,
+	uiManifest: uiManifestSchema.optional(),
 	requiredOrganizationId: z.string().max(100).optional(),
 });
 

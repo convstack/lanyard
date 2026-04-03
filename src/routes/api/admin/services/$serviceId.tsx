@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getAuthenticatedUser } from "~/lib/verify-access-token";
+import {
+	getAuthenticatedUser,
+	hasAdminReadAccess,
+} from "~/lib/verify-access-token";
 
 export const Route = createFileRoute("/api/admin/services/$serviceId")({
 	server: {
@@ -12,7 +15,7 @@ export const Route = createFileRoute("/api/admin/services/$serviceId")({
 				params: { serviceId: string };
 			}) => {
 				const user = await getAuthenticatedUser(request);
-				if (!user || user.role !== "admin") {
+				if (!user || !hasAdminReadAccess(user.role)) {
 					return new Response(JSON.stringify({ error: "Unauthorized" }), {
 						status: 401,
 						headers: { "Content-Type": "application/json" },

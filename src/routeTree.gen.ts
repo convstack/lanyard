@@ -45,6 +45,7 @@ import { Route as ApiAdminClientsRouteImport } from './routes/api/admin/clients'
 import { Route as ApiAdminBrandingRouteImport } from './routes/api/admin/branding'
 import { Route as ApiUserDepartmentsDepartmentIdRouteImport } from './routes/api/user/departments/$departmentId'
 import { Route as ApiUserDataDeletionCancelRouteImport } from './routes/api/user/data-deletion/cancel'
+import { Route as ApiUserDataDeletionActionsRouteImport } from './routes/api/user/data-deletion/actions'
 import { Route as ApiUser2faStatusRouteImport } from './routes/api/user/2fa/status'
 import { Route as ApiDepartmentsSlugTeamsRouteImport } from './routes/api/departments/$slug/teams'
 import { Route as ApiDepartmentsSlugMembersRouteImport } from './routes/api/departments/$slug/members'
@@ -272,6 +273,12 @@ const ApiUserDataDeletionCancelRoute =
   ApiUserDataDeletionCancelRouteImport.update({
     id: '/cancel',
     path: '/cancel',
+    getParentRoute: () => ApiUserDataDeletionRoute,
+  } as any)
+const ApiUserDataDeletionActionsRoute =
+  ApiUserDataDeletionActionsRouteImport.update({
+    id: '/actions',
+    path: '/actions',
     getParentRoute: () => ApiUserDataDeletionRoute,
   } as any)
 const ApiUser2faStatusRoute = ApiUser2faStatusRouteImport.update({
@@ -593,6 +600,7 @@ export interface FileRoutesByFullPath {
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
+  '/api/user/data-deletion/actions': typeof ApiUserDataDeletionActionsRoute
   '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
@@ -676,6 +684,7 @@ export interface FileRoutesByTo {
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
+  '/api/user/data-deletion/actions': typeof ApiUserDataDeletionActionsRoute
   '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
@@ -761,6 +770,7 @@ export interface FileRoutesById {
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
+  '/api/user/data-deletion/actions': typeof ApiUserDataDeletionActionsRoute
   '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
@@ -846,6 +856,7 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
     | '/api/user/2fa/status'
+    | '/api/user/data-deletion/actions'
     | '/api/user/data-deletion/cancel'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
@@ -929,6 +940,7 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
     | '/api/user/2fa/status'
+    | '/api/user/data-deletion/actions'
     | '/api/user/data-deletion/cancel'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
@@ -1013,6 +1025,7 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
     | '/api/user/2fa/status'
+    | '/api/user/data-deletion/actions'
     | '/api/user/data-deletion/cancel'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
@@ -1334,6 +1347,13 @@ declare module '@tanstack/react-router' {
       path: '/cancel'
       fullPath: '/api/user/data-deletion/cancel'
       preLoaderRoute: typeof ApiUserDataDeletionCancelRouteImport
+      parentRoute: typeof ApiUserDataDeletionRoute
+    }
+    '/api/user/data-deletion/actions': {
+      id: '/api/user/data-deletion/actions'
+      path: '/actions'
+      fullPath: '/api/user/data-deletion/actions'
+      preLoaderRoute: typeof ApiUserDataDeletionActionsRouteImport
       parentRoute: typeof ApiUserDataDeletionRoute
     }
     '/api/user/2fa/status': {
@@ -2007,10 +2027,12 @@ const ApiUserConnectedAppsRouteWithChildren =
   ApiUserConnectedAppsRoute._addFileChildren(ApiUserConnectedAppsRouteChildren)
 
 interface ApiUserDataDeletionRouteChildren {
+  ApiUserDataDeletionActionsRoute: typeof ApiUserDataDeletionActionsRoute
   ApiUserDataDeletionCancelRoute: typeof ApiUserDataDeletionCancelRoute
 }
 
 const ApiUserDataDeletionRouteChildren: ApiUserDataDeletionRouteChildren = {
+  ApiUserDataDeletionActionsRoute: ApiUserDataDeletionActionsRoute,
   ApiUserDataDeletionCancelRoute: ApiUserDataDeletionCancelRoute,
 }
 
