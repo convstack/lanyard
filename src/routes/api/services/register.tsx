@@ -83,6 +83,9 @@ export const Route = createFileRoute("/api/services/register")({
 
 				const serviceId = nanoid();
 
+				const requiredOrganizationId =
+					parsed.data.requiredOrganizationId || null;
+
 				// Insert service
 				await db.insert(serviceCatalogEntry).values({
 					id: serviceId,
@@ -97,6 +100,7 @@ export const Route = createFileRoute("/api/services/register")({
 					apiKeyHash,
 					apiKeyPrefix,
 					registeredBy: authedUser.id,
+					requiredOrganizationId,
 				});
 
 				// Insert declared permissions

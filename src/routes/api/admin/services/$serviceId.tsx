@@ -70,6 +70,11 @@ export const Route = createFileRoute("/api/admin/services/$serviceId")({
 								value: found.apiKeyPrefix,
 							},
 							{ key: "createdAt", label: "Created", value: createdAtStr },
+							{
+								key: "requiredOrganizationId",
+								label: "Restricted to Department",
+								value: found.requiredOrganizationId ?? "All (no restriction)",
+							},
 						],
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },

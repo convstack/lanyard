@@ -469,6 +469,12 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 								type: "text",
 								placeholder: "/health",
 							},
+							{
+								key: "requiredOrganizationId",
+								label: "Restrict to Department (ID)",
+								type: "text",
+								placeholder: "Leave empty for public access",
+							},
 						],
 						submitLabel: "Register Service",
 					},
