@@ -70,6 +70,7 @@ import { Route as ApiAdminUsersUserIdSetRoleRouteImport } from './routes/api/adm
 import { Route as ApiAdminUsersUserIdBanRouteImport } from './routes/api/admin/users/$userId/ban'
 import { Route as ApiAdminUsersUserIdActionsRouteImport } from './routes/api/admin/users/$userId/actions'
 import { Route as ApiAdminServicesServiceIdToggleRouteImport } from './routes/api/admin/services/$serviceId/toggle'
+import { Route as ApiAdminServicesServiceIdRegenerateKeyRouteImport } from './routes/api/admin/services/$serviceId/regenerate-key'
 import { Route as ApiAdminServicesServiceIdDeleteRouteImport } from './routes/api/admin/services/$serviceId/delete'
 import { Route as ApiAdminServicesServiceIdActionsRouteImport } from './routes/api/admin/services/$serviceId/actions'
 import { Route as ApiAdminDepartmentsDepartmentIdTeamsRouteImport } from './routes/api/admin/departments/$departmentId/teams'
@@ -417,6 +418,12 @@ const ApiAdminServicesServiceIdToggleRoute =
     path: '/toggle',
     getParentRoute: () => ApiAdminServicesServiceIdRoute,
   } as any)
+const ApiAdminServicesServiceIdRegenerateKeyRoute =
+  ApiAdminServicesServiceIdRegenerateKeyRouteImport.update({
+    id: '/regenerate-key',
+    path: '/regenerate-key',
+    getParentRoute: () => ApiAdminServicesServiceIdRoute,
+  } as any)
 const ApiAdminServicesServiceIdDeleteRoute =
   ApiAdminServicesServiceIdDeleteRouteImport.update({
     id: '/delete',
@@ -614,6 +621,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/departments/$departmentId/teams': typeof ApiAdminDepartmentsDepartmentIdTeamsRouteWithChildren
   '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
   '/api/admin/services/$serviceId/delete': typeof ApiAdminServicesServiceIdDeleteRoute
+  '/api/admin/services/$serviceId/regenerate-key': typeof ApiAdminServicesServiceIdRegenerateKeyRoute
   '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
@@ -698,6 +706,7 @@ export interface FileRoutesByTo {
   '/api/admin/departments/$departmentId/teams': typeof ApiAdminDepartmentsDepartmentIdTeamsRouteWithChildren
   '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
   '/api/admin/services/$serviceId/delete': typeof ApiAdminServicesServiceIdDeleteRoute
+  '/api/admin/services/$serviceId/regenerate-key': typeof ApiAdminServicesServiceIdRegenerateKeyRoute
   '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
@@ -784,6 +793,7 @@ export interface FileRoutesById {
   '/api/admin/departments/$departmentId/teams': typeof ApiAdminDepartmentsDepartmentIdTeamsRouteWithChildren
   '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
   '/api/admin/services/$serviceId/delete': typeof ApiAdminServicesServiceIdDeleteRoute
+  '/api/admin/services/$serviceId/regenerate-key': typeof ApiAdminServicesServiceIdRegenerateKeyRoute
   '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
@@ -870,6 +880,7 @@ export interface FileRouteTypes {
     | '/api/admin/departments/$departmentId/teams'
     | '/api/admin/services/$serviceId/actions'
     | '/api/admin/services/$serviceId/delete'
+    | '/api/admin/services/$serviceId/regenerate-key'
     | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
@@ -954,6 +965,7 @@ export interface FileRouteTypes {
     | '/api/admin/departments/$departmentId/teams'
     | '/api/admin/services/$serviceId/actions'
     | '/api/admin/services/$serviceId/delete'
+    | '/api/admin/services/$serviceId/regenerate-key'
     | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
@@ -1039,6 +1051,7 @@ export interface FileRouteTypes {
     | '/api/admin/departments/$departmentId/teams'
     | '/api/admin/services/$serviceId/actions'
     | '/api/admin/services/$serviceId/delete'
+    | '/api/admin/services/$serviceId/regenerate-key'
     | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
@@ -1524,6 +1537,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminServicesServiceIdToggleRouteImport
       parentRoute: typeof ApiAdminServicesServiceIdRoute
     }
+    '/api/admin/services/$serviceId/regenerate-key': {
+      id: '/api/admin/services/$serviceId/regenerate-key'
+      path: '/regenerate-key'
+      fullPath: '/api/admin/services/$serviceId/regenerate-key'
+      preLoaderRoute: typeof ApiAdminServicesServiceIdRegenerateKeyRouteImport
+      parentRoute: typeof ApiAdminServicesServiceIdRoute
+    }
     '/api/admin/services/$serviceId/delete': {
       id: '/api/admin/services/$serviceId/delete'
       path: '/delete'
@@ -1952,6 +1972,7 @@ const ApiAdminDepartmentsRouteWithChildren =
 interface ApiAdminServicesServiceIdRouteChildren {
   ApiAdminServicesServiceIdActionsRoute: typeof ApiAdminServicesServiceIdActionsRoute
   ApiAdminServicesServiceIdDeleteRoute: typeof ApiAdminServicesServiceIdDeleteRoute
+  ApiAdminServicesServiceIdRegenerateKeyRoute: typeof ApiAdminServicesServiceIdRegenerateKeyRoute
   ApiAdminServicesServiceIdToggleRoute: typeof ApiAdminServicesServiceIdToggleRoute
 }
 
@@ -1960,6 +1981,8 @@ const ApiAdminServicesServiceIdRouteChildren: ApiAdminServicesServiceIdRouteChil
     ApiAdminServicesServiceIdActionsRoute:
       ApiAdminServicesServiceIdActionsRoute,
     ApiAdminServicesServiceIdDeleteRoute: ApiAdminServicesServiceIdDeleteRoute,
+    ApiAdminServicesServiceIdRegenerateKeyRoute:
+      ApiAdminServicesServiceIdRegenerateKeyRoute,
     ApiAdminServicesServiceIdToggleRoute: ApiAdminServicesServiceIdToggleRoute,
   }
 
