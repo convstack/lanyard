@@ -4,14 +4,18 @@ import type { UIManifest } from "~/db/schema/service-catalog";
 import { LANYARD_ADMIN_MANIFEST } from "~/lib/admin-manifest";
 import { MY_ACCOUNT_MANIFEST } from "~/lib/user-manifest";
 
-async function registerService(
-	slug: string,
-	name: string,
-	description: string,
-	type: string,
-	manifest: UIManifest,
-	baseUrl: string,
-) {
+interface ServiceOptions {
+	slug: string;
+	name: string;
+	description: string;
+	type: string;
+	manifest: UIManifest;
+	baseUrl: string;
+	backchannelLogoutUrl?: string;
+	frontchannelLogoutUrl?: string;
+}
+
+async function registerService(opts: ServiceOptions) {
 	const { db } = await import("~/db");
 	const { serviceCatalogEntry, serviceCatalogAuditLog } = await import(
 		"~/db/schema"
@@ -21,15 +25,17 @@ async function registerService(
 	const [existing] = await db
 		.select({ id: serviceCatalogEntry.id })
 		.from(serviceCatalogEntry)
-		.where(eq(serviceCatalogEntry.slug, slug))
+		.where(eq(serviceCatalogEntry.slug, opts.slug))
 		.limit(1);
 
 	if (existing) {
 		await db
 			.update(serviceCatalogEntry)
 			.set({
-				uiManifest: manifest,
-				baseUrl,
+				uiManifest: opts.manifest,
+				baseUrl: opts.baseUrl,
+				backchannelLogoutUrl: opts.backchannelLogoutUrl ?? null,
+				frontchannelLogoutUrl: opts.frontchannelLogoutUrl ?? null,
 				status: "active",
 				lastHealthCheck: new Date(),
 				lastHealthStatus: "healthy",
@@ -37,7 +43,7 @@ async function registerService(
 				updatedAt: new Date(),
 			})
 			.where(eq(serviceCatalogEntry.id, existing.id));
-		console.log(`Service "${slug}" manifest updated`);
+		console.log(`Service "${opts.slug}" manifest updated`);
 		return;
 	}
 
@@ -48,14 +54,14 @@ async function registerService(
 
 	await db.insert(serviceCatalogEntry).values({
 		id,
-		name,
-		slug,
-		type,
-		description,
+		name: opts.name,
+		slug: opts.slug,
+		type: opts.type,
+		description: opts.description,
 		version: "1.0.0",
-		baseUrl,
+		baseUrl: opts.baseUrl,
 		healthCheckPath: "/api/health",
-		uiManifest: manifest,
+		uiManifest: opts.manifest,
 		apiKeyHash,
 		apiKeyPrefix,
 		status: "active",
@@ -63,6 +69,8 @@ async function registerService(
 		lastHealthStatus: "healthy",
 		consecutiveFailures: 0,
 		disabled: false,
+		backchannelLogoutUrl: opts.backchannelLogoutUrl ?? null,
+		frontchannelLogoutUrl: opts.frontchannelLogoutUrl ?? null,
 		registeredBy: null,
 		createdAt: new Date(),
 		updatedAt: new Date(),
@@ -72,36 +80,38 @@ async function registerService(
 		id: nanoid(),
 		serviceId: id,
 		action: "registered",
-		details: { name, slug },
+		details: { name: opts.name, slug: opts.slug },
 		performedBy: "system",
 		createdAt: new Date(),
 	});
 
-	console.log(`Service "${slug}" registered in catalog`);
+	console.log(`Service "${opts.slug}" registered in catalog`);
 }
 
 export async function registerLanyardAsService() {
 	const BASE_URL =
 		process.env.LANYARD_BASE_URL ||
 		`http://localhost:${process.env.PORT || 3000}`;
+	const DASHBOARD_URL = process.env.DASHBOARD_URL || "http://localhost:4000";
 
 	try {
-		await registerService(
-			"lanyard-admin",
-			"Lanyard Administration",
-			"Identity provider and service catalog administration",
-			"admin",
-			LANYARD_ADMIN_MANIFEST,
-			BASE_URL,
-		);
-		await registerService(
-			"my-account",
-			"My Account",
-			"User profile, sessions, and account settings",
-			"user",
-			MY_ACCOUNT_MANIFEST,
-			BASE_URL,
-		);
+		await registerService({
+			slug: "lanyard-admin",
+			name: "Lanyard Administration",
+			description: "Identity provider and service catalog administration",
+			type: "admin",
+			manifest: LANYARD_ADMIN_MANIFEST,
+			baseUrl: BASE_URL,
+		});
+		await registerService({
+			slug: "my-account",
+			name: "My Account",
+			description: "User profile, sessions, and account settings",
+			type: "user",
+			manifest: MY_ACCOUNT_MANIFEST,
+			baseUrl: BASE_URL,
+			backchannelLogoutUrl: `${DASHBOARD_URL}/api/auth/backchannel-logout`,
+		});
 	} catch (error) {
 		console.warn("Failed to self-register Lanyard services:", error);
 	}

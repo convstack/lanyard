@@ -20,7 +20,7 @@ export const Route = createFileRoute("/api/admin/users/$userId/ban")({
 				}
 
 				const { db } = await import("~/db");
-				const { user } = await import("~/db/schema");
+				const { user, session: sessionTable } = await import("~/db/schema");
 				const { eq } = await import("drizzle-orm");
 
 				const [existing] = await db
@@ -36,10 +36,23 @@ export const Route = createFileRoute("/api/admin/users/$userId/ban")({
 					});
 				}
 
+				// Ban the user
 				await db
 					.update(user)
 					.set({ banned: true, updatedAt: new Date() })
 					.where(eq(user.id, params.userId));
+
+				// Revoke all their sessions
+				await db
+					.delete(sessionTable)
+					.where(eq(sessionTable.userId, params.userId));
+
+				// Revoke OAuth2 tokens and notify services
+				const { revokeUserTokens, propagateLogout } = await import(
+					"~/server/services/logout-propagation"
+				);
+				await revokeUserTokens(params.userId);
+				await propagateLogout(params.userId);
 
 				return new Response(JSON.stringify({ success: true }), {
 					status: 200,
