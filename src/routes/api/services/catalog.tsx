@@ -53,7 +53,9 @@ export const Route = createFileRoute("/api/services/catalog")({
 				const filtered =
 					user.role === "admin"
 						? services
-						: services.filter((s) => s.status !== "inactive");
+						: services.filter(
+								(s) => s.status !== "inactive" && s.type !== "admin",
+							);
 
 				return new Response(JSON.stringify(filtered), {
 					status: 200,
