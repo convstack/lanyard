@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { checkRateLimit } from "~/lib/security/rate-limiter";
-import { getAuthenticatedUser } from "~/lib/verify-access-token";
+import {
+	getAuthenticatedUser,
+	getUserOrganizationIds,
+} from "~/lib/verify-access-token";
 
 export const Route = createFileRoute("/api/services/catalog")({
 	server: {
@@ -46,6 +49,7 @@ export const Route = createFileRoute("/api/services/catalog")({
 						status: serviceCatalogEntry.status,
 						lastHealthCheck: serviceCatalogEntry.lastHealthCheck,
 						lastHealthStatus: serviceCatalogEntry.lastHealthStatus,
+						requiredOrganizationId: serviceCatalogEntry.requiredOrganizationId,
 					})
 					.from(serviceCatalogEntry)
 					.where(and(eq(serviceCatalogEntry.disabled, false)));
@@ -57,7 +61,21 @@ export const Route = createFileRoute("/api/services/catalog")({
 								(s) => s.status !== "inactive" && s.type !== "admin",
 							);
 
-				return new Response(JSON.stringify(filtered), {
+				// Get user's org memberships for visibility filtering
+				const userOrgIds =
+					user.role === "admin" ? null : await getUserOrganizationIds(user.id);
+
+				const visibleServices = filtered.filter((s) => {
+					if (!s.requiredOrganizationId) return true;
+					if (!userOrgIds) return true;
+					return userOrgIds.includes(s.requiredOrganizationId);
+				});
+
+				const response = visibleServices.map(
+					({ requiredOrganizationId: _dropped, ...rest }) => rest,
+				);
+
+				return new Response(JSON.stringify(response), {
 					status: 200,
 					headers: { "Content-Type": "application/json" },
 				});

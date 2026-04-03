@@ -1,0 +1,2 @@
+ALTER TABLE "service_catalog_entry" ADD COLUMN "required_organization_id" text;--> statement-breakpoint
+ALTER TABLE "service_catalog_entry" ADD CONSTRAINT "service_catalog_entry_649WTdvhGwGi_fkey" FOREIGN KEY ("required_organization_id") REFERENCES "organization"("id") ON DELETE SET NULL;

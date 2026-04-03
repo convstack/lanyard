@@ -93,6 +93,10 @@ export const serviceCatalogEntry = pgTable("service_catalog_entry", {
 	disabled: boolean("disabled").notNull().default(false),
 	frontchannelLogoutUrl: text("frontchannel_logout_url"),
 	backchannelLogoutUrl: text("backchannel_logout_url"),
+	requiredOrganizationId: text("required_organization_id").references(
+		() => organization.id,
+		{ onDelete: "set null" },
+	),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });

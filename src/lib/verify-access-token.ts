@@ -92,3 +92,18 @@ export async function getAuthenticatedUser(request: Request): Promise<{
 
 	return null;
 }
+
+export async function getUserOrganizationIds(
+	userId: string,
+): Promise<string[]> {
+	const { db } = await import("~/db");
+	const { member } = await import("~/db/schema");
+	const { eq } = await import("drizzle-orm");
+
+	const memberships = await db
+		.select({ organizationId: member.organizationId })
+		.from(member)
+		.where(eq(member.userId, userId));
+
+	return memberships.map((m) => m.organizationId);
+}
