@@ -34,8 +34,14 @@ async function main() {
 				.limit(1);
 
 			if (existing) {
+				// Update redirect URLs in case they changed
+				const redirectUrls = `${dashboardUrl}/callback,${dashboardUrl}/login`;
+				await db
+					.update(oauthApplication)
+					.set({ redirectUrls })
+					.where(eq(oauthApplication.clientId, clientId));
 				console.log(
-					`Dashboard OIDC client "${clientId}" already registered.\n`,
+					`Dashboard OIDC client "${clientId}" already registered (redirect URLs updated).\n`,
 				);
 			} else {
 				const { nanoid } = await import("nanoid");
@@ -47,7 +53,7 @@ async function main() {
 					name: "Convention Dashboard",
 					clientId,
 					clientSecret,
-					redirectUrls: `${dashboardUrl}/callback`,
+					redirectUrls: `${dashboardUrl}/callback,${dashboardUrl}/login`,
 					type: "confidential",
 					disabled: false,
 					createdAt: new Date(),
