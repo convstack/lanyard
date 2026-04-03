@@ -18,6 +18,7 @@ export const user = pgTable("user", {
 	banExpires: timestamp("ban_expires"),
 	// two-factor plugin
 	twoFactorEnabled: boolean("two_factor_enabled").default(false),
+	deletionPending: boolean("deletion_pending").default(false),
 });
 
 export const session = pgTable("session", {

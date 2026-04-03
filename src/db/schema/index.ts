@@ -1,5 +1,6 @@
 export * from "./auth";
 export * from "./branding";
+export * from "./data-deletion";
 export * from "./oidc";
 export * from "./organization";
 export * from "./passkey";
