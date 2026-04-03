@@ -260,10 +260,14 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 					config: {
 						fields: [
 							{
-								key: "email",
-								label: "User Email",
-								type: "email",
+								key: "userId",
+								label: "User",
+								type: "search",
 								required: true,
+								placeholder: "Search by name or email...",
+								searchEndpoint: "/api/admin/users/search",
+								searchResultLabel: "name",
+								searchResultValue: "id",
 							},
 							{
 								key: "role",
@@ -327,7 +331,16 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 						"/api/admin/departments/:departmentId/teams/:teamId/members",
 					config: {
 						fields: [
-							{ key: "userId", label: "User ID", type: "text", required: true },
+							{
+								key: "userId",
+								label: "User",
+								type: "search",
+								required: true,
+								placeholder: "Search by name or email...",
+								searchEndpoint: "/api/admin/users/search",
+								searchResultLabel: "name",
+								searchResultValue: "id",
+							},
 						],
 						submitLabel: "Add to Team",
 					},

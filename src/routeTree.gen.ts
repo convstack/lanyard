@@ -40,6 +40,7 @@ import { Route as ApiAdminClientsRouteImport } from './routes/api/admin/clients'
 import { Route as ApiAdminBrandingRouteImport } from './routes/api/admin/branding'
 import { Route as ApiUserDepartmentsDepartmentIdRouteImport } from './routes/api/user/departments/$departmentId'
 import { Route as ApiUser2faStatusRouteImport } from './routes/api/user/2fa/status'
+import { Route as ApiAdminUsersSearchRouteImport } from './routes/api/admin/users/search'
 import { Route as ApiAdminUsersCreateRouteImport } from './routes/api/admin/users/create'
 import { Route as ApiAdminUsersUserIdRouteImport } from './routes/api/admin/users/$userId'
 import { Route as ApiAdminServicesServiceIdRouteImport } from './routes/api/admin/services/$serviceId'
@@ -224,6 +225,11 @@ const ApiUser2faStatusRoute = ApiUser2faStatusRouteImport.update({
   id: '/api/user/2fa/status',
   path: '/api/user/2fa/status',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminUsersSearchRoute = ApiAdminUsersSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => ApiAdminUsersRoute,
 } as any)
 const ApiAdminUsersCreateRoute = ApiAdminUsersCreateRouteImport.update({
   id: '/create',
@@ -434,6 +440,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
   '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
+  '/api/admin/users/search': typeof ApiAdminUsersSearchRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
@@ -495,6 +502,7 @@ export interface FileRoutesByTo {
   '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
   '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
+  '/api/admin/users/search': typeof ApiAdminUsersSearchRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
@@ -558,6 +566,7 @@ export interface FileRoutesById {
   '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
   '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
+  '/api/admin/users/search': typeof ApiAdminUsersSearchRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
@@ -621,6 +630,7 @@ export interface FileRouteTypes {
     | '/api/admin/services/$serviceId'
     | '/api/admin/users/$userId'
     | '/api/admin/users/create'
+    | '/api/admin/users/search'
     | '/api/user/2fa/status'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
@@ -682,6 +692,7 @@ export interface FileRouteTypes {
     | '/api/admin/services/$serviceId'
     | '/api/admin/users/$userId'
     | '/api/admin/users/create'
+    | '/api/admin/users/search'
     | '/api/user/2fa/status'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
@@ -744,6 +755,7 @@ export interface FileRouteTypes {
     | '/api/admin/services/$serviceId'
     | '/api/admin/users/$userId'
     | '/api/admin/users/create'
+    | '/api/admin/users/search'
     | '/api/user/2fa/status'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
@@ -1017,6 +1029,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/user/2fa/status'
       preLoaderRoute: typeof ApiUser2faStatusRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/users/search': {
+      id: '/api/admin/users/search'
+      path: '/search'
+      fullPath: '/api/admin/users/search'
+      preLoaderRoute: typeof ApiAdminUsersSearchRouteImport
+      parentRoute: typeof ApiAdminUsersRoute
     }
     '/api/admin/users/create': {
       id: '/api/admin/users/create'
@@ -1410,11 +1429,13 @@ const ApiAdminUsersUserIdRouteWithChildren =
 interface ApiAdminUsersRouteChildren {
   ApiAdminUsersUserIdRoute: typeof ApiAdminUsersUserIdRouteWithChildren
   ApiAdminUsersCreateRoute: typeof ApiAdminUsersCreateRoute
+  ApiAdminUsersSearchRoute: typeof ApiAdminUsersSearchRoute
 }
 
 const ApiAdminUsersRouteChildren: ApiAdminUsersRouteChildren = {
   ApiAdminUsersUserIdRoute: ApiAdminUsersUserIdRouteWithChildren,
   ApiAdminUsersCreateRoute: ApiAdminUsersCreateRoute,
+  ApiAdminUsersSearchRoute: ApiAdminUsersSearchRoute,
 }
 
 const ApiAdminUsersRouteWithChildren = ApiAdminUsersRoute._addFileChildren(

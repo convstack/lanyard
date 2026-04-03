@@ -81,30 +81,48 @@ export const Route = createFileRoute(
 				}
 
 				const body = await request.json();
-				const { email, role } = body as { email: string; role?: string };
+				const { userId, email, role } = body as {
+					userId?: string;
+					email?: string;
+					role?: string;
+				};
 
 				const { db } = await import("~/db");
 				const { member, user: userTable } = await import("~/db/schema");
 				const { eq } = await import("drizzle-orm");
 				const { nanoid } = await import("nanoid");
 
-				const [found] = await db
-					.select({ id: userTable.id })
-					.from(userTable)
-					.where(eq(userTable.email, email))
-					.limit(1);
+				let targetUserId = userId;
 
-				if (!found) {
-					return new Response(JSON.stringify({ error: "User not found" }), {
-						status: 404,
-						headers: { "Content-Type": "application/json" },
-					});
+				if (!targetUserId && email) {
+					const [found] = await db
+						.select({ id: userTable.id })
+						.from(userTable)
+						.where(eq(userTable.email, email))
+						.limit(1);
+					if (!found) {
+						return new Response(JSON.stringify({ error: "User not found" }), {
+							status: 404,
+							headers: { "Content-Type": "application/json" },
+						});
+					}
+					targetUserId = found.id;
+				}
+
+				if (!targetUserId) {
+					return new Response(
+						JSON.stringify({ error: "User ID or email is required" }),
+						{
+							status: 400,
+							headers: { "Content-Type": "application/json" },
+						},
+					);
 				}
 
 				await db.insert(member).values({
 					id: nanoid(),
 					organizationId: params.departmentId,
-					userId: found.id,
+					userId: targetUserId,
 					role: role ?? "member",
 					createdAt: new Date(),
 				});
