@@ -520,6 +520,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			path: "/services/:serviceId",
 			title: "Service Detail",
 			layout: "default",
+			showBack: true,
 			sections: [
 				{
 					type: "detail",
@@ -530,6 +531,53 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 					type: "action-bar",
 					endpoint: "/api/admin/services/:serviceId/actions",
 					config: {},
+				},
+			],
+		},
+		{
+			path: "/services/:serviceId/edit",
+			title: "Edit Service",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "form",
+					endpoint: "/api/admin/services/:serviceId",
+					config: {
+						fields: [
+							{ key: "name", label: "Name", type: "text" },
+							{ key: "description", label: "Description", type: "textarea" },
+							{ key: "baseUrl", label: "Base URL", type: "text" },
+							{
+								key: "healthCheckPath",
+								label: "Health Check Path",
+								type: "text",
+							},
+							{ key: "version", label: "Version", type: "text" },
+							{
+								key: "type",
+								label: "Type",
+								type: "select",
+								options: [
+									{ label: "Service", value: "service" },
+									{ label: "Admin", value: "admin" },
+									{ label: "User", value: "user" },
+								],
+							},
+							{
+								key: "visibility",
+								label: "Visibility",
+								type: "select",
+								options: [
+									{ label: "Everyone", value: "all" },
+									{ label: "Staff Only", value: "staff" },
+									{ label: "Admins Only", value: "admin" },
+								],
+							},
+						],
+						submitLabel: "Save Changes",
+						method: "PUT",
+					},
 				},
 			],
 		},

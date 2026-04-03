@@ -46,6 +46,11 @@ export const Route = createFileRoute("/api/admin/services/$serviceId")({
 				return new Response(
 					JSON.stringify({
 						fields: [
+							{
+								key: "visibility",
+								label: "Visibility",
+								value: found.visibility ?? "all",
+							},
 							{ key: "name", label: "Name", value: found.name },
 							{ key: "slug", label: "Slug", value: found.slug },
 							{ key: "type", label: "Type", value: found.type },
@@ -82,6 +87,55 @@ export const Route = createFileRoute("/api/admin/services/$serviceId")({
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);
+			},
+
+			PUT: async ({
+				request,
+				params,
+			}: {
+				request: Request;
+				params: { serviceId: string };
+			}) => {
+				const user = await getAuthenticatedUser(request);
+				if (!user || user.role !== "admin") {
+					return new Response(JSON.stringify({ error: "Unauthorized" }), {
+						status: 401,
+						headers: { "Content-Type": "application/json" },
+					});
+				}
+
+				const body = await request.json();
+				const { db } = await import("~/db");
+				const { serviceCatalogEntry } = await import("~/db/schema");
+				const { eq } = await import("drizzle-orm");
+
+				const updates: Record<string, unknown> = {
+					updatedAt: new Date(),
+				};
+				if (typeof body.name === "string" && body.name)
+					updates.name = body.name;
+				if (typeof body.description === "string")
+					updates.description = body.description || null;
+				if (typeof body.baseUrl === "string" && body.baseUrl)
+					updates.baseUrl = body.baseUrl;
+				if (typeof body.healthCheckPath === "string" && body.healthCheckPath)
+					updates.healthCheckPath = body.healthCheckPath;
+				if (typeof body.version === "string")
+					updates.version = body.version || null;
+				if (typeof body.type === "string" && body.type)
+					updates.type = body.type;
+				if (typeof body.visibility === "string" && body.visibility)
+					updates.visibility = body.visibility;
+
+				await db
+					.update(serviceCatalogEntry)
+					.set(updates)
+					.where(eq(serviceCatalogEntry.id, params.serviceId));
+
+				return new Response(JSON.stringify({ success: true }), {
+					status: 200,
+					headers: { "Content-Type": "application/json" },
+				});
 			},
 		},
 	},

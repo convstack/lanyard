@@ -44,6 +44,12 @@ export const Route = createFileRoute("/api/admin/services/$serviceId/actions")({
 
 				const actions = [
 					{
+						label: "Edit Service",
+						endpoint: "",
+						method: "POST",
+						link: `/services/${params.serviceId}/edit`,
+					},
+					{
 						label: found.disabled ? "Enable Service" : "Disable Service",
 						endpoint: `/api/admin/services/${params.serviceId}/toggle`,
 						method: "POST",
