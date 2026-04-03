@@ -14,6 +14,7 @@ export const MY_ACCOUNT_MANIFEST: UIManifest = {
 			path: "/security",
 			icon: "shield-check",
 		},
+		{ label: "Data & Privacy", path: "/data-deletion", icon: "trash-2" },
 	],
 	widgets: [],
 	pages: [
@@ -140,6 +141,53 @@ export const MY_ACCOUNT_MANIFEST: UIManifest = {
 					type: "passkey-manager",
 					endpoint: "",
 					config: {},
+				},
+			],
+		},
+		{
+			path: "/data-deletion",
+			title: "Data & Privacy",
+			layout: "default",
+			sections: [
+				{
+					type: "detail",
+					endpoint: "/api/user/data-deletion",
+					config: { title: "Deletion Request Status" },
+				},
+				{
+					type: "form",
+					endpoint: "/api/user/data-deletion",
+					config: {
+						title: "Request Account Deletion",
+						fields: [
+							{
+								key: "reason",
+								label: "Why do you want to delete your account?",
+								type: "select",
+								required: true,
+								options: [
+									{
+										label: "I no longer need this account",
+										value: "no-longer-needed",
+									},
+									{ label: "Privacy concerns", value: "privacy" },
+									{ label: "I have a duplicate account", value: "duplicate" },
+									{
+										label: "I'm not satisfied with the service",
+										value: "unsatisfied",
+									},
+									{ label: "Other", value: "other" },
+								],
+							},
+							{
+								key: "additionalInfo",
+								label: "Additional information (optional)",
+								type: "textarea",
+								placeholder: "Tell us more about why you want to leave...",
+							},
+						],
+						submitLabel: "Request Account Deletion",
+					},
 				},
 			],
 		},

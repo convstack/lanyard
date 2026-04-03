@@ -25,6 +25,7 @@ import { Route as ApiUserPasswordRouteImport } from './routes/api/user/password'
 import { Route as ApiUserPasskeysRouteImport } from './routes/api/user/passkeys'
 import { Route as ApiUserOrganizationsRouteImport } from './routes/api/user/organizations'
 import { Route as ApiUserDepartmentsRouteImport } from './routes/api/user/departments'
+import { Route as ApiUserDataDeletionRouteImport } from './routes/api/user/data-deletion'
 import { Route as ApiUserConnectedAppsRouteImport } from './routes/api/user/connected-apps'
 import { Route as ApiUploadAvatarRouteImport } from './routes/api/upload/avatar'
 import { Route as ApiServicesRegisterRouteImport } from './routes/api/services/register'
@@ -39,9 +40,11 @@ import { Route as ApiAdminStatsRouteImport } from './routes/api/admin/stats'
 import { Route as ApiAdminSettingsRouteImport } from './routes/api/admin/settings'
 import { Route as ApiAdminServicesRouteImport } from './routes/api/admin/services'
 import { Route as ApiAdminDepartmentsRouteImport } from './routes/api/admin/departments'
+import { Route as ApiAdminDataDeletionRouteImport } from './routes/api/admin/data-deletion'
 import { Route as ApiAdminClientsRouteImport } from './routes/api/admin/clients'
 import { Route as ApiAdminBrandingRouteImport } from './routes/api/admin/branding'
 import { Route as ApiUserDepartmentsDepartmentIdRouteImport } from './routes/api/user/departments/$departmentId'
+import { Route as ApiUserDataDeletionCancelRouteImport } from './routes/api/user/data-deletion/cancel'
 import { Route as ApiUser2faStatusRouteImport } from './routes/api/user/2fa/status'
 import { Route as ApiDepartmentsSlugTeamsRouteImport } from './routes/api/departments/$slug/teams'
 import { Route as ApiDepartmentsSlugMembersRouteImport } from './routes/api/departments/$slug/members'
@@ -52,6 +55,7 @@ import { Route as ApiAdminUsersUserIdRouteImport } from './routes/api/admin/user
 import { Route as ApiAdminServicesServiceIdRouteImport } from './routes/api/admin/services/$serviceId'
 import { Route as ApiAdminDepartmentsCreateRouteImport } from './routes/api/admin/departments/create'
 import { Route as ApiAdminDepartmentsDepartmentIdRouteImport } from './routes/api/admin/departments/$departmentId'
+import { Route as ApiAdminDataDeletionRequestIdRouteImport } from './routes/api/admin/data-deletion/$requestId'
 import { Route as ApiAdminClientsRegisterRouteImport } from './routes/api/admin/clients/register'
 import { Route as ApiAdminClientsClientIdRouteImport } from './routes/api/admin/clients/$clientId'
 import { Route as ApiUserSessionsSessionIdRevokeRouteImport } from './routes/api/user/sessions/$sessionId/revoke'
@@ -64,13 +68,6 @@ import { Route as ApiAdminUsersUserIdUnbanRouteImport } from './routes/api/admin
 import { Route as ApiAdminUsersUserIdSetRoleRouteImport } from './routes/api/admin/users/$userId/set-role'
 import { Route as ApiAdminUsersUserIdBanRouteImport } from './routes/api/admin/users/$userId/ban'
 import { Route as ApiAdminUsersUserIdActionsRouteImport } from './routes/api/admin/users/$userId/actions'
-import { Route as ApiAdminDataDeletionRouteImport } from './routes/api/admin/data-deletion'
-import { Route as ApiAdminDataDeletionRequestIdRouteImport } from './routes/api/admin/data-deletion/$requestId'
-import { Route as ApiAdminDataDeletionRequestIdAcceptRouteImport } from './routes/api/admin/data-deletion/$requestId/accept'
-import { Route as ApiAdminDataDeletionRequestIdDeclineRouteImport } from './routes/api/admin/data-deletion/$requestId/decline'
-import { Route as ApiAdminDataDeletionRequestIdActionsRouteImport } from './routes/api/admin/data-deletion/$requestId/actions'
-import { Route as ApiUserDataDeletionRouteImport } from './routes/api/user/data-deletion'
-import { Route as ApiUserDataDeletionCancelRouteImport } from './routes/api/user/data-deletion/cancel'
 import { Route as ApiAdminServicesServiceIdToggleRouteImport } from './routes/api/admin/services/$serviceId/toggle'
 import { Route as ApiAdminServicesServiceIdDeleteRouteImport } from './routes/api/admin/services/$serviceId/delete'
 import { Route as ApiAdminServicesServiceIdActionsRouteImport } from './routes/api/admin/services/$serviceId/actions'
@@ -78,6 +75,10 @@ import { Route as ApiAdminDepartmentsDepartmentIdTeamsRouteImport } from './rout
 import { Route as ApiAdminDepartmentsDepartmentIdMembersRouteImport } from './routes/api/admin/departments/$departmentId/members'
 import { Route as ApiAdminDepartmentsDepartmentIdDeleteRouteImport } from './routes/api/admin/departments/$departmentId/delete'
 import { Route as ApiAdminDepartmentsDepartmentIdActionsRouteImport } from './routes/api/admin/departments/$departmentId/actions'
+import { Route as ApiAdminDataDeletionRequestIdExecuteRouteImport } from './routes/api/admin/data-deletion/$requestId/execute'
+import { Route as ApiAdminDataDeletionRequestIdDeclineRouteImport } from './routes/api/admin/data-deletion/$requestId/decline'
+import { Route as ApiAdminDataDeletionRequestIdActionsRouteImport } from './routes/api/admin/data-deletion/$requestId/actions'
+import { Route as ApiAdminDataDeletionRequestIdAcceptRouteImport } from './routes/api/admin/data-deletion/$requestId/accept'
 import { Route as ApiAdminClientsClientIdActionsRouteImport } from './routes/api/admin/clients/$clientId/actions'
 import { Route as ApiDepartmentsSlugTeamsTeamIdMembersRouteImport } from './routes/api/departments/$slug/teams/$teamId/members'
 import { Route as ApiDepartmentsSlugTeamsTeamIdDeleteRouteImport } from './routes/api/departments/$slug/teams/$teamId/delete'
@@ -170,6 +171,11 @@ const ApiUserDepartmentsRoute = ApiUserDepartmentsRouteImport.update({
   path: '/api/user/departments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiUserDataDeletionRoute = ApiUserDataDeletionRouteImport.update({
+  id: '/api/user/data-deletion',
+  path: '/api/user/data-deletion',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiUserConnectedAppsRoute = ApiUserConnectedAppsRouteImport.update({
   id: '/api/user/connected-apps',
   path: '/api/user/connected-apps',
@@ -241,6 +247,11 @@ const ApiAdminDepartmentsRoute = ApiAdminDepartmentsRouteImport.update({
   path: '/api/admin/departments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminDataDeletionRoute = ApiAdminDataDeletionRouteImport.update({
+  id: '/api/admin/data-deletion',
+  path: '/api/admin/data-deletion',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminClientsRoute = ApiAdminClientsRouteImport.update({
   id: '/api/admin/clients',
   path: '/api/admin/clients',
@@ -256,6 +267,12 @@ const ApiUserDepartmentsDepartmentIdRoute =
     id: '/$departmentId',
     path: '/$departmentId',
     getParentRoute: () => ApiUserDepartmentsRoute,
+  } as any)
+const ApiUserDataDeletionCancelRoute =
+  ApiUserDataDeletionCancelRouteImport.update({
+    id: '/cancel',
+    path: '/cancel',
+    getParentRoute: () => ApiUserDataDeletionRoute,
   } as any)
 const ApiUser2faStatusRoute = ApiUser2faStatusRouteImport.update({
   id: '/api/user/2fa/status',
@@ -311,6 +328,12 @@ const ApiAdminDepartmentsDepartmentIdRoute =
     id: '/$departmentId',
     path: '/$departmentId',
     getParentRoute: () => ApiAdminDepartmentsRoute,
+  } as any)
+const ApiAdminDataDeletionRequestIdRoute =
+  ApiAdminDataDeletionRequestIdRouteImport.update({
+    id: '/$requestId',
+    path: '/$requestId',
+    getParentRoute: () => ApiAdminDataDeletionRoute,
   } as any)
 const ApiAdminClientsRegisterRoute = ApiAdminClientsRegisterRouteImport.update({
   id: '/register',
@@ -381,46 +404,6 @@ const ApiAdminUsersUserIdActionsRoute =
     path: '/actions',
     getParentRoute: () => ApiAdminUsersUserIdRoute,
   } as any)
-const ApiAdminDataDeletionRoute = ApiAdminDataDeletionRouteImport.update({
-  id: '/api/admin/data-deletion',
-  path: '/api/admin/data-deletion',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAdminDataDeletionRequestIdRoute =
-  ApiAdminDataDeletionRequestIdRouteImport.update({
-    id: '/$requestId',
-    path: '/$requestId',
-    getParentRoute: () => ApiAdminDataDeletionRoute,
-  } as any)
-const ApiAdminDataDeletionRequestIdAcceptRoute =
-  ApiAdminDataDeletionRequestIdAcceptRouteImport.update({
-    id: '/accept',
-    path: '/accept',
-    getParentRoute: () => ApiAdminDataDeletionRequestIdRoute,
-  } as any)
-const ApiAdminDataDeletionRequestIdDeclineRoute =
-  ApiAdminDataDeletionRequestIdDeclineRouteImport.update({
-    id: '/decline',
-    path: '/decline',
-    getParentRoute: () => ApiAdminDataDeletionRequestIdRoute,
-  } as any)
-const ApiAdminDataDeletionRequestIdActionsRoute =
-  ApiAdminDataDeletionRequestIdActionsRouteImport.update({
-    id: '/actions',
-    path: '/actions',
-    getParentRoute: () => ApiAdminDataDeletionRequestIdRoute,
-  } as any)
-const ApiUserDataDeletionRoute = ApiUserDataDeletionRouteImport.update({
-  id: '/api/user/data-deletion',
-  path: '/api/user/data-deletion',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiUserDataDeletionCancelRoute =
-  ApiUserDataDeletionCancelRouteImport.update({
-    id: '/cancel',
-    path: '/cancel',
-    getParentRoute: () => ApiUserDataDeletionRoute,
-  } as any)
 const ApiAdminServicesServiceIdToggleRoute =
   ApiAdminServicesServiceIdToggleRouteImport.update({
     id: '/toggle',
@@ -462,6 +445,30 @@ const ApiAdminDepartmentsDepartmentIdActionsRoute =
     id: '/actions',
     path: '/actions',
     getParentRoute: () => ApiAdminDepartmentsDepartmentIdRoute,
+  } as any)
+const ApiAdminDataDeletionRequestIdExecuteRoute =
+  ApiAdminDataDeletionRequestIdExecuteRouteImport.update({
+    id: '/execute',
+    path: '/execute',
+    getParentRoute: () => ApiAdminDataDeletionRequestIdRoute,
+  } as any)
+const ApiAdminDataDeletionRequestIdDeclineRoute =
+  ApiAdminDataDeletionRequestIdDeclineRouteImport.update({
+    id: '/decline',
+    path: '/decline',
+    getParentRoute: () => ApiAdminDataDeletionRequestIdRoute,
+  } as any)
+const ApiAdminDataDeletionRequestIdActionsRoute =
+  ApiAdminDataDeletionRequestIdActionsRouteImport.update({
+    id: '/actions',
+    path: '/actions',
+    getParentRoute: () => ApiAdminDataDeletionRequestIdRoute,
+  } as any)
+const ApiAdminDataDeletionRequestIdAcceptRoute =
+  ApiAdminDataDeletionRequestIdAcceptRouteImport.update({
+    id: '/accept',
+    path: '/accept',
+    getParentRoute: () => ApiAdminDataDeletionRequestIdRoute,
   } as any)
 const ApiAdminClientsClientIdActionsRoute =
   ApiAdminClientsClientIdActionsRouteImport.update({
@@ -550,6 +557,7 @@ export interface FileRoutesByFullPath {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
+  '/api/admin/data-deletion': typeof ApiAdminDataDeletionRouteWithChildren
   '/api/admin/departments': typeof ApiAdminDepartmentsRouteWithChildren
   '/api/admin/services': typeof ApiAdminServicesRouteWithChildren
   '/api/admin/settings': typeof ApiAdminSettingsRoute
@@ -564,6 +572,7 @@ export interface FileRoutesByFullPath {
   '/api/services/register': typeof ApiServicesRegisterRoute
   '/api/upload/avatar': typeof ApiUploadAvatarRoute
   '/api/user/connected-apps': typeof ApiUserConnectedAppsRouteWithChildren
+  '/api/user/data-deletion': typeof ApiUserDataDeletionRouteWithChildren
   '/api/user/departments': typeof ApiUserDepartmentsRouteWithChildren
   '/api/user/organizations': typeof ApiUserOrganizationsRoute
   '/api/user/passkeys': typeof ApiUserPasskeysRouteWithChildren
@@ -573,6 +582,7 @@ export interface FileRoutesByFullPath {
   '/api/user/sessions': typeof ApiUserSessionsRouteWithChildren
   '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRouteWithChildren
   '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
+  '/api/admin/data-deletion/$requestId': typeof ApiAdminDataDeletionRequestIdRouteWithChildren
   '/api/admin/departments/$departmentId': typeof ApiAdminDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/departments/create': typeof ApiAdminDepartmentsCreateRoute
   '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
@@ -583,8 +593,13 @@ export interface FileRoutesByFullPath {
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
+  '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
+  '/api/admin/data-deletion/$requestId/accept': typeof ApiAdminDataDeletionRequestIdAcceptRoute
+  '/api/admin/data-deletion/$requestId/actions': typeof ApiAdminDataDeletionRequestIdActionsRoute
+  '/api/admin/data-deletion/$requestId/decline': typeof ApiAdminDataDeletionRequestIdDeclineRoute
+  '/api/admin/data-deletion/$requestId/execute': typeof ApiAdminDataDeletionRequestIdExecuteRoute
   '/api/admin/departments/$departmentId/actions': typeof ApiAdminDepartmentsDepartmentIdActionsRoute
   '/api/admin/departments/$departmentId/delete': typeof ApiAdminDepartmentsDepartmentIdDeleteRoute
   '/api/admin/departments/$departmentId/members': typeof ApiAdminDepartmentsDepartmentIdMembersRouteWithChildren
@@ -613,13 +628,6 @@ export interface FileRoutesByFullPath {
   '/api/admin/departments/$departmentId/teams/$teamId/members': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRouteWithChildren
   '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove': typeof ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRoute
   '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRoute
-  '/api/admin/data-deletion': typeof ApiAdminDataDeletionRouteWithChildren
-  '/api/admin/data-deletion/$requestId': typeof ApiAdminDataDeletionRequestIdRouteWithChildren
-  '/api/admin/data-deletion/$requestId/accept': typeof ApiAdminDataDeletionRequestIdAcceptRoute
-  '/api/admin/data-deletion/$requestId/decline': typeof ApiAdminDataDeletionRequestIdDeclineRoute
-  '/api/admin/data-deletion/$requestId/actions': typeof ApiAdminDataDeletionRequestIdActionsRoute
-  '/api/user/data-deletion': typeof ApiUserDataDeletionRouteWithChildren
-  '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -632,6 +640,7 @@ export interface FileRoutesByTo {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
+  '/api/admin/data-deletion': typeof ApiAdminDataDeletionRouteWithChildren
   '/api/admin/departments': typeof ApiAdminDepartmentsRouteWithChildren
   '/api/admin/services': typeof ApiAdminServicesRouteWithChildren
   '/api/admin/settings': typeof ApiAdminSettingsRoute
@@ -646,6 +655,7 @@ export interface FileRoutesByTo {
   '/api/services/register': typeof ApiServicesRegisterRoute
   '/api/upload/avatar': typeof ApiUploadAvatarRoute
   '/api/user/connected-apps': typeof ApiUserConnectedAppsRouteWithChildren
+  '/api/user/data-deletion': typeof ApiUserDataDeletionRouteWithChildren
   '/api/user/departments': typeof ApiUserDepartmentsRouteWithChildren
   '/api/user/organizations': typeof ApiUserOrganizationsRoute
   '/api/user/passkeys': typeof ApiUserPasskeysRouteWithChildren
@@ -655,6 +665,7 @@ export interface FileRoutesByTo {
   '/api/user/sessions': typeof ApiUserSessionsRouteWithChildren
   '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRouteWithChildren
   '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
+  '/api/admin/data-deletion/$requestId': typeof ApiAdminDataDeletionRequestIdRouteWithChildren
   '/api/admin/departments/$departmentId': typeof ApiAdminDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/departments/create': typeof ApiAdminDepartmentsCreateRoute
   '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
@@ -665,8 +676,13 @@ export interface FileRoutesByTo {
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
+  '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
+  '/api/admin/data-deletion/$requestId/accept': typeof ApiAdminDataDeletionRequestIdAcceptRoute
+  '/api/admin/data-deletion/$requestId/actions': typeof ApiAdminDataDeletionRequestIdActionsRoute
+  '/api/admin/data-deletion/$requestId/decline': typeof ApiAdminDataDeletionRequestIdDeclineRoute
+  '/api/admin/data-deletion/$requestId/execute': typeof ApiAdminDataDeletionRequestIdExecuteRoute
   '/api/admin/departments/$departmentId/actions': typeof ApiAdminDepartmentsDepartmentIdActionsRoute
   '/api/admin/departments/$departmentId/delete': typeof ApiAdminDepartmentsDepartmentIdDeleteRoute
   '/api/admin/departments/$departmentId/members': typeof ApiAdminDepartmentsDepartmentIdMembersRouteWithChildren
@@ -695,13 +711,6 @@ export interface FileRoutesByTo {
   '/api/admin/departments/$departmentId/teams/$teamId/members': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRouteWithChildren
   '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove': typeof ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRoute
   '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRoute
-  '/api/admin/data-deletion': typeof ApiAdminDataDeletionRouteWithChildren
-  '/api/admin/data-deletion/$requestId': typeof ApiAdminDataDeletionRequestIdRouteWithChildren
-  '/api/admin/data-deletion/$requestId/accept': typeof ApiAdminDataDeletionRequestIdAcceptRoute
-  '/api/admin/data-deletion/$requestId/decline': typeof ApiAdminDataDeletionRequestIdDeclineRoute
-  '/api/admin/data-deletion/$requestId/actions': typeof ApiAdminDataDeletionRequestIdActionsRoute
-  '/api/user/data-deletion': typeof ApiUserDataDeletionRouteWithChildren
-  '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -716,6 +725,7 @@ export interface FileRoutesById {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
+  '/api/admin/data-deletion': typeof ApiAdminDataDeletionRouteWithChildren
   '/api/admin/departments': typeof ApiAdminDepartmentsRouteWithChildren
   '/api/admin/services': typeof ApiAdminServicesRouteWithChildren
   '/api/admin/settings': typeof ApiAdminSettingsRoute
@@ -730,6 +740,7 @@ export interface FileRoutesById {
   '/api/services/register': typeof ApiServicesRegisterRoute
   '/api/upload/avatar': typeof ApiUploadAvatarRoute
   '/api/user/connected-apps': typeof ApiUserConnectedAppsRouteWithChildren
+  '/api/user/data-deletion': typeof ApiUserDataDeletionRouteWithChildren
   '/api/user/departments': typeof ApiUserDepartmentsRouteWithChildren
   '/api/user/organizations': typeof ApiUserOrganizationsRoute
   '/api/user/passkeys': typeof ApiUserPasskeysRouteWithChildren
@@ -739,6 +750,7 @@ export interface FileRoutesById {
   '/api/user/sessions': typeof ApiUserSessionsRouteWithChildren
   '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRouteWithChildren
   '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
+  '/api/admin/data-deletion/$requestId': typeof ApiAdminDataDeletionRequestIdRouteWithChildren
   '/api/admin/departments/$departmentId': typeof ApiAdminDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/departments/create': typeof ApiAdminDepartmentsCreateRoute
   '/api/admin/services/$serviceId': typeof ApiAdminServicesServiceIdRouteWithChildren
@@ -749,8 +761,13 @@ export interface FileRoutesById {
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
+  '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
   '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
+  '/api/admin/data-deletion/$requestId/accept': typeof ApiAdminDataDeletionRequestIdAcceptRoute
+  '/api/admin/data-deletion/$requestId/actions': typeof ApiAdminDataDeletionRequestIdActionsRoute
+  '/api/admin/data-deletion/$requestId/decline': typeof ApiAdminDataDeletionRequestIdDeclineRoute
+  '/api/admin/data-deletion/$requestId/execute': typeof ApiAdminDataDeletionRequestIdExecuteRoute
   '/api/admin/departments/$departmentId/actions': typeof ApiAdminDepartmentsDepartmentIdActionsRoute
   '/api/admin/departments/$departmentId/delete': typeof ApiAdminDepartmentsDepartmentIdDeleteRoute
   '/api/admin/departments/$departmentId/members': typeof ApiAdminDepartmentsDepartmentIdMembersRouteWithChildren
@@ -779,13 +796,6 @@ export interface FileRoutesById {
   '/api/admin/departments/$departmentId/teams/$teamId/members': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRouteWithChildren
   '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove': typeof ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRoute
   '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove': typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRoute
-  '/api/admin/data-deletion': typeof ApiAdminDataDeletionRouteWithChildren
-  '/api/admin/data-deletion/$requestId': typeof ApiAdminDataDeletionRequestIdRouteWithChildren
-  '/api/admin/data-deletion/$requestId/accept': typeof ApiAdminDataDeletionRequestIdAcceptRoute
-  '/api/admin/data-deletion/$requestId/decline': typeof ApiAdminDataDeletionRequestIdDeclineRoute
-  '/api/admin/data-deletion/$requestId/actions': typeof ApiAdminDataDeletionRequestIdActionsRoute
-  '/api/user/data-deletion': typeof ApiUserDataDeletionRouteWithChildren
-  '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -800,6 +810,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/api/admin/branding'
     | '/api/admin/clients'
+    | '/api/admin/data-deletion'
     | '/api/admin/departments'
     | '/api/admin/services'
     | '/api/admin/settings'
@@ -814,6 +825,7 @@ export interface FileRouteTypes {
     | '/api/services/register'
     | '/api/upload/avatar'
     | '/api/user/connected-apps'
+    | '/api/user/data-deletion'
     | '/api/user/departments'
     | '/api/user/organizations'
     | '/api/user/passkeys'
@@ -823,6 +835,7 @@ export interface FileRouteTypes {
     | '/api/user/sessions'
     | '/api/admin/clients/$clientId'
     | '/api/admin/clients/register'
+    | '/api/admin/data-deletion/$requestId'
     | '/api/admin/departments/$departmentId'
     | '/api/admin/departments/create'
     | '/api/admin/services/$serviceId'
@@ -833,8 +846,13 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
     | '/api/user/2fa/status'
+    | '/api/user/data-deletion/cancel'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
+    | '/api/admin/data-deletion/$requestId/accept'
+    | '/api/admin/data-deletion/$requestId/actions'
+    | '/api/admin/data-deletion/$requestId/decline'
+    | '/api/admin/data-deletion/$requestId/execute'
     | '/api/admin/departments/$departmentId/actions'
     | '/api/admin/departments/$departmentId/delete'
     | '/api/admin/departments/$departmentId/members'
@@ -863,13 +881,6 @@ export interface FileRouteTypes {
     | '/api/admin/departments/$departmentId/teams/$teamId/members'
     | '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove'
     | '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove'
-    | '/api/admin/data-deletion'
-    | '/api/admin/data-deletion/$requestId'
-    | '/api/admin/data-deletion/$requestId/accept'
-    | '/api/admin/data-deletion/$requestId/decline'
-    | '/api/admin/data-deletion/$requestId/actions'
-    | '/api/user/data-deletion'
-    | '/api/user/data-deletion/cancel'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -882,6 +893,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/api/admin/branding'
     | '/api/admin/clients'
+    | '/api/admin/data-deletion'
     | '/api/admin/departments'
     | '/api/admin/services'
     | '/api/admin/settings'
@@ -896,6 +908,7 @@ export interface FileRouteTypes {
     | '/api/services/register'
     | '/api/upload/avatar'
     | '/api/user/connected-apps'
+    | '/api/user/data-deletion'
     | '/api/user/departments'
     | '/api/user/organizations'
     | '/api/user/passkeys'
@@ -905,6 +918,7 @@ export interface FileRouteTypes {
     | '/api/user/sessions'
     | '/api/admin/clients/$clientId'
     | '/api/admin/clients/register'
+    | '/api/admin/data-deletion/$requestId'
     | '/api/admin/departments/$departmentId'
     | '/api/admin/departments/create'
     | '/api/admin/services/$serviceId'
@@ -915,8 +929,13 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
     | '/api/user/2fa/status'
+    | '/api/user/data-deletion/cancel'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
+    | '/api/admin/data-deletion/$requestId/accept'
+    | '/api/admin/data-deletion/$requestId/actions'
+    | '/api/admin/data-deletion/$requestId/decline'
+    | '/api/admin/data-deletion/$requestId/execute'
     | '/api/admin/departments/$departmentId/actions'
     | '/api/admin/departments/$departmentId/delete'
     | '/api/admin/departments/$departmentId/members'
@@ -945,13 +964,6 @@ export interface FileRouteTypes {
     | '/api/admin/departments/$departmentId/teams/$teamId/members'
     | '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove'
     | '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove'
-    | '/api/admin/data-deletion'
-    | '/api/admin/data-deletion/$requestId'
-    | '/api/admin/data-deletion/$requestId/accept'
-    | '/api/admin/data-deletion/$requestId/decline'
-    | '/api/admin/data-deletion/$requestId/actions'
-    | '/api/user/data-deletion'
-    | '/api/user/data-deletion/cancel'
   id:
     | '__root__'
     | '/'
@@ -965,6 +977,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/api/admin/branding'
     | '/api/admin/clients'
+    | '/api/admin/data-deletion'
     | '/api/admin/departments'
     | '/api/admin/services'
     | '/api/admin/settings'
@@ -979,6 +992,7 @@ export interface FileRouteTypes {
     | '/api/services/register'
     | '/api/upload/avatar'
     | '/api/user/connected-apps'
+    | '/api/user/data-deletion'
     | '/api/user/departments'
     | '/api/user/organizations'
     | '/api/user/passkeys'
@@ -988,6 +1002,7 @@ export interface FileRouteTypes {
     | '/api/user/sessions'
     | '/api/admin/clients/$clientId'
     | '/api/admin/clients/register'
+    | '/api/admin/data-deletion/$requestId'
     | '/api/admin/departments/$departmentId'
     | '/api/admin/departments/create'
     | '/api/admin/services/$serviceId'
@@ -998,8 +1013,13 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
     | '/api/user/2fa/status'
+    | '/api/user/data-deletion/cancel'
     | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
+    | '/api/admin/data-deletion/$requestId/accept'
+    | '/api/admin/data-deletion/$requestId/actions'
+    | '/api/admin/data-deletion/$requestId/decline'
+    | '/api/admin/data-deletion/$requestId/execute'
     | '/api/admin/departments/$departmentId/actions'
     | '/api/admin/departments/$departmentId/delete'
     | '/api/admin/departments/$departmentId/members'
@@ -1028,13 +1048,6 @@ export interface FileRouteTypes {
     | '/api/admin/departments/$departmentId/teams/$teamId/members'
     | '/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove'
     | '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove'
-    | '/api/admin/data-deletion'
-    | '/api/admin/data-deletion/$requestId'
-    | '/api/admin/data-deletion/$requestId/accept'
-    | '/api/admin/data-deletion/$requestId/decline'
-    | '/api/admin/data-deletion/$requestId/actions'
-    | '/api/user/data-deletion'
-    | '/api/user/data-deletion/cancel'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1045,6 +1058,7 @@ export interface RootRouteChildren {
   OauthConsentRoute: typeof OauthConsentRoute
   ApiAdminBrandingRoute: typeof ApiAdminBrandingRoute
   ApiAdminClientsRoute: typeof ApiAdminClientsRouteWithChildren
+  ApiAdminDataDeletionRoute: typeof ApiAdminDataDeletionRouteWithChildren
   ApiAdminDepartmentsRoute: typeof ApiAdminDepartmentsRouteWithChildren
   ApiAdminServicesRoute: typeof ApiAdminServicesRouteWithChildren
   ApiAdminSettingsRoute: typeof ApiAdminSettingsRoute
@@ -1057,6 +1071,7 @@ export interface RootRouteChildren {
   ApiServicesRegisterRoute: typeof ApiServicesRegisterRoute
   ApiUploadAvatarRoute: typeof ApiUploadAvatarRoute
   ApiUserConnectedAppsRoute: typeof ApiUserConnectedAppsRouteWithChildren
+  ApiUserDataDeletionRoute: typeof ApiUserDataDeletionRouteWithChildren
   ApiUserDepartmentsRoute: typeof ApiUserDepartmentsRouteWithChildren
   ApiUserOrganizationsRoute: typeof ApiUserOrganizationsRoute
   ApiUserPasskeysRoute: typeof ApiUserPasskeysRouteWithChildren
@@ -1065,8 +1080,6 @@ export interface RootRouteChildren {
   ApiUserSecurityStatusRoute: typeof ApiUserSecurityStatusRoute
   ApiUserSessionsRoute: typeof ApiUserSessionsRouteWithChildren
   ApiUser2faStatusRoute: typeof ApiUser2faStatusRoute
-  ApiAdminDataDeletionRoute: typeof ApiAdminDataDeletionRouteWithChildren
-  ApiUserDataDeletionRoute: typeof ApiUserDataDeletionRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -1183,6 +1196,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiUserDepartmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/user/data-deletion': {
+      id: '/api/user/data-deletion'
+      path: '/api/user/data-deletion'
+      fullPath: '/api/user/data-deletion'
+      preLoaderRoute: typeof ApiUserDataDeletionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/user/connected-apps': {
       id: '/api/user/connected-apps'
       path: '/api/user/connected-apps'
@@ -1281,6 +1301,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminDepartmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/data-deletion': {
+      id: '/api/admin/data-deletion'
+      path: '/api/admin/data-deletion'
+      fullPath: '/api/admin/data-deletion'
+      preLoaderRoute: typeof ApiAdminDataDeletionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/clients': {
       id: '/api/admin/clients'
       path: '/api/admin/clients'
@@ -1301,6 +1328,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/user/departments/$departmentId'
       preLoaderRoute: typeof ApiUserDepartmentsDepartmentIdRouteImport
       parentRoute: typeof ApiUserDepartmentsRoute
+    }
+    '/api/user/data-deletion/cancel': {
+      id: '/api/user/data-deletion/cancel'
+      path: '/cancel'
+      fullPath: '/api/user/data-deletion/cancel'
+      preLoaderRoute: typeof ApiUserDataDeletionCancelRouteImport
+      parentRoute: typeof ApiUserDataDeletionRoute
     }
     '/api/user/2fa/status': {
       id: '/api/user/2fa/status'
@@ -1371,6 +1405,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/admin/departments/$departmentId'
       preLoaderRoute: typeof ApiAdminDepartmentsDepartmentIdRouteImport
       parentRoute: typeof ApiAdminDepartmentsRoute
+    }
+    '/api/admin/data-deletion/$requestId': {
+      id: '/api/admin/data-deletion/$requestId'
+      path: '/$requestId'
+      fullPath: '/api/admin/data-deletion/$requestId'
+      preLoaderRoute: typeof ApiAdminDataDeletionRequestIdRouteImport
+      parentRoute: typeof ApiAdminDataDeletionRoute
     }
     '/api/admin/clients/register': {
       id: '/api/admin/clients/register'
@@ -1505,6 +1546,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminDepartmentsDepartmentIdActionsRouteImport
       parentRoute: typeof ApiAdminDepartmentsDepartmentIdRoute
     }
+    '/api/admin/data-deletion/$requestId/execute': {
+      id: '/api/admin/data-deletion/$requestId/execute'
+      path: '/execute'
+      fullPath: '/api/admin/data-deletion/$requestId/execute'
+      preLoaderRoute: typeof ApiAdminDataDeletionRequestIdExecuteRouteImport
+      parentRoute: typeof ApiAdminDataDeletionRequestIdRoute
+    }
+    '/api/admin/data-deletion/$requestId/decline': {
+      id: '/api/admin/data-deletion/$requestId/decline'
+      path: '/decline'
+      fullPath: '/api/admin/data-deletion/$requestId/decline'
+      preLoaderRoute: typeof ApiAdminDataDeletionRequestIdDeclineRouteImport
+      parentRoute: typeof ApiAdminDataDeletionRequestIdRoute
+    }
+    '/api/admin/data-deletion/$requestId/actions': {
+      id: '/api/admin/data-deletion/$requestId/actions'
+      path: '/actions'
+      fullPath: '/api/admin/data-deletion/$requestId/actions'
+      preLoaderRoute: typeof ApiAdminDataDeletionRequestIdActionsRouteImport
+      parentRoute: typeof ApiAdminDataDeletionRequestIdRoute
+    }
+    '/api/admin/data-deletion/$requestId/accept': {
+      id: '/api/admin/data-deletion/$requestId/accept'
+      path: '/accept'
+      fullPath: '/api/admin/data-deletion/$requestId/accept'
+      preLoaderRoute: typeof ApiAdminDataDeletionRequestIdAcceptRouteImport
+      parentRoute: typeof ApiAdminDataDeletionRequestIdRoute
+    }
     '/api/admin/clients/$clientId/actions': {
       id: '/api/admin/clients/$clientId/actions'
       path: '/actions'
@@ -1588,55 +1657,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove'
       preLoaderRoute: typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRouteImport
       parentRoute: typeof ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRoute
-    }
-    '/api/admin/data-deletion': {
-      id: '/api/admin/data-deletion'
-      path: '/api/admin/data-deletion'
-      fullPath: '/api/admin/data-deletion'
-      preLoaderRoute: typeof ApiAdminDataDeletionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/admin/data-deletion/$requestId': {
-      id: '/api/admin/data-deletion/$requestId'
-      path: '/$requestId'
-      fullPath: '/api/admin/data-deletion/$requestId'
-      preLoaderRoute: typeof ApiAdminDataDeletionRequestIdRouteImport
-      parentRoute: typeof ApiAdminDataDeletionRoute
-    }
-    '/api/admin/data-deletion/$requestId/accept': {
-      id: '/api/admin/data-deletion/$requestId/accept'
-      path: '/accept'
-      fullPath: '/api/admin/data-deletion/$requestId/accept'
-      preLoaderRoute: typeof ApiAdminDataDeletionRequestIdAcceptRouteImport
-      parentRoute: typeof ApiAdminDataDeletionRequestIdRoute
-    }
-    '/api/admin/data-deletion/$requestId/decline': {
-      id: '/api/admin/data-deletion/$requestId/decline'
-      path: '/decline'
-      fullPath: '/api/admin/data-deletion/$requestId/decline'
-      preLoaderRoute: typeof ApiAdminDataDeletionRequestIdDeclineRouteImport
-      parentRoute: typeof ApiAdminDataDeletionRequestIdRoute
-    }
-    '/api/admin/data-deletion/$requestId/actions': {
-      id: '/api/admin/data-deletion/$requestId/actions'
-      path: '/actions'
-      fullPath: '/api/admin/data-deletion/$requestId/actions'
-      preLoaderRoute: typeof ApiAdminDataDeletionRequestIdActionsRouteImport
-      parentRoute: typeof ApiAdminDataDeletionRequestIdRoute
-    }
-    '/api/user/data-deletion': {
-      id: '/api/user/data-deletion'
-      path: '/api/user/data-deletion'
-      fullPath: '/api/user/data-deletion'
-      preLoaderRoute: typeof ApiUserDataDeletionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/user/data-deletion/cancel': {
-      id: '/api/user/data-deletion/cancel'
-      path: '/cancel'
-      fullPath: '/api/user/data-deletion/cancel'
-      preLoaderRoute: typeof ApiUserDataDeletionCancelRouteImport
-      parentRoute: typeof ApiUserDataDeletionRoute
     }
   }
 }
@@ -1783,6 +1803,42 @@ const ApiAdminClientsRouteChildren: ApiAdminClientsRouteChildren = {
 const ApiAdminClientsRouteWithChildren = ApiAdminClientsRoute._addFileChildren(
   ApiAdminClientsRouteChildren,
 )
+
+interface ApiAdminDataDeletionRequestIdRouteChildren {
+  ApiAdminDataDeletionRequestIdAcceptRoute: typeof ApiAdminDataDeletionRequestIdAcceptRoute
+  ApiAdminDataDeletionRequestIdActionsRoute: typeof ApiAdminDataDeletionRequestIdActionsRoute
+  ApiAdminDataDeletionRequestIdDeclineRoute: typeof ApiAdminDataDeletionRequestIdDeclineRoute
+  ApiAdminDataDeletionRequestIdExecuteRoute: typeof ApiAdminDataDeletionRequestIdExecuteRoute
+}
+
+const ApiAdminDataDeletionRequestIdRouteChildren: ApiAdminDataDeletionRequestIdRouteChildren =
+  {
+    ApiAdminDataDeletionRequestIdAcceptRoute:
+      ApiAdminDataDeletionRequestIdAcceptRoute,
+    ApiAdminDataDeletionRequestIdActionsRoute:
+      ApiAdminDataDeletionRequestIdActionsRoute,
+    ApiAdminDataDeletionRequestIdDeclineRoute:
+      ApiAdminDataDeletionRequestIdDeclineRoute,
+    ApiAdminDataDeletionRequestIdExecuteRoute:
+      ApiAdminDataDeletionRequestIdExecuteRoute,
+  }
+
+const ApiAdminDataDeletionRequestIdRouteWithChildren =
+  ApiAdminDataDeletionRequestIdRoute._addFileChildren(
+    ApiAdminDataDeletionRequestIdRouteChildren,
+  )
+
+interface ApiAdminDataDeletionRouteChildren {
+  ApiAdminDataDeletionRequestIdRoute: typeof ApiAdminDataDeletionRequestIdRouteWithChildren
+}
+
+const ApiAdminDataDeletionRouteChildren: ApiAdminDataDeletionRouteChildren = {
+  ApiAdminDataDeletionRequestIdRoute:
+    ApiAdminDataDeletionRequestIdRouteWithChildren,
+}
+
+const ApiAdminDataDeletionRouteWithChildren =
+  ApiAdminDataDeletionRoute._addFileChildren(ApiAdminDataDeletionRouteChildren)
 
 interface ApiAdminDepartmentsDepartmentIdMembersRouteChildren {
   ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRoute: typeof ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRoute
@@ -1950,6 +2006,17 @@ const ApiUserConnectedAppsRouteChildren: ApiUserConnectedAppsRouteChildren = {
 const ApiUserConnectedAppsRouteWithChildren =
   ApiUserConnectedAppsRoute._addFileChildren(ApiUserConnectedAppsRouteChildren)
 
+interface ApiUserDataDeletionRouteChildren {
+  ApiUserDataDeletionCancelRoute: typeof ApiUserDataDeletionCancelRoute
+}
+
+const ApiUserDataDeletionRouteChildren: ApiUserDataDeletionRouteChildren = {
+  ApiUserDataDeletionCancelRoute: ApiUserDataDeletionCancelRoute,
+}
+
+const ApiUserDataDeletionRouteWithChildren =
+  ApiUserDataDeletionRoute._addFileChildren(ApiUserDataDeletionRouteChildren)
+
 interface ApiUserDepartmentsDepartmentIdRouteChildren {
   ApiUserDepartmentsDepartmentIdTeamsRoute: typeof ApiUserDepartmentsDepartmentIdTeamsRoute
 }
@@ -2001,50 +2068,6 @@ const ApiUserSessionsRouteWithChildren = ApiUserSessionsRoute._addFileChildren(
   ApiUserSessionsRouteChildren,
 )
 
-interface ApiAdminDataDeletionRequestIdRouteChildren {
-  ApiAdminDataDeletionRequestIdAcceptRoute: typeof ApiAdminDataDeletionRequestIdAcceptRoute
-  ApiAdminDataDeletionRequestIdDeclineRoute: typeof ApiAdminDataDeletionRequestIdDeclineRoute
-  ApiAdminDataDeletionRequestIdActionsRoute: typeof ApiAdminDataDeletionRequestIdActionsRoute
-}
-
-const ApiAdminDataDeletionRequestIdRouteChildren: ApiAdminDataDeletionRequestIdRouteChildren =
-  {
-    ApiAdminDataDeletionRequestIdAcceptRoute:
-      ApiAdminDataDeletionRequestIdAcceptRoute,
-    ApiAdminDataDeletionRequestIdDeclineRoute:
-      ApiAdminDataDeletionRequestIdDeclineRoute,
-    ApiAdminDataDeletionRequestIdActionsRoute:
-      ApiAdminDataDeletionRequestIdActionsRoute,
-  }
-
-const ApiAdminDataDeletionRequestIdRouteWithChildren =
-  ApiAdminDataDeletionRequestIdRoute._addFileChildren(
-    ApiAdminDataDeletionRequestIdRouteChildren,
-  )
-
-interface ApiAdminDataDeletionRouteChildren {
-  ApiAdminDataDeletionRequestIdRoute: typeof ApiAdminDataDeletionRequestIdRouteWithChildren
-}
-
-const ApiAdminDataDeletionRouteChildren: ApiAdminDataDeletionRouteChildren = {
-  ApiAdminDataDeletionRequestIdRoute:
-    ApiAdminDataDeletionRequestIdRouteWithChildren,
-}
-
-const ApiAdminDataDeletionRouteWithChildren =
-  ApiAdminDataDeletionRoute._addFileChildren(ApiAdminDataDeletionRouteChildren)
-
-interface ApiUserDataDeletionRouteChildren {
-  ApiUserDataDeletionCancelRoute: typeof ApiUserDataDeletionCancelRoute
-}
-
-const ApiUserDataDeletionRouteChildren: ApiUserDataDeletionRouteChildren = {
-  ApiUserDataDeletionCancelRoute: ApiUserDataDeletionCancelRoute,
-}
-
-const ApiUserDataDeletionRouteWithChildren =
-  ApiUserDataDeletionRoute._addFileChildren(ApiUserDataDeletionRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PublicRoute: PublicRouteWithChildren,
@@ -2053,6 +2076,7 @@ const rootRouteChildren: RootRouteChildren = {
   OauthConsentRoute: OauthConsentRoute,
   ApiAdminBrandingRoute: ApiAdminBrandingRoute,
   ApiAdminClientsRoute: ApiAdminClientsRouteWithChildren,
+  ApiAdminDataDeletionRoute: ApiAdminDataDeletionRouteWithChildren,
   ApiAdminDepartmentsRoute: ApiAdminDepartmentsRouteWithChildren,
   ApiAdminServicesRoute: ApiAdminServicesRouteWithChildren,
   ApiAdminSettingsRoute: ApiAdminSettingsRoute,
@@ -2065,6 +2089,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiServicesRegisterRoute: ApiServicesRegisterRoute,
   ApiUploadAvatarRoute: ApiUploadAvatarRoute,
   ApiUserConnectedAppsRoute: ApiUserConnectedAppsRouteWithChildren,
+  ApiUserDataDeletionRoute: ApiUserDataDeletionRouteWithChildren,
   ApiUserDepartmentsRoute: ApiUserDepartmentsRouteWithChildren,
   ApiUserOrganizationsRoute: ApiUserOrganizationsRoute,
   ApiUserPasskeysRoute: ApiUserPasskeysRouteWithChildren,
@@ -2073,8 +2098,6 @@ const rootRouteChildren: RootRouteChildren = {
   ApiUserSecurityStatusRoute: ApiUserSecurityStatusRoute,
   ApiUserSessionsRoute: ApiUserSessionsRouteWithChildren,
   ApiUser2faStatusRoute: ApiUser2faStatusRoute,
-  ApiAdminDataDeletionRoute: ApiAdminDataDeletionRouteWithChildren,
-  ApiUserDataDeletionRoute: ApiUserDataDeletionRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

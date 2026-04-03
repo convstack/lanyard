@@ -12,6 +12,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 		{ label: "Services", path: "/services", icon: "box" },
 		{ label: "Branding", path: "/branding", icon: "palette" },
 		{ label: "Settings", path: "/settings", icon: "settings" },
+		{ label: "Data Deletion", path: "/data-deletion", icon: "trash-2" },
 	],
 	widgets: [
 		{
@@ -663,6 +664,38 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 						submitLabel: "Save Settings",
 						method: "PUT",
 					},
+				},
+			],
+		},
+		{
+			path: "/data-deletion",
+			title: "Data Deletion Requests",
+			layout: "default",
+			sections: [
+				{
+					type: "data-table",
+					endpoint: "/api/admin/data-deletion",
+					config: {
+						rowLink: "/data-deletion/:id",
+					},
+				},
+			],
+		},
+		{
+			path: "/data-deletion/:requestId",
+			title: "Deletion Request",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "detail",
+					endpoint: "/api/admin/data-deletion/:requestId",
+					config: { title: "Request Details" },
+				},
+				{
+					type: "action-bar",
+					endpoint: "/api/admin/data-deletion/:requestId/actions",
+					config: {},
 				},
 			],
 		},

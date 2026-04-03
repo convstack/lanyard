@@ -110,6 +110,8 @@ export const auth = betterAuth({
 			refreshTokenExpiresIn: 30 * 86400, // 30 days
 			getAdditionalUserInfoClaim: async (user) => ({
 				role: (user as { role?: string }).role ?? "user",
+				deletionPending:
+					(user as { deletionPending?: boolean }).deletionPending ?? false,
 			}),
 		}),
 		admin(),
