@@ -67,6 +67,7 @@ import { Route as ApiDepartmentsSlugTeamsTeamIdRouteImport } from './routes/api/
 import { Route as ApiAdminUsersUserIdVerifyEmailRouteImport } from './routes/api/admin/users/$userId/verify-email'
 import { Route as ApiAdminUsersUserIdUnbanRouteImport } from './routes/api/admin/users/$userId/unban'
 import { Route as ApiAdminUsersUserIdSetRoleRouteImport } from './routes/api/admin/users/$userId/set-role'
+import { Route as ApiAdminUsersUserIdDeleteRouteImport } from './routes/api/admin/users/$userId/delete'
 import { Route as ApiAdminUsersUserIdBanRouteImport } from './routes/api/admin/users/$userId/ban'
 import { Route as ApiAdminUsersUserIdActionsRouteImport } from './routes/api/admin/users/$userId/actions'
 import { Route as ApiAdminServicesServiceIdToggleRouteImport } from './routes/api/admin/services/$serviceId/toggle'
@@ -401,6 +402,12 @@ const ApiAdminUsersUserIdSetRoleRoute =
     path: '/set-role',
     getParentRoute: () => ApiAdminUsersUserIdRoute,
   } as any)
+const ApiAdminUsersUserIdDeleteRoute =
+  ApiAdminUsersUserIdDeleteRouteImport.update({
+    id: '/delete',
+    path: '/delete',
+    getParentRoute: () => ApiAdminUsersUserIdRoute,
+  } as any)
 const ApiAdminUsersUserIdBanRoute = ApiAdminUsersUserIdBanRouteImport.update({
   id: '/ban',
   path: '/ban',
@@ -625,6 +632,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
+  '/api/admin/users/$userId/delete': typeof ApiAdminUsersUserIdDeleteRoute
   '/api/admin/users/$userId/set-role': typeof ApiAdminUsersUserIdSetRoleRoute
   '/api/admin/users/$userId/unban': typeof ApiAdminUsersUserIdUnbanRoute
   '/api/admin/users/$userId/verify-email': typeof ApiAdminUsersUserIdVerifyEmailRoute
@@ -710,6 +718,7 @@ export interface FileRoutesByTo {
   '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
+  '/api/admin/users/$userId/delete': typeof ApiAdminUsersUserIdDeleteRoute
   '/api/admin/users/$userId/set-role': typeof ApiAdminUsersUserIdSetRoleRoute
   '/api/admin/users/$userId/unban': typeof ApiAdminUsersUserIdUnbanRoute
   '/api/admin/users/$userId/verify-email': typeof ApiAdminUsersUserIdVerifyEmailRoute
@@ -797,6 +806,7 @@ export interface FileRoutesById {
   '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
+  '/api/admin/users/$userId/delete': typeof ApiAdminUsersUserIdDeleteRoute
   '/api/admin/users/$userId/set-role': typeof ApiAdminUsersUserIdSetRoleRoute
   '/api/admin/users/$userId/unban': typeof ApiAdminUsersUserIdUnbanRoute
   '/api/admin/users/$userId/verify-email': typeof ApiAdminUsersUserIdVerifyEmailRoute
@@ -884,6 +894,7 @@ export interface FileRouteTypes {
     | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
+    | '/api/admin/users/$userId/delete'
     | '/api/admin/users/$userId/set-role'
     | '/api/admin/users/$userId/unban'
     | '/api/admin/users/$userId/verify-email'
@@ -969,6 +980,7 @@ export interface FileRouteTypes {
     | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
+    | '/api/admin/users/$userId/delete'
     | '/api/admin/users/$userId/set-role'
     | '/api/admin/users/$userId/unban'
     | '/api/admin/users/$userId/verify-email'
@@ -1055,6 +1067,7 @@ export interface FileRouteTypes {
     | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
+    | '/api/admin/users/$userId/delete'
     | '/api/admin/users/$userId/set-role'
     | '/api/admin/users/$userId/unban'
     | '/api/admin/users/$userId/verify-email'
@@ -1514,6 +1527,13 @@ declare module '@tanstack/react-router' {
       path: '/set-role'
       fullPath: '/api/admin/users/$userId/set-role'
       preLoaderRoute: typeof ApiAdminUsersUserIdSetRoleRouteImport
+      parentRoute: typeof ApiAdminUsersUserIdRoute
+    }
+    '/api/admin/users/$userId/delete': {
+      id: '/api/admin/users/$userId/delete'
+      path: '/delete'
+      fullPath: '/api/admin/users/$userId/delete'
+      preLoaderRoute: typeof ApiAdminUsersUserIdDeleteRouteImport
       parentRoute: typeof ApiAdminUsersUserIdRoute
     }
     '/api/admin/users/$userId/ban': {
@@ -2005,6 +2025,7 @@ const ApiAdminServicesRouteWithChildren =
 interface ApiAdminUsersUserIdRouteChildren {
   ApiAdminUsersUserIdActionsRoute: typeof ApiAdminUsersUserIdActionsRoute
   ApiAdminUsersUserIdBanRoute: typeof ApiAdminUsersUserIdBanRoute
+  ApiAdminUsersUserIdDeleteRoute: typeof ApiAdminUsersUserIdDeleteRoute
   ApiAdminUsersUserIdSetRoleRoute: typeof ApiAdminUsersUserIdSetRoleRoute
   ApiAdminUsersUserIdUnbanRoute: typeof ApiAdminUsersUserIdUnbanRoute
   ApiAdminUsersUserIdVerifyEmailRoute: typeof ApiAdminUsersUserIdVerifyEmailRoute
@@ -2013,6 +2034,7 @@ interface ApiAdminUsersUserIdRouteChildren {
 const ApiAdminUsersUserIdRouteChildren: ApiAdminUsersUserIdRouteChildren = {
   ApiAdminUsersUserIdActionsRoute: ApiAdminUsersUserIdActionsRoute,
   ApiAdminUsersUserIdBanRoute: ApiAdminUsersUserIdBanRoute,
+  ApiAdminUsersUserIdDeleteRoute: ApiAdminUsersUserIdDeleteRoute,
   ApiAdminUsersUserIdSetRoleRoute: ApiAdminUsersUserIdSetRoleRoute,
   ApiAdminUsersUserIdUnbanRoute: ApiAdminUsersUserIdUnbanRoute,
   ApiAdminUsersUserIdVerifyEmailRoute: ApiAdminUsersUserIdVerifyEmailRoute,

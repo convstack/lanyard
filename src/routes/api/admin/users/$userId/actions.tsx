@@ -50,6 +50,7 @@ export const Route = createFileRoute("/api/admin/users/$userId/actions")({
 					variant?: string;
 					confirm?: string;
 					link?: string;
+					redirect?: string;
 				}> = [];
 
 				// Edit action (navigates to edit page)
@@ -109,6 +110,16 @@ export const Route = createFileRoute("/api/admin/users/$userId/actions")({
 						confirm: "Remove all privileges from this user?",
 					});
 				}
+
+				actions.push({
+					label: "Delete User",
+					endpoint: `/api/admin/users/${params.userId}/delete`,
+					method: "POST",
+					variant: "danger",
+					confirm:
+						"Permanently delete this user and all their data? This cannot be undone.",
+					redirect: "/users",
+				});
 
 				return new Response(JSON.stringify({ actions }), {
 					status: 200,
