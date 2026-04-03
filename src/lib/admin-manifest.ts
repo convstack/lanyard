@@ -173,8 +173,19 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 					endpoint: "/api/admin/departments/create",
 					config: {
 						fields: [
-							{ key: "name", label: "Department Name", type: "text", required: true },
-							{ key: "slug", label: "Slug", type: "text", required: true, placeholder: "security" },
+							{
+								key: "name",
+								label: "Department Name",
+								type: "text",
+								required: true,
+							},
+							{
+								key: "slug",
+								label: "Slug",
+								type: "text",
+								required: true,
+								placeholder: "security",
+							},
 						],
 						submitLabel: "Create Department",
 					},
@@ -248,7 +259,12 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 					endpoint: "/api/admin/departments/:departmentId/members",
 					config: {
 						fields: [
-							{ key: "email", label: "User Email", type: "email", required: true },
+							{
+								key: "email",
+								label: "User Email",
+								type: "email",
+								required: true,
+							},
 							{
 								key: "role",
 								label: "Role",
@@ -290,7 +306,8 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			sections: [
 				{
 					type: "data-table",
-					endpoint: "/api/admin/departments/:departmentId/teams/:teamId/members",
+					endpoint:
+						"/api/admin/departments/:departmentId/teams/:teamId/members",
 					config: {
 						createLink: "/departments/:departmentId/teams/:teamId/members/add",
 						createLabel: "Add Member",
@@ -306,7 +323,8 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			sections: [
 				{
 					type: "form",
-					endpoint: "/api/admin/departments/:departmentId/teams/:teamId/members",
+					endpoint:
+						"/api/admin/departments/:departmentId/teams/:teamId/members",
 					config: {
 						fields: [
 							{ key: "userId", label: "User ID", type: "text", required: true },

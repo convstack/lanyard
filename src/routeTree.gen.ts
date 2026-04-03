@@ -38,6 +38,7 @@ import { Route as ApiAdminServicesRouteImport } from './routes/api/admin/service
 import { Route as ApiAdminDepartmentsRouteImport } from './routes/api/admin/departments'
 import { Route as ApiAdminClientsRouteImport } from './routes/api/admin/clients'
 import { Route as ApiAdminBrandingRouteImport } from './routes/api/admin/branding'
+import { Route as ApiUserDepartmentsDepartmentIdRouteImport } from './routes/api/user/departments/$departmentId'
 import { Route as ApiUser2faStatusRouteImport } from './routes/api/user/2fa/status'
 import { Route as ApiAdminUsersCreateRouteImport } from './routes/api/admin/users/create'
 import { Route as ApiAdminUsersUserIdRouteImport } from './routes/api/admin/users/$userId'
@@ -48,6 +49,7 @@ import { Route as ApiAdminClientsRegisterRouteImport } from './routes/api/admin/
 import { Route as ApiAdminClientsClientIdRouteImport } from './routes/api/admin/clients/$clientId'
 import { Route as ApiUserSessionsSessionIdRevokeRouteImport } from './routes/api/user/sessions/$sessionId/revoke'
 import { Route as ApiUserPasskeysPasskeyIdDeleteRouteImport } from './routes/api/user/passkeys/$passkeyId/delete'
+import { Route as ApiUserDepartmentsDepartmentIdTeamsRouteImport } from './routes/api/user/departments/$departmentId/teams'
 import { Route as ApiUserConnectedAppsConsentIdRevokeRouteImport } from './routes/api/user/connected-apps/$consentId/revoke'
 import { Route as ApiAdminUsersUserIdVerifyEmailRouteImport } from './routes/api/admin/users/$userId/verify-email'
 import { Route as ApiAdminUsersUserIdUnbanRouteImport } from './routes/api/admin/users/$userId/unban'
@@ -212,6 +214,12 @@ const ApiAdminBrandingRoute = ApiAdminBrandingRouteImport.update({
   path: '/api/admin/branding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiUserDepartmentsDepartmentIdRoute =
+  ApiUserDepartmentsDepartmentIdRouteImport.update({
+    id: '/$departmentId',
+    path: '/$departmentId',
+    getParentRoute: () => ApiUserDepartmentsRoute,
+  } as any)
 const ApiUser2faStatusRoute = ApiUser2faStatusRouteImport.update({
   id: '/api/user/2fa/status',
   path: '/api/user/2fa/status',
@@ -266,6 +274,12 @@ const ApiUserPasskeysPasskeyIdDeleteRoute =
     id: '/$passkeyId/delete',
     path: '/$passkeyId/delete',
     getParentRoute: () => ApiUserPasskeysRoute,
+  } as any)
+const ApiUserDepartmentsDepartmentIdTeamsRoute =
+  ApiUserDepartmentsDepartmentIdTeamsRouteImport.update({
+    id: '/teams',
+    path: '/teams',
+    getParentRoute: () => ApiUserDepartmentsDepartmentIdRoute,
   } as any)
 const ApiUserConnectedAppsConsentIdRevokeRoute =
   ApiUserConnectedAppsConsentIdRevokeRouteImport.update({
@@ -406,7 +420,7 @@ export interface FileRoutesByFullPath {
   '/api/services/register': typeof ApiServicesRegisterRoute
   '/api/upload/avatar': typeof ApiUploadAvatarRoute
   '/api/user/connected-apps': typeof ApiUserConnectedAppsRouteWithChildren
-  '/api/user/departments': typeof ApiUserDepartmentsRoute
+  '/api/user/departments': typeof ApiUserDepartmentsRouteWithChildren
   '/api/user/organizations': typeof ApiUserOrganizationsRoute
   '/api/user/passkeys': typeof ApiUserPasskeysRouteWithChildren
   '/api/user/password': typeof ApiUserPasswordRoute
@@ -421,6 +435,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
   '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
+  '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
   '/api/admin/departments/$departmentId/actions': typeof ApiAdminDepartmentsDepartmentIdActionsRoute
   '/api/admin/departments/$departmentId/delete': typeof ApiAdminDepartmentsDepartmentIdDeleteRoute
@@ -435,6 +450,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/users/$userId/unban': typeof ApiAdminUsersUserIdUnbanRoute
   '/api/admin/users/$userId/verify-email': typeof ApiAdminUsersUserIdVerifyEmailRoute
   '/api/user/connected-apps/$consentId/revoke': typeof ApiUserConnectedAppsConsentIdRevokeRoute
+  '/api/user/departments/$departmentId/teams': typeof ApiUserDepartmentsDepartmentIdTeamsRoute
   '/api/user/passkeys/$passkeyId/delete': typeof ApiUserPasskeysPasskeyIdDeleteRoute
   '/api/user/sessions/$sessionId/revoke': typeof ApiUserSessionsSessionIdRevokeRoute
   '/api/admin/departments/$departmentId/members/$memberId/remove': typeof ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRoute
@@ -465,7 +481,7 @@ export interface FileRoutesByTo {
   '/api/services/register': typeof ApiServicesRegisterRoute
   '/api/upload/avatar': typeof ApiUploadAvatarRoute
   '/api/user/connected-apps': typeof ApiUserConnectedAppsRouteWithChildren
-  '/api/user/departments': typeof ApiUserDepartmentsRoute
+  '/api/user/departments': typeof ApiUserDepartmentsRouteWithChildren
   '/api/user/organizations': typeof ApiUserOrganizationsRoute
   '/api/user/passkeys': typeof ApiUserPasskeysRouteWithChildren
   '/api/user/password': typeof ApiUserPasswordRoute
@@ -480,6 +496,7 @@ export interface FileRoutesByTo {
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
   '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
+  '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
   '/api/admin/departments/$departmentId/actions': typeof ApiAdminDepartmentsDepartmentIdActionsRoute
   '/api/admin/departments/$departmentId/delete': typeof ApiAdminDepartmentsDepartmentIdDeleteRoute
@@ -494,6 +511,7 @@ export interface FileRoutesByTo {
   '/api/admin/users/$userId/unban': typeof ApiAdminUsersUserIdUnbanRoute
   '/api/admin/users/$userId/verify-email': typeof ApiAdminUsersUserIdVerifyEmailRoute
   '/api/user/connected-apps/$consentId/revoke': typeof ApiUserConnectedAppsConsentIdRevokeRoute
+  '/api/user/departments/$departmentId/teams': typeof ApiUserDepartmentsDepartmentIdTeamsRoute
   '/api/user/passkeys/$passkeyId/delete': typeof ApiUserPasskeysPasskeyIdDeleteRoute
   '/api/user/sessions/$sessionId/revoke': typeof ApiUserSessionsSessionIdRevokeRoute
   '/api/admin/departments/$departmentId/members/$memberId/remove': typeof ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRoute
@@ -526,7 +544,7 @@ export interface FileRoutesById {
   '/api/services/register': typeof ApiServicesRegisterRoute
   '/api/upload/avatar': typeof ApiUploadAvatarRoute
   '/api/user/connected-apps': typeof ApiUserConnectedAppsRouteWithChildren
-  '/api/user/departments': typeof ApiUserDepartmentsRoute
+  '/api/user/departments': typeof ApiUserDepartmentsRouteWithChildren
   '/api/user/organizations': typeof ApiUserOrganizationsRoute
   '/api/user/passkeys': typeof ApiUserPasskeysRouteWithChildren
   '/api/user/password': typeof ApiUserPasswordRoute
@@ -541,6 +559,7 @@ export interface FileRoutesById {
   '/api/admin/users/$userId': typeof ApiAdminUsersUserIdRouteWithChildren
   '/api/admin/users/create': typeof ApiAdminUsersCreateRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
+  '/api/user/departments/$departmentId': typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
   '/api/admin/clients/$clientId/actions': typeof ApiAdminClientsClientIdActionsRoute
   '/api/admin/departments/$departmentId/actions': typeof ApiAdminDepartmentsDepartmentIdActionsRoute
   '/api/admin/departments/$departmentId/delete': typeof ApiAdminDepartmentsDepartmentIdDeleteRoute
@@ -555,6 +574,7 @@ export interface FileRoutesById {
   '/api/admin/users/$userId/unban': typeof ApiAdminUsersUserIdUnbanRoute
   '/api/admin/users/$userId/verify-email': typeof ApiAdminUsersUserIdVerifyEmailRoute
   '/api/user/connected-apps/$consentId/revoke': typeof ApiUserConnectedAppsConsentIdRevokeRoute
+  '/api/user/departments/$departmentId/teams': typeof ApiUserDepartmentsDepartmentIdTeamsRoute
   '/api/user/passkeys/$passkeyId/delete': typeof ApiUserPasskeysPasskeyIdDeleteRoute
   '/api/user/sessions/$sessionId/revoke': typeof ApiUserSessionsSessionIdRevokeRoute
   '/api/admin/departments/$departmentId/members/$memberId/remove': typeof ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRoute
@@ -602,6 +622,7 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId'
     | '/api/admin/users/create'
     | '/api/user/2fa/status'
+    | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
     | '/api/admin/departments/$departmentId/actions'
     | '/api/admin/departments/$departmentId/delete'
@@ -616,6 +637,7 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId/unban'
     | '/api/admin/users/$userId/verify-email'
     | '/api/user/connected-apps/$consentId/revoke'
+    | '/api/user/departments/$departmentId/teams'
     | '/api/user/passkeys/$passkeyId/delete'
     | '/api/user/sessions/$sessionId/revoke'
     | '/api/admin/departments/$departmentId/members/$memberId/remove'
@@ -661,6 +683,7 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId'
     | '/api/admin/users/create'
     | '/api/user/2fa/status'
+    | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
     | '/api/admin/departments/$departmentId/actions'
     | '/api/admin/departments/$departmentId/delete'
@@ -675,6 +698,7 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId/unban'
     | '/api/admin/users/$userId/verify-email'
     | '/api/user/connected-apps/$consentId/revoke'
+    | '/api/user/departments/$departmentId/teams'
     | '/api/user/passkeys/$passkeyId/delete'
     | '/api/user/sessions/$sessionId/revoke'
     | '/api/admin/departments/$departmentId/members/$memberId/remove'
@@ -721,6 +745,7 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId'
     | '/api/admin/users/create'
     | '/api/user/2fa/status'
+    | '/api/user/departments/$departmentId'
     | '/api/admin/clients/$clientId/actions'
     | '/api/admin/departments/$departmentId/actions'
     | '/api/admin/departments/$departmentId/delete'
@@ -735,6 +760,7 @@ export interface FileRouteTypes {
     | '/api/admin/users/$userId/unban'
     | '/api/admin/users/$userId/verify-email'
     | '/api/user/connected-apps/$consentId/revoke'
+    | '/api/user/departments/$departmentId/teams'
     | '/api/user/passkeys/$passkeyId/delete'
     | '/api/user/sessions/$sessionId/revoke'
     | '/api/admin/departments/$departmentId/members/$memberId/remove'
@@ -763,7 +789,7 @@ export interface RootRouteChildren {
   ApiServicesRegisterRoute: typeof ApiServicesRegisterRoute
   ApiUploadAvatarRoute: typeof ApiUploadAvatarRoute
   ApiUserConnectedAppsRoute: typeof ApiUserConnectedAppsRouteWithChildren
-  ApiUserDepartmentsRoute: typeof ApiUserDepartmentsRoute
+  ApiUserDepartmentsRoute: typeof ApiUserDepartmentsRouteWithChildren
   ApiUserOrganizationsRoute: typeof ApiUserOrganizationsRoute
   ApiUserPasskeysRoute: typeof ApiUserPasskeysRouteWithChildren
   ApiUserPasswordRoute: typeof ApiUserPasswordRoute
@@ -978,6 +1004,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminBrandingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/user/departments/$departmentId': {
+      id: '/api/user/departments/$departmentId'
+      path: '/$departmentId'
+      fullPath: '/api/user/departments/$departmentId'
+      preLoaderRoute: typeof ApiUserDepartmentsDepartmentIdRouteImport
+      parentRoute: typeof ApiUserDepartmentsRoute
+    }
     '/api/user/2fa/status': {
       id: '/api/user/2fa/status'
       path: '/api/user/2fa/status'
@@ -1047,6 +1080,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/user/passkeys/$passkeyId/delete'
       preLoaderRoute: typeof ApiUserPasskeysPasskeyIdDeleteRouteImport
       parentRoute: typeof ApiUserPasskeysRoute
+    }
+    '/api/user/departments/$departmentId/teams': {
+      id: '/api/user/departments/$departmentId/teams'
+      path: '/teams'
+      fullPath: '/api/user/departments/$departmentId/teams'
+      preLoaderRoute: typeof ApiUserDepartmentsDepartmentIdTeamsRouteImport
+      parentRoute: typeof ApiUserDepartmentsDepartmentIdRoute
     }
     '/api/user/connected-apps/$consentId/revoke': {
       id: '/api/user/connected-apps/$consentId/revoke'
@@ -1393,6 +1433,33 @@ const ApiUserConnectedAppsRouteChildren: ApiUserConnectedAppsRouteChildren = {
 const ApiUserConnectedAppsRouteWithChildren =
   ApiUserConnectedAppsRoute._addFileChildren(ApiUserConnectedAppsRouteChildren)
 
+interface ApiUserDepartmentsDepartmentIdRouteChildren {
+  ApiUserDepartmentsDepartmentIdTeamsRoute: typeof ApiUserDepartmentsDepartmentIdTeamsRoute
+}
+
+const ApiUserDepartmentsDepartmentIdRouteChildren: ApiUserDepartmentsDepartmentIdRouteChildren =
+  {
+    ApiUserDepartmentsDepartmentIdTeamsRoute:
+      ApiUserDepartmentsDepartmentIdTeamsRoute,
+  }
+
+const ApiUserDepartmentsDepartmentIdRouteWithChildren =
+  ApiUserDepartmentsDepartmentIdRoute._addFileChildren(
+    ApiUserDepartmentsDepartmentIdRouteChildren,
+  )
+
+interface ApiUserDepartmentsRouteChildren {
+  ApiUserDepartmentsDepartmentIdRoute: typeof ApiUserDepartmentsDepartmentIdRouteWithChildren
+}
+
+const ApiUserDepartmentsRouteChildren: ApiUserDepartmentsRouteChildren = {
+  ApiUserDepartmentsDepartmentIdRoute:
+    ApiUserDepartmentsDepartmentIdRouteWithChildren,
+}
+
+const ApiUserDepartmentsRouteWithChildren =
+  ApiUserDepartmentsRoute._addFileChildren(ApiUserDepartmentsRouteChildren)
+
 interface ApiUserPasskeysRouteChildren {
   ApiUserPasskeysPasskeyIdDeleteRoute: typeof ApiUserPasskeysPasskeyIdDeleteRoute
 }
@@ -1436,7 +1503,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiServicesRegisterRoute: ApiServicesRegisterRoute,
   ApiUploadAvatarRoute: ApiUploadAvatarRoute,
   ApiUserConnectedAppsRoute: ApiUserConnectedAppsRouteWithChildren,
-  ApiUserDepartmentsRoute: ApiUserDepartmentsRoute,
+  ApiUserDepartmentsRoute: ApiUserDepartmentsRouteWithChildren,
   ApiUserOrganizationsRoute: ApiUserOrganizationsRoute,
   ApiUserPasskeysRoute: ApiUserPasskeysRouteWithChildren,
   ApiUserPasswordRoute: ApiUserPasswordRoute,
