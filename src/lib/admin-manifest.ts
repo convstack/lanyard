@@ -7,6 +7,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 	navigation: [
 		{ label: "Overview", path: "/", icon: "layout-dashboard" },
 		{ label: "Users", path: "/users", icon: "users" },
+		{ label: "Departments", path: "/departments", icon: "building-2" },
 		{ label: "OIDC Clients", path: "/clients", icon: "key-round" },
 		{ label: "Services", path: "/services", icon: "box" },
 		{ label: "Branding", path: "/branding", icon: "palette" },
@@ -141,6 +142,176 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 						],
 						submitLabel: "Save Changes",
 						method: "PUT",
+					},
+				},
+			],
+		},
+		{
+			path: "/departments",
+			title: "Departments",
+			layout: "default",
+			sections: [
+				{
+					type: "data-table",
+					endpoint: "/api/admin/departments",
+					config: {
+						rowLink: "/departments/:id",
+						createLink: "/departments/new",
+						createLabel: "Create Department",
+					},
+				},
+			],
+		},
+		{
+			path: "/departments/new",
+			title: "Create Department",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "form",
+					endpoint: "/api/admin/departments/create",
+					config: {
+						fields: [
+							{ key: "name", label: "Department Name", type: "text", required: true },
+							{ key: "slug", label: "Slug", type: "text", required: true, placeholder: "security" },
+						],
+						submitLabel: "Create Department",
+					},
+				},
+			],
+		},
+		{
+			path: "/departments/:departmentId",
+			title: "Department Detail",
+			layout: "default",
+			sections: [
+				{
+					type: "detail",
+					endpoint: "/api/admin/departments/:departmentId",
+					config: { title: "Department Info" },
+				},
+				{
+					type: "action-bar",
+					endpoint: "/api/admin/departments/:departmentId/actions",
+					config: {},
+				},
+				{
+					type: "data-table",
+					endpoint: "/api/admin/departments/:departmentId/members",
+					config: {
+						title: "Members",
+						createLink: "/departments/:departmentId/members/add",
+						createLabel: "Add Member",
+					},
+				},
+				{
+					type: "data-table",
+					endpoint: "/api/admin/departments/:departmentId/teams",
+					config: {
+						title: "Teams",
+						createLink: "/departments/:departmentId/teams/create",
+						createLabel: "Create Team",
+						rowLink: "/departments/:departmentId/teams/:id/members",
+					},
+				},
+			],
+		},
+		{
+			path: "/departments/:departmentId/edit",
+			title: "Edit Department",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "form",
+					endpoint: "/api/admin/departments/:departmentId",
+					config: {
+						fields: [
+							{ key: "name", label: "Department Name", type: "text" },
+							{ key: "slug", label: "Slug", type: "text" },
+						],
+						submitLabel: "Save Changes",
+						method: "PUT",
+					},
+				},
+			],
+		},
+		{
+			path: "/departments/:departmentId/members/add",
+			title: "Add Member",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "form",
+					endpoint: "/api/admin/departments/:departmentId/members",
+					config: {
+						fields: [
+							{ key: "email", label: "User Email", type: "email", required: true },
+							{
+								key: "role",
+								label: "Role",
+								type: "select",
+								options: [
+									{ label: "Member", value: "member" },
+									{ label: "Admin", value: "admin" },
+								],
+							},
+						],
+						submitLabel: "Add Member",
+					},
+				},
+			],
+		},
+		{
+			path: "/departments/:departmentId/teams/create",
+			title: "Create Team",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "form",
+					endpoint: "/api/admin/departments/:departmentId/teams",
+					config: {
+						fields: [
+							{ key: "name", label: "Team Name", type: "text", required: true },
+						],
+						submitLabel: "Create Team",
+					},
+				},
+			],
+		},
+		{
+			path: "/departments/:departmentId/teams/:teamId/members",
+			title: "Team Members",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "data-table",
+					endpoint: "/api/admin/departments/:departmentId/teams/:teamId/members",
+					config: {
+						createLink: "/departments/:departmentId/teams/:teamId/members/add",
+						createLabel: "Add Member",
+					},
+				},
+			],
+		},
+		{
+			path: "/departments/:departmentId/teams/:teamId/members/add",
+			title: "Add Team Member",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "form",
+					endpoint: "/api/admin/departments/:departmentId/teams/:teamId/members",
+					config: {
+						fields: [
+							{ key: "userId", label: "User ID", type: "text", required: true },
+						],
+						submitLabel: "Add to Team",
 					},
 				},
 			],

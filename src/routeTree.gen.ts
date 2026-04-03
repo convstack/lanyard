@@ -23,6 +23,7 @@ import { Route as ApiUserProfileRouteImport } from './routes/api/user/profile'
 import { Route as ApiUserPasswordRouteImport } from './routes/api/user/password'
 import { Route as ApiUserPasskeysRouteImport } from './routes/api/user/passkeys'
 import { Route as ApiUserOrganizationsRouteImport } from './routes/api/user/organizations'
+import { Route as ApiUserDepartmentsRouteImport } from './routes/api/user/departments'
 import { Route as ApiUserConnectedAppsRouteImport } from './routes/api/user/connected-apps'
 import { Route as ApiUploadAvatarRouteImport } from './routes/api/upload/avatar'
 import { Route as ApiServicesRegisterRouteImport } from './routes/api/services/register'
@@ -134,6 +135,11 @@ const ApiUserPasskeysRoute = ApiUserPasskeysRouteImport.update({
 const ApiUserOrganizationsRoute = ApiUserOrganizationsRouteImport.update({
   id: '/api/user/organizations',
   path: '/api/user/organizations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiUserDepartmentsRoute = ApiUserDepartmentsRouteImport.update({
+  id: '/api/user/departments',
+  path: '/api/user/departments',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiUserConnectedAppsRoute = ApiUserConnectedAppsRouteImport.update({
@@ -400,6 +406,7 @@ export interface FileRoutesByFullPath {
   '/api/services/register': typeof ApiServicesRegisterRoute
   '/api/upload/avatar': typeof ApiUploadAvatarRoute
   '/api/user/connected-apps': typeof ApiUserConnectedAppsRouteWithChildren
+  '/api/user/departments': typeof ApiUserDepartmentsRoute
   '/api/user/organizations': typeof ApiUserOrganizationsRoute
   '/api/user/passkeys': typeof ApiUserPasskeysRouteWithChildren
   '/api/user/password': typeof ApiUserPasswordRoute
@@ -458,6 +465,7 @@ export interface FileRoutesByTo {
   '/api/services/register': typeof ApiServicesRegisterRoute
   '/api/upload/avatar': typeof ApiUploadAvatarRoute
   '/api/user/connected-apps': typeof ApiUserConnectedAppsRouteWithChildren
+  '/api/user/departments': typeof ApiUserDepartmentsRoute
   '/api/user/organizations': typeof ApiUserOrganizationsRoute
   '/api/user/passkeys': typeof ApiUserPasskeysRouteWithChildren
   '/api/user/password': typeof ApiUserPasswordRoute
@@ -518,6 +526,7 @@ export interface FileRoutesById {
   '/api/services/register': typeof ApiServicesRegisterRoute
   '/api/upload/avatar': typeof ApiUploadAvatarRoute
   '/api/user/connected-apps': typeof ApiUserConnectedAppsRouteWithChildren
+  '/api/user/departments': typeof ApiUserDepartmentsRoute
   '/api/user/organizations': typeof ApiUserOrganizationsRoute
   '/api/user/passkeys': typeof ApiUserPasskeysRouteWithChildren
   '/api/user/password': typeof ApiUserPasswordRoute
@@ -578,6 +587,7 @@ export interface FileRouteTypes {
     | '/api/services/register'
     | '/api/upload/avatar'
     | '/api/user/connected-apps'
+    | '/api/user/departments'
     | '/api/user/organizations'
     | '/api/user/passkeys'
     | '/api/user/password'
@@ -636,6 +646,7 @@ export interface FileRouteTypes {
     | '/api/services/register'
     | '/api/upload/avatar'
     | '/api/user/connected-apps'
+    | '/api/user/departments'
     | '/api/user/organizations'
     | '/api/user/passkeys'
     | '/api/user/password'
@@ -695,6 +706,7 @@ export interface FileRouteTypes {
     | '/api/services/register'
     | '/api/upload/avatar'
     | '/api/user/connected-apps'
+    | '/api/user/departments'
     | '/api/user/organizations'
     | '/api/user/passkeys'
     | '/api/user/password'
@@ -751,6 +763,7 @@ export interface RootRouteChildren {
   ApiServicesRegisterRoute: typeof ApiServicesRegisterRoute
   ApiUploadAvatarRoute: typeof ApiUploadAvatarRoute
   ApiUserConnectedAppsRoute: typeof ApiUserConnectedAppsRouteWithChildren
+  ApiUserDepartmentsRoute: typeof ApiUserDepartmentsRoute
   ApiUserOrganizationsRoute: typeof ApiUserOrganizationsRoute
   ApiUserPasskeysRoute: typeof ApiUserPasskeysRouteWithChildren
   ApiUserPasswordRoute: typeof ApiUserPasswordRoute
@@ -858,6 +871,13 @@ declare module '@tanstack/react-router' {
       path: '/api/user/organizations'
       fullPath: '/api/user/organizations'
       preLoaderRoute: typeof ApiUserOrganizationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/user/departments': {
+      id: '/api/user/departments'
+      path: '/api/user/departments'
+      fullPath: '/api/user/departments'
+      preLoaderRoute: typeof ApiUserDepartmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/user/connected-apps': {
@@ -1416,6 +1436,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiServicesRegisterRoute: ApiServicesRegisterRoute,
   ApiUploadAvatarRoute: ApiUploadAvatarRoute,
   ApiUserConnectedAppsRoute: ApiUserConnectedAppsRouteWithChildren,
+  ApiUserDepartmentsRoute: ApiUserDepartmentsRoute,
   ApiUserOrganizationsRoute: ApiUserOrganizationsRoute,
   ApiUserPasskeysRoute: ApiUserPasskeysRouteWithChildren,
   ApiUserPasswordRoute: ApiUserPasswordRoute,

@@ -8,7 +8,7 @@ export const MY_ACCOUNT_MANIFEST: UIManifest = {
 		{ label: "Profile", path: "/", icon: "user" },
 		{ label: "Sessions", path: "/sessions", icon: "monitor-smartphone" },
 		{ label: "Connected Apps", path: "/connected-apps", icon: "unplug" },
-		{ label: "Organizations", path: "/organizations", icon: "building-2" },
+		{ label: "Departments", path: "/departments", icon: "building-2" },
 		{ label: "Change Password", path: "/password", icon: "lock" },
 		{
 			label: "Security",
@@ -94,14 +94,34 @@ export const MY_ACCOUNT_MANIFEST: UIManifest = {
 			],
 		},
 		{
-			path: "/organizations",
-			title: "Organizations",
+			path: "/departments",
+			title: "Your Departments",
 			layout: "default",
 			sections: [
 				{
 					type: "data-table",
-					endpoint: "/api/user/organizations",
-					config: {},
+					endpoint: "/api/user/departments",
+					config: {
+						rowLink: "/departments/:id",
+					},
+				},
+			],
+		},
+		{
+			path: "/departments/:departmentId",
+			title: "Department",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "detail",
+					endpoint: "/api/user/departments/:departmentId",
+					config: { title: "Department Info" },
+				},
+				{
+					type: "data-table",
+					endpoint: "/api/user/departments/:departmentId/teams",
+					config: { title: "Your Teams" },
 				},
 			],
 		},
