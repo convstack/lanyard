@@ -62,6 +62,7 @@ export const Route = createFileRoute("/api/admin/services/$serviceId/actions")({
 						variant: "danger",
 						confirm:
 							"Are you sure you want to delete this service? This action cannot be undone.",
+						redirect: "/services",
 					},
 				];
 

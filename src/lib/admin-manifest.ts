@@ -415,6 +415,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			path: "/clients/:clientId",
 			title: "Client Detail",
 			layout: "default",
+			showBack: true,
 			sections: [
 				{
 					type: "detail",
@@ -425,6 +426,39 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 					type: "action-bar",
 					endpoint: "/api/admin/clients/:clientId/actions",
 					config: {},
+				},
+			],
+		},
+		{
+			path: "/clients/:clientId/edit",
+			title: "Edit Client",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "form",
+					endpoint: "/api/admin/clients/:clientId",
+					config: {
+						fields: [
+							{ key: "name", label: "Name", type: "text" },
+							{
+								key: "redirectUrls",
+								label: "Redirect URLs (comma separated)",
+								type: "text",
+							},
+							{
+								key: "type",
+								label: "Type",
+								type: "select",
+								options: [
+									{ label: "Confidential", value: "confidential" },
+									{ label: "Public", value: "public" },
+								],
+							},
+						],
+						submitLabel: "Save Changes",
+						method: "PUT",
+					},
 				},
 			],
 		},

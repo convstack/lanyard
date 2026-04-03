@@ -58,6 +58,7 @@ export const Route = createFileRoute("/api/admin/users/create")({
 						JSON.stringify({
 							success: true,
 							userId: result.user.id,
+							redirect: "/lanyard-admin/users",
 						}),
 						{ status: 201, headers: { "Content-Type": "application/json" } },
 					);

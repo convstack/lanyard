@@ -41,12 +41,19 @@ export const Route = createFileRoute("/api/admin/clients/$clientId/actions")({
 
 				const actions = [
 					{
+						label: "Edit Client",
+						endpoint: "",
+						method: "POST",
+						link: `/clients/${params.clientId}/edit`,
+					},
+					{
 						label: "Delete Client",
 						endpoint: `/api/admin/clients/${params.clientId}`,
 						method: "DELETE",
 						variant: "danger",
 						confirm:
 							"Are you sure you want to delete this OIDC client? This action cannot be undone.",
+						redirect: "/clients",
 					},
 				];
 

@@ -131,6 +131,7 @@ export const Route = createFileRoute("/api/services/register")({
 						serviceId,
 						apiKey,
 						message: "Store this API key securely. It will not be shown again.",
+						redirect: "/lanyard-admin/services",
 					}),
 					{
 						status: 201,

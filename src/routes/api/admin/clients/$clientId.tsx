@@ -66,6 +66,47 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 				);
 			},
 
+			PUT: async ({
+				request,
+				params,
+			}: {
+				request: Request;
+				params: { clientId: string };
+			}) => {
+				const user = await getAuthenticatedUser(request);
+				if (!user || user.role !== "admin") {
+					return new Response(JSON.stringify({ error: "Unauthorized" }), {
+						status: 401,
+						headers: { "Content-Type": "application/json" },
+					});
+				}
+
+				const body = await request.json();
+				const { db } = await import("~/db");
+				const { oauthApplication } = await import("~/db/schema");
+				const { eq } = await import("drizzle-orm");
+
+				const updates: Record<string, unknown> = {
+					updatedAt: new Date(),
+				};
+				if (typeof body.name === "string" && body.name)
+					updates.name = body.name;
+				if (typeof body.redirectUrls === "string" && body.redirectUrls)
+					updates.redirectUrls = body.redirectUrls;
+				if (typeof body.type === "string" && body.type)
+					updates.type = body.type;
+
+				await db
+					.update(oauthApplication)
+					.set(updates)
+					.where(eq(oauthApplication.clientId, params.clientId));
+
+				return new Response(JSON.stringify({ success: true }), {
+					status: 200,
+					headers: { "Content-Type": "application/json" },
+				});
+			},
+
 			DELETE: async ({
 				request,
 				params,

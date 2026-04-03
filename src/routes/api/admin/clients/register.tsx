@@ -49,6 +49,7 @@ export const Route = createFileRoute("/api/admin/clients/register")({
 						clientId,
 						clientSecret,
 						message: "Save the client secret — it will not be shown again.",
+						redirect: "/lanyard-admin/clients",
 					}),
 					{ status: 201, headers: { "Content-Type": "application/json" } },
 				);
