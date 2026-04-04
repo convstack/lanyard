@@ -9,6 +9,12 @@ import {
 import { user } from "./auth";
 import { organization } from "./organization";
 
+export interface ServiceSidebar {
+	items?: NavigationItem[];
+	type?: "tree";
+	endpoint?: string;
+}
+
 export interface UIManifest {
 	name: string;
 	icon: string;
@@ -17,6 +23,7 @@ export interface UIManifest {
 	widgets: WidgetDefinition[];
 	pages: PageDefinition[];
 	permissions: string[];
+	sidebar?: ServiceSidebar;
 }
 
 export interface NavigationItem {
@@ -66,6 +73,8 @@ export interface PageSection {
 		| "action-bar"
 		| "two-factor"
 		| "passkey-manager"
+		| "markdown"
+		| "markdown-editor"
 		| "custom";
 	endpoint: string;
 	config: Record<string, JsonValue>;

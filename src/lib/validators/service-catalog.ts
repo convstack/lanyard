@@ -50,6 +50,8 @@ const pageSectionSchema = z.object({
 		"action-bar",
 		"two-factor",
 		"passkey-manager",
+		"markdown",
+		"markdown-editor",
 		"custom",
 	]),
 	endpoint: z.string().max(500),
