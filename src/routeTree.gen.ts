@@ -18,6 +18,7 @@ import { Route as PublicResetPasswordRouteImport } from './routes/_public/reset-
 import { Route as PublicRegisterRouteImport } from './routes/_public/register'
 import { Route as PublicLoginRouteImport } from './routes/_public/login'
 import { Route as PublicForgotPasswordRouteImport } from './routes/_public/forgot-password'
+import { Route as ApiUsersUserIdRouteImport } from './routes/api/users/$userId'
 import { Route as ApiUserSessionsRouteImport } from './routes/api/user/sessions'
 import { Route as ApiUserSecurityStatusRouteImport } from './routes/api/user/security-status'
 import { Route as ApiUserProfileRouteImport } from './routes/api/user/profile'
@@ -138,6 +139,11 @@ const PublicForgotPasswordRoute = PublicForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
   getParentRoute: () => PublicRoute,
+} as any)
+const ApiUsersUserIdRoute = ApiUsersUserIdRouteImport.update({
+  id: '/api/users/$userId',
+  path: '/api/users/$userId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiUserSessionsRoute = ApiUserSessionsRouteImport.update({
   id: '/api/user/sessions',
@@ -601,6 +607,7 @@ export interface FileRoutesByFullPath {
   '/api/user/profile': typeof ApiUserProfileRoute
   '/api/user/security-status': typeof ApiUserSecurityStatusRoute
   '/api/user/sessions': typeof ApiUserSessionsRouteWithChildren
+  '/api/users/$userId': typeof ApiUsersUserIdRoute
   '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRouteWithChildren
   '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
   '/api/admin/data-deletion/$requestId': typeof ApiAdminDataDeletionRequestIdRouteWithChildren
@@ -687,6 +694,7 @@ export interface FileRoutesByTo {
   '/api/user/profile': typeof ApiUserProfileRoute
   '/api/user/security-status': typeof ApiUserSecurityStatusRoute
   '/api/user/sessions': typeof ApiUserSessionsRouteWithChildren
+  '/api/users/$userId': typeof ApiUsersUserIdRoute
   '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRouteWithChildren
   '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
   '/api/admin/data-deletion/$requestId': typeof ApiAdminDataDeletionRequestIdRouteWithChildren
@@ -775,6 +783,7 @@ export interface FileRoutesById {
   '/api/user/profile': typeof ApiUserProfileRoute
   '/api/user/security-status': typeof ApiUserSecurityStatusRoute
   '/api/user/sessions': typeof ApiUserSessionsRouteWithChildren
+  '/api/users/$userId': typeof ApiUsersUserIdRoute
   '/api/admin/clients/$clientId': typeof ApiAdminClientsClientIdRouteWithChildren
   '/api/admin/clients/register': typeof ApiAdminClientsRegisterRoute
   '/api/admin/data-deletion/$requestId': typeof ApiAdminDataDeletionRequestIdRouteWithChildren
@@ -863,6 +872,7 @@ export interface FileRouteTypes {
     | '/api/user/profile'
     | '/api/user/security-status'
     | '/api/user/sessions'
+    | '/api/users/$userId'
     | '/api/admin/clients/$clientId'
     | '/api/admin/clients/register'
     | '/api/admin/data-deletion/$requestId'
@@ -949,6 +959,7 @@ export interface FileRouteTypes {
     | '/api/user/profile'
     | '/api/user/security-status'
     | '/api/user/sessions'
+    | '/api/users/$userId'
     | '/api/admin/clients/$clientId'
     | '/api/admin/clients/register'
     | '/api/admin/data-deletion/$requestId'
@@ -1036,6 +1047,7 @@ export interface FileRouteTypes {
     | '/api/user/profile'
     | '/api/user/security-status'
     | '/api/user/sessions'
+    | '/api/users/$userId'
     | '/api/admin/clients/$clientId'
     | '/api/admin/clients/register'
     | '/api/admin/data-deletion/$requestId'
@@ -1118,6 +1130,7 @@ export interface RootRouteChildren {
   ApiUserProfileRoute: typeof ApiUserProfileRoute
   ApiUserSecurityStatusRoute: typeof ApiUserSecurityStatusRoute
   ApiUserSessionsRoute: typeof ApiUserSessionsRouteWithChildren
+  ApiUsersUserIdRoute: typeof ApiUsersUserIdRoute
   ApiUser2faStatusRoute: typeof ApiUser2faStatusRoute
 }
 
@@ -1185,6 +1198,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/forgot-password'
       preLoaderRoute: typeof PublicForgotPasswordRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/api/users/$userId': {
+      id: '/api/users/$userId'
+      path: '/api/users/$userId'
+      fullPath: '/api/users/$userId'
+      preLoaderRoute: typeof ApiUsersUserIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/user/sessions': {
       id: '/api/user/sessions'
@@ -2164,6 +2184,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiUserProfileRoute: ApiUserProfileRoute,
   ApiUserSecurityStatusRoute: ApiUserSecurityStatusRoute,
   ApiUserSessionsRoute: ApiUserSessionsRouteWithChildren,
+  ApiUsersUserIdRoute: ApiUsersUserIdRoute,
   ApiUser2faStatusRoute: ApiUser2faStatusRoute,
 }
 export const routeTree = rootRouteImport

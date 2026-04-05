@@ -173,6 +173,14 @@ export function hasAdminReadAccess(role: string | null): boolean {
 }
 
 /**
+ * Any authenticated service or admin can use this.
+ * For lightweight, non-sensitive lookups (e.g. resolving user display names).
+ */
+export function hasServiceAccess(role: string | null): boolean {
+	return role === "admin" || role === "service-admin" || role === "service";
+}
+
+/**
  * Check if the user has admin-level write access.
  * Only "admin" (human via OIDC) can perform destructive operations.
  * "service-admin" (ServiceKey) is read-only for admin resources.

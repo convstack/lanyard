@@ -63,7 +63,18 @@ const pageDefinitionSchema = z.object({
 	title: z.string().min(1).max(100),
 	layout: z.enum(["default", "full-width", "split"]),
 	sections: z.array(pageSectionSchema).max(20),
+	showBack: z.boolean().optional(),
 	requiredPermission: z.string().max(100).optional(),
+});
+
+const serviceSidebarSchema = z.object({
+	items: z.array(navigationItemSchema).max(30).optional(),
+	tree: z
+		.object({
+			endpoint: z.string().min(1).max(500),
+		})
+		.optional(),
+	footerItems: z.array(navigationItemSchema).max(30).optional(),
 });
 
 export const uiManifestSchema = z.object({
@@ -74,6 +85,7 @@ export const uiManifestSchema = z.object({
 	widgets: z.array(widgetDefinitionSchema).max(50),
 	pages: z.array(pageDefinitionSchema).max(50),
 	permissions: z.array(z.string().max(100)).max(100),
+	sidebar: serviceSidebarSchema.optional(),
 });
 
 export const registerServiceSchema = z.object({
