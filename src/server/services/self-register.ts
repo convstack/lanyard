@@ -4,6 +4,7 @@ import type { UIManifest } from "~/db/schema/service-catalog";
 import { LANYARD_ADMIN_MANIFEST } from "~/lib/admin-manifest";
 import { DEPARTMENTS_MANIFEST } from "~/lib/departments-manifest";
 import { MY_ACCOUNT_MANIFEST } from "~/lib/user-manifest";
+import pkg from "../../../package.json";
 
 interface ServiceOptions {
 	slug: string;
@@ -62,7 +63,7 @@ async function registerService(opts: ServiceOptions) {
 		type: opts.type,
 		visibility: opts.visibility ?? "all",
 		description: opts.description,
-		version: "1.0.0",
+		version: pkg.version,
 		baseUrl: opts.baseUrl,
 		healthCheckPath: "/api/health",
 		uiManifest: opts.manifest,

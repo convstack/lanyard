@@ -26,6 +26,12 @@ export default defineConfig({
           } catch (err) {
             console.warn("Failed to self-register in dev:", err);
           }
+          try {
+            const hc = await server.ssrLoadModule("~/server/services/health-checker");
+            hc.startHealthChecker();
+          } catch (err) {
+            console.warn("Failed to start health checker in dev:", err);
+          }
         });
       },
     },
