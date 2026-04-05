@@ -26,7 +26,6 @@ async function checkServiceHealth(
 		clearTimeout(timeout);
 
 		if (response.ok) {
-			// Service is healthy
 			const previousStatus = service.status;
 			await db
 				.update(serviceCatalogEntry)
@@ -104,7 +103,7 @@ async function recordFailure(
 	}
 }
 
-async function runHealthChecks() {
+export async function runHealthChecks() {
 	try {
 		const services = await db
 			.select()

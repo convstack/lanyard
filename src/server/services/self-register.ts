@@ -1,10 +1,15 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { hash } from "bcryptjs";
 import { nanoid } from "nanoid";
 import type { UIManifest } from "~/db/schema/service-catalog";
 import { LANYARD_ADMIN_MANIFEST } from "~/lib/admin-manifest";
 import { DEPARTMENTS_MANIFEST } from "~/lib/departments-manifest";
 import { MY_ACCOUNT_MANIFEST } from "~/lib/user-manifest";
-import pkg from "../../../package.json";
+
+const { version: pkgVersion } = JSON.parse(
+	readFileSync(join(process.cwd(), "package.json"), "utf-8"),
+);
 
 interface ServiceOptions {
 	slug: string;
@@ -63,7 +68,7 @@ async function registerService(opts: ServiceOptions) {
 		type: opts.type,
 		visibility: opts.visibility ?? "all",
 		description: opts.description,
-		version: pkg.version,
+		version: pkgVersion,
 		baseUrl: opts.baseUrl,
 		healthCheckPath: "/api/health",
 		uiManifest: opts.manifest,

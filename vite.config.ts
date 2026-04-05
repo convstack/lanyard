@@ -27,8 +27,15 @@ export default defineConfig({
             console.warn("Failed to self-register in dev:", err);
           }
           try {
-            const hc = await server.ssrLoadModule("~/server/services/health-checker");
-            hc.startHealthChecker();
+            const runChecks = async () => {
+              const hc = await server.ssrLoadModule("~/server/services/health-checker");
+              await hc.runHealthChecks();
+            };
+            setTimeout(() => {
+              runChecks();
+              setInterval(runChecks, 60_000);
+            }, 5_000);
+            console.log("Health checker started (interval: 60s)");
           } catch (err) {
             console.warn("Failed to start health checker in dev:", err);
           }
