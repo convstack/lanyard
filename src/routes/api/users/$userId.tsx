@@ -34,6 +34,7 @@ export const Route = createFileRoute("/api/users/$userId")({
 					.select({
 						id: user.id,
 						name: user.name,
+						email: user.email,
 						image: user.image,
 					})
 					.from(user)
@@ -47,11 +48,18 @@ export const Route = createFileRoute("/api/users/$userId")({
 					});
 				}
 
+				// Include email only for service-authenticated requests
+				const isService =
+					authedUser.id.startsWith("service:") ||
+					authedUser.role === "service" ||
+					authedUser.role === "service-admin";
+
 				return new Response(
 					JSON.stringify({
 						id: found.id,
 						name: found.name ?? "Unknown",
 						image: found.image,
+						...(isService ? { email: found.email } : {}),
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);
