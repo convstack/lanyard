@@ -299,7 +299,7 @@
                     "type": "string",
                     "description": "Client name"
                   },
-                  "redirectUrls": {
+                  "redirectUris": {
                     "type": "string",
                     "description": "Redirect URLs"
                   },
@@ -428,7 +428,7 @@
                     "type": "string",
                     "description": "Client name"
                   },
-                  "redirectUrls": {
+                  "redirectUris": {
                     "type": "string",
                     "description": "Redirect URLs"
                   },
@@ -439,7 +439,7 @@
                 },
                 "required": [
                   "name",
-                  "redirectUrls"
+                  "redirectUris"
                 ]
               }
             }

@@ -51,7 +51,7 @@ export const Route = createFileRoute("/api/admin/clients/register")({
 					name,
 					clientId,
 					clientSecret,
-					redirectUris: redirectUris,
+					redirectUris: redirectUris.split(",").map((u: string) => u.trim()),
 					type: type || "confidential",
 					disabled: false,
 					userId: user.id,

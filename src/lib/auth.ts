@@ -112,8 +112,12 @@ export const auth = betterAuth({
 			consentPage: "/oauth/consent",
 			accessTokenExpiresIn: 86400, // 24 hours
 			refreshTokenExpiresIn: 30 * 86400, // 30 days
-			// RFC 8414 .well-known endpoints are served via middleware
-			// outside of TanStack Router's file-based routing
+			customUserInfoClaims: ({ user }) => ({
+				role: (user as { role?: string }).role ?? "user",
+				deletionPending:
+					(user as { deletionPending?: boolean }).deletionPending ??
+					false,
+			}),
 			silenceWarnings: {
 				oauthAuthServerConfig: true,
 				openidConfig: true,

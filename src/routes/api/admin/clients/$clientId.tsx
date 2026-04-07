@@ -59,8 +59,10 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 							{ key: "type", label: "Type", value: found.type },
 							{
 								key: "redirectUris",
-								label: "Redirect URLs",
-								value: found.redirectUris,
+								label: "Redirect URIs",
+								value: Array.isArray(found.redirectUris)
+									? found.redirectUris.join(", ")
+									: found.redirectUris || "",
 							},
 							{
 								key: "disabled",
@@ -111,7 +113,9 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 				if (typeof body.name === "string" && body.name)
 					updates.name = body.name;
 				if (typeof body.redirectUris === "string" && body.redirectUris)
-					updates.redirectUris = body.redirectUris;
+					updates.redirectUris = body.redirectUris
+						.split(",")
+						.map((u: string) => u.trim());
 				if (typeof body.type === "string" && body.type)
 					updates.type = body.type;
 

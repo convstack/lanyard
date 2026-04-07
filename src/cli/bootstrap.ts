@@ -35,7 +35,10 @@ async function main() {
 
 			if (existing) {
 				// Update redirect URLs in case they changed
-				const redirectUris = `${dashboardUrl}/callback,${dashboardUrl}/login`;
+				const redirectUris = [
+					`${dashboardUrl}/callback`,
+					`${dashboardUrl}/login`,
+				];
 				await db
 					.update(oauthApplication)
 					.set({ redirectUris })
@@ -45,15 +48,25 @@ async function main() {
 				);
 			} else {
 				const { nanoid } = await import("nanoid");
+				const { createHash } = await import("@better-auth/utils/hash");
+				const { base64Url } = await import("@better-auth/utils/base64");
 
-				// Store secret as plain text — Better Auth's default
-				// storeClientSecret mode uses plain text comparison
+				// Hash the secret using SHA-256 + base64url (matches oauth-provider default)
+				const secretHash = await createHash("SHA-256").digest(
+					new TextEncoder().encode(clientSecret),
+				);
+				const hashedSecret = base64Url.encode(new Uint8Array(secretHash), {
+					padding: false,
+				});
+
 				await db.insert(oauthApplication).values({
 					id: nanoid(),
 					name: "Convention Dashboard",
 					clientId,
-					clientSecret,
-					redirectUris: `${dashboardUrl}/callback,${dashboardUrl}/login`,
+					clientSecret: hashedSecret,
+					redirectUris: [`${dashboardUrl}/callback`, `${dashboardUrl}/login`],
+					postLogoutRedirectUris: [`${dashboardUrl}/login`],
+					enableEndSession: true,
 					type: "confidential",
 					disabled: false,
 					createdAt: new Date(),

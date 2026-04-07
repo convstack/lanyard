@@ -85,7 +85,7 @@ async function seed() {
 			name: "Test Application",
 			clientId,
 			clientSecret,
-			redirectUris: "http://localhost:4000/callback",
+			redirectUris: ["http://localhost:4000/callback"],
 			type: "confidential",
 			userId: adminId,
 		})

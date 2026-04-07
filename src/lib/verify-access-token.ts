@@ -25,19 +25,40 @@ export async function verifyAccessToken(request: Request): Promise<{
 	const { db } = await import("~/db");
 	const { oauthAccessToken } = await import("~/db/schema");
 	const { user } = await import("~/db/schema");
-	const { eq } = await import("drizzle-orm");
+	const { eq, or } = await import("drizzle-orm");
 
-	// Look up the access token
+	// Hash the token (new plugin stores hashed tokens via SHA-256 + base64url)
+	const { createHash } = await import("@better-auth/utils/hash");
+	const { base64Url } = await import("@better-auth/utils/base64");
+	const hash = await createHash("SHA-256").digest(
+		new TextEncoder().encode(token),
+	);
+	const hashedToken = base64Url.encode(new Uint8Array(hash), {
+		padding: false,
+	});
+
+	// Look up: hashed token (new plugin) OR plain text access_token (legacy)
 	const [accessToken] = await db
 		.select()
 		.from(oauthAccessToken)
-		.where(eq(oauthAccessToken.accessToken, token))
+		.where(
+			or(
+				eq(oauthAccessToken.token, hashedToken),
+				eq(oauthAccessToken.accessToken, token),
+			),
+		)
 		.limit(1);
 
 	if (!accessToken) return null;
 
 	// Check expiry
-	if (accessToken.accessTokenExpiresAt < new Date()) return null;
+	if (
+		accessToken.accessTokenExpiresAt &&
+		accessToken.accessTokenExpiresAt < new Date()
+	)
+		return null;
+
+	if (!accessToken.userId) return null;
 
 	// Get user
 	const [foundUser] = await db
@@ -56,7 +77,7 @@ export async function verifyAccessToken(request: Request): Promise<{
 
 	return {
 		userId: accessToken.userId,
-		scopes: accessToken.scopes.split(" "),
+		scopes: accessToken.scopes ?? [],
 		user: foundUser,
 	};
 }
