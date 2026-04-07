@@ -8,7 +8,6 @@ interface OpenAPISpec {
 	paths: Record<string, unknown>;
 }
 
-// Cache for 60 seconds
 let cache: { spec: string; fetchedAt: number } | null = null;
 const CACHE_TTL = 60_000;
 
@@ -24,7 +23,7 @@ async function fetchServiceSpec(baseUrl: string): Promise<OpenAPISpec | null> {
 	}
 }
 
-async function buildAggregatedSpec(): Promise<string> {
+async function buildAggregatedSpec(requestUrl: string): Promise<string> {
 	if (cache && Date.now() - cache.fetchedAt < CACHE_TTL) {
 		return cache.spec;
 	}
@@ -32,6 +31,9 @@ async function buildAggregatedSpec(): Promise<string> {
 	const { db } = await import("~/db");
 	const { serviceCatalogEntry } = await import("~/db/schema");
 	const { eq } = await import("drizzle-orm");
+
+	const parsed = new URL(requestUrl);
+	const lanyardBaseUrl = `${parsed.protocol}//${parsed.host}`;
 
 	const services = await db
 		.select({
@@ -42,7 +44,6 @@ async function buildAggregatedSpec(): Promise<string> {
 		.from(serviceCatalogEntry)
 		.where(eq(serviceCatalogEntry.disabled, false));
 
-	// Start with Lanyard's own spec
 	let lanyardSpec: OpenAPISpec;
 	try {
 		lanyardSpec = JSON.parse(
@@ -58,18 +59,20 @@ async function buildAggregatedSpec(): Promise<string> {
 
 	const mergedPaths: Record<string, unknown> = {};
 	const tags: Array<{ name: string; description: string }> = [
-		{ name: "lanyard", description: "Lanyard (Identity & Service Catalog)" },
+		{
+			name: "lanyard",
+			description: `Lanyard (${lanyardBaseUrl})`,
+		},
 	];
 
-	// Add Lanyard's own paths
 	for (const [path, methods] of Object.entries(lanyardSpec.paths)) {
-		mergedPaths[path] = retagMethods(
+		mergedPaths[path] = addServerToMethods(
 			methods as Record<string, unknown>,
 			"lanyard",
+			lanyardBaseUrl,
 		);
 	}
 
-	// Fetch and merge each service's spec
 	const fetches = services
 		.filter(
 			(s) =>
@@ -83,15 +86,14 @@ async function buildAggregatedSpec(): Promise<string> {
 
 			tags.push({
 				name: service.slug,
-				description: service.name,
+				description: `${service.name} (${service.baseUrl})`,
 			});
 
 			for (const [path, methods] of Object.entries(spec.paths)) {
-				// Prefix paths with service slug for clarity
-				const prefixedPath = `/${service.slug}${path}`;
-				mergedPaths[prefixedPath] = retagMethods(
+				mergedPaths[path] = addServerToMethods(
 					methods as Record<string, unknown>,
 					service.slug,
+					service.baseUrl,
 				);
 			}
 		});
@@ -118,9 +120,10 @@ async function buildAggregatedSpec(): Promise<string> {
 	return spec;
 }
 
-function retagMethods(
+function addServerToMethods(
 	methods: Record<string, unknown>,
 	tag: string,
+	serverUrl: string,
 ): Record<string, unknown> {
 	const result: Record<string, unknown> = {};
 	for (const [method, operation] of Object.entries(methods)) {
@@ -128,6 +131,7 @@ function retagMethods(
 			result[method] = {
 				...(operation as Record<string, unknown>),
 				tags: [tag],
+				servers: [{ url: serverUrl }],
 			};
 		} else {
 			result[method] = operation;
@@ -139,8 +143,8 @@ function retagMethods(
 export const Route = createFileRoute("/api/docs/openapi")({
 	server: {
 		handlers: {
-			GET: async () => {
-				const spec = await buildAggregatedSpec();
+			GET: async ({ request }: { request: Request }) => {
+				const spec = await buildAggregatedSpec(request.url);
 				return new Response(spec, {
 					status: 200,
 					headers: {
