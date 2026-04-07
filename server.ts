@@ -53,6 +53,22 @@ Bun.serve({
 			}
 		}
 
+		// RFC 8414: OAuth 2.0 Authorization Server Metadata
+		if (pathname.startsWith("/.well-known/")) {
+			const { auth } = await import("./src/lib/auth.ts");
+			const { oauthProviderAuthServerMetadata, oauthProviderOpenIdConfigMetadata } =
+				await import("@better-auth/oauth-provider");
+
+			if (pathname.startsWith("/.well-known/oauth-authorization-server")) {
+				const handler = oauthProviderAuthServerMetadata(auth);
+				return await handler(request);
+			}
+			if (pathname.startsWith("/.well-known/openid-configuration")) {
+				const handler = oauthProviderOpenIdConfigMetadata(auth);
+				return await handler(request);
+			}
+		}
+
 		// Forward everything else to TanStack Start handler
 		return app.fetch(request);
 	},
