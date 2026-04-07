@@ -5,6 +5,14 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/departments/$slug")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get department details by slug
+			 * auth: user
+			 * response: 200
+			 *   fields: array
+			 * error: 401 Unauthorized
+			 * error: 404 Department not found
+			 */
 			GET: async ({
 				request,
 				params,
@@ -44,6 +52,17 @@ export const Route = createFileRoute("/api/departments/$slug")({
 				);
 			},
 
+			/** @openapi
+			 * summary: Update department details
+			 * auth: user (department admin)
+			 * body:
+			 *   name: string - Department name
+			 *   metadata: string - Department description
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 403 Admin access required
+			 */
 			PUT: async ({
 				request,
 				params,

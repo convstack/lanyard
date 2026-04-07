@@ -4,6 +4,14 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/user/sessions/$sessionId/revoke")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Revoke a specific user session
+			 * auth: user
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 404 Session not found
+			 */
 			POST: async ({
 				request,
 				params,

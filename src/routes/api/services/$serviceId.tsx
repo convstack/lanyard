@@ -6,6 +6,19 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/services/$serviceId")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get service details with audit log
+			 * auth: admin
+			 * response: 200
+			 *   id: string
+			 *   name: string
+			 *   slug: string
+			 *   type: string
+			 *   status: string
+			 *   auditLog: array
+			 * error: 401 Unauthorized
+			 * error: 404 Service not found
+			 */
 			GET: async ({
 				request,
 				params,
@@ -57,6 +70,23 @@ export const Route = createFileRoute("/api/services/$serviceId")({
 				);
 			},
 
+			/** @openapi
+			 * summary: Update a service in the catalog
+			 * auth: admin
+			 * body:
+			 *   name: string - Service name
+			 *   type: string - Service type
+			 *   description: string - Description
+			 *   version: string - Version
+			 *   baseUrl: string - Base URL
+			 *   healthCheckPath: string - Health check path
+			 *   uiManifest: object - UI manifest with permissions
+			 * response: 200
+			 *   success: boolean
+			 * error: 400 Invalid JSON or validation failed
+			 * error: 401 Unauthorized
+			 * error: 404 Service not found
+			 */
 			PUT: async ({
 				request,
 				params,
@@ -165,6 +195,14 @@ export const Route = createFileRoute("/api/services/$serviceId")({
 				});
 			},
 
+			/** @openapi
+			 * summary: Delete a service from the catalog
+			 * auth: admin
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 404 Service not found
+			 */
 			DELETE: async ({
 				request,
 				params,

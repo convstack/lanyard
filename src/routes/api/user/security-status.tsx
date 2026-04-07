@@ -4,6 +4,13 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/user/security-status")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get current user security status (2FA, passkeys)
+			 * auth: user
+			 * response: 200
+			 *   fields: array
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const authedUser = await getAuthenticatedUser(request);
 				if (!authedUser) {

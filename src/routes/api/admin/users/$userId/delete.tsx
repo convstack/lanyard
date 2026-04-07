@@ -4,6 +4,16 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/admin/users/$userId/delete")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Permanently delete a user and all their data
+			 * auth: admin
+			 * response: 200
+			 *   success: boolean
+			 *   redirect: string
+			 * error: 400 Cannot delete your own account
+			 * error: 401 Unauthorized
+			 * error: 404 User not found
+			 */
 			POST: async ({
 				request,
 				params,

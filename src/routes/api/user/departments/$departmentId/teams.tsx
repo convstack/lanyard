@@ -6,6 +6,16 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List teams the current user belongs to in a department
+			 * auth: user
+			 * response: 200
+			 *   columns: array
+			 *   rows: array
+			 *   total: number
+			 * error: 401 Unauthorized
+			 * error: 404 Department not found or not a member
+			 */
 			GET: async ({
 				request,
 				params,

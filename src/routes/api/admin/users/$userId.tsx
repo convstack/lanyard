@@ -7,6 +7,14 @@ import {
 export const Route = createFileRoute("/api/admin/users/$userId")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get user details by ID
+			 * auth: admin
+			 * response: 200
+			 *   fields: array
+			 * error: 401 Unauthorized
+			 * error: 404 User not found
+			 */
 			GET: async ({
 				request,
 				params,
@@ -62,6 +70,17 @@ export const Route = createFileRoute("/api/admin/users/$userId")({
 				);
 			},
 
+			/** @openapi
+			 * summary: Update a user
+			 * auth: admin
+			 * body:
+			 *   name: string - Display name
+			 *   email: string - Email address
+			 *   role: string - User role
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 */
 			PUT: async ({
 				request,
 				params,

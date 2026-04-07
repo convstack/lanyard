@@ -6,6 +6,13 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Remove a member from a department (admin)
+			 * auth: admin
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 */
 			POST: async ({
 				request,
 				params,

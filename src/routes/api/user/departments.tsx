@@ -4,6 +4,15 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/user/departments")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List departments the current user belongs to
+			 * auth: user
+			 * response: 200
+			 *   columns: array
+			 *   rows: array
+			 *   total: number
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user) {

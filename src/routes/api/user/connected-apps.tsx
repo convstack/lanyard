@@ -4,6 +4,15 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/user/connected-apps")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List OAuth apps the user has authorized
+			 * auth: user
+			 * response: 200
+			 *   columns: array
+			 *   rows: array
+			 *   total: number
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user) {

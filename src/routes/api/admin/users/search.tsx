@@ -7,6 +7,15 @@ import {
 export const Route = createFileRoute("/api/admin/users/search")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Search users by name or email (admin)
+			 * auth: admin
+			 * query:
+			 *   q: string (required) - Search query (min 2 chars)
+			 * response: 200
+			 *   results: array
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const admin = await getAuthenticatedUser(request);
 				if (!admin || !hasAdminReadAccess(admin.role)) {

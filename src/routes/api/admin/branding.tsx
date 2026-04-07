@@ -7,6 +7,13 @@ import {
 export const Route = createFileRoute("/api/admin/branding")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get branding configuration
+			 * auth: admin
+			 * response: 200
+			 *   fields: array
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user || !hasAdminReadAccess(user.role)) {
@@ -100,6 +107,25 @@ export const Route = createFileRoute("/api/admin/branding")({
 				);
 			},
 
+			/** @openapi
+			 * summary: Update branding configuration
+			 * auth: admin
+			 * body:
+			 *   appName: string - Application name
+			 *   logoUrl: string - Logo URL
+			 *   faviconUrl: string - Favicon URL
+			 *   primaryColor: string - Primary color
+			 *   accentColor: string - Accent color
+			 *   backgroundColor: string - Background color
+			 *   foregroundColor: string - Foreground color
+			 *   mutedColor: string - Muted color
+			 *   destructiveColor: string - Destructive color
+			 *   borderRadius: string - Border radius
+			 *   customCss: string - Custom CSS
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 */
 			PUT: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user || user.role !== "admin") {

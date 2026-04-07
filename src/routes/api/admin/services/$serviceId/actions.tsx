@@ -7,6 +7,14 @@ import {
 export const Route = createFileRoute("/api/admin/services/$serviceId/actions")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get available actions for a service
+			 * auth: admin
+			 * response: 200
+			 *   actions: array
+			 * error: 401 Unauthorized
+			 * error: 404 Service not found
+			 */
 			GET: async ({
 				request,
 				params,

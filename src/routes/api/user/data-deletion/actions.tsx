@@ -4,6 +4,12 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/user/data-deletion/actions")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get available actions for the user data deletion request
+			 * auth: user
+			 * response: 200
+			 *   actions: array
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user) {

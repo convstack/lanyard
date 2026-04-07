@@ -7,6 +7,14 @@ import {
 export const Route = createFileRoute("/api/admin/services/$serviceId")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get service details (admin view)
+			 * auth: admin
+			 * response: 200
+			 *   fields: array
+			 * error: 401 Unauthorized
+			 * error: 404 Service not found
+			 */
 			GET: async ({
 				request,
 				params,
@@ -89,6 +97,21 @@ export const Route = createFileRoute("/api/admin/services/$serviceId")({
 				);
 			},
 
+			/** @openapi
+			 * summary: Update a service (admin)
+			 * auth: admin
+			 * body:
+			 *   name: string - Service name
+			 *   description: string - Description
+			 *   baseUrl: string - Base URL
+			 *   healthCheckPath: string - Health check path
+			 *   version: string - Version
+			 *   type: string - Service type
+			 *   visibility: string - Visibility level
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 */
 			PUT: async ({
 				request,
 				params,

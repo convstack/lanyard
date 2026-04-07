@@ -6,6 +6,14 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Toggle a department member role between admin and member (admin)
+			 * auth: admin
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 404 Member not found
+			 */
 			POST: async ({
 				request,
 				params,

@@ -6,6 +6,15 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Regenerate a service API key
+			 * auth: admin
+			 * response: 200
+			 *   apiKey: string
+			 *   message: string
+			 * error: 401 Unauthorized
+			 * error: 404 Service not found
+			 */
 			POST: async ({
 				request,
 				params,

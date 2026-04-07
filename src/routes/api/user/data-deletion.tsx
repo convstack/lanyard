@@ -4,6 +4,13 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/user/data-deletion")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get current user data deletion request status
+			 * auth: user
+			 * response: 200
+			 *   fields: array
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const authedUser = await getAuthenticatedUser(request);
 				if (!authedUser) {
@@ -78,6 +85,17 @@ export const Route = createFileRoute("/api/user/data-deletion")({
 				);
 			},
 
+			/** @openapi
+			 * summary: Submit a data deletion request
+			 * auth: user
+			 * body:
+			 *   reason: string - Reason for deletion
+			 *   additionalInfo: string - Additional details
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 409 A pending or accepted deletion request already exists
+			 */
 			POST: async ({ request }: { request: Request }) => {
 				const authedUser = await getAuthenticatedUser(request);
 				if (!authedUser) {

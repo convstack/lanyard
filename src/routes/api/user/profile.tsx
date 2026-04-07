@@ -4,6 +4,13 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/user/profile")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get current user profile fields
+			 * auth: user
+			 * response: 200
+			 *   fields: array
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const authedUser = await getAuthenticatedUser(request);
 				if (!authedUser) {
@@ -36,6 +43,16 @@ export const Route = createFileRoute("/api/user/profile")({
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);
 			},
+			/** @openapi
+			 * summary: Update current user profile
+			 * auth: user
+			 * body:
+			 *   name: string - Display name
+			 *   image: string - Avatar URL
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 */
 			PUT: async ({ request }: { request: Request }) => {
 				const authedUser = await getAuthenticatedUser(request);
 				if (!authedUser) {

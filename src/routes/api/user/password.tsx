@@ -5,6 +5,17 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/user/password")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Change current user password
+			 * auth: user
+			 * body:
+			 *   currentPassword: string (required) - Current password
+			 *   newPassword: string (required) - New password
+			 * response: 200
+			 *   success: boolean
+			 * error: 400 Password change failed
+			 * error: 401 Unauthorized
+			 */
 			POST: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user) {

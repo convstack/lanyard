@@ -7,6 +7,15 @@ import {
 export const Route = createFileRoute("/api/user/sessions")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List current user sessions
+			 * auth: user
+			 * response: 200
+			 *   columns: array
+			 *   rows: array
+			 *   total: number
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user) {

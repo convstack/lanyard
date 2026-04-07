@@ -14,6 +14,18 @@ async function getMaxSizeMb(): Promise<number> {
 export const Route = createFileRoute("/api/upload/avatar")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Upload a new avatar image
+			 * auth: user
+			 * body:
+			 *   file: File (required) - Image file (JPEG, PNG, GIF, WebP)
+			 * response: 200
+			 *   url: string
+			 * error: 400 No file provided or invalid file type or file too large
+			 * error: 401 Unauthorized
+			 * error: 500 Upload failed
+			 * error: 501 File uploads are not configured
+			 */
 			POST: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user) {

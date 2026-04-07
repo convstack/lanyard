@@ -6,6 +6,15 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Execute a data deletion request immediately
+			 * auth: admin
+			 * response: 200
+			 *   success: boolean
+			 *   redirect: string
+			 * error: 400 Deletion failed
+			 * error: 401 Unauthorized
+			 */
 			POST: async ({
 				request,
 				params,

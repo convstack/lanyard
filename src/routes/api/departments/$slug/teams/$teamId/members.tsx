@@ -7,6 +7,17 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List members of a team
+			 * auth: user (department member)
+			 * response: 200
+			 *   columns: array
+			 *   rows: array
+			 *   total: number
+			 *   rowActions: array (admin only)
+			 * error: 401 Unauthorized
+			 * error: 403 Not a member
+			 */
 			GET: async ({
 				request,
 				params,
@@ -72,6 +83,16 @@ export const Route = createFileRoute(
 				);
 			},
 
+			/** @openapi
+			 * summary: Add a member to a team
+			 * auth: user (department admin)
+			 * body:
+			 *   userId: string (required) - User ID to add
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 403 Admin access required
+			 */
 			POST: async ({
 				request,
 				params,

@@ -7,6 +7,14 @@ import {
 export const Route = createFileRoute("/api/admin/clients/$clientId")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get OAuth client details
+			 * auth: admin
+			 * response: 200
+			 *   fields: array
+			 * error: 401 Unauthorized
+			 * error: 404 Client not found
+			 */
 			GET: async ({
 				request,
 				params,
@@ -66,6 +74,17 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 				);
 			},
 
+			/** @openapi
+			 * summary: Update an OAuth client
+			 * auth: admin
+			 * body:
+			 *   name: string - Client name
+			 *   redirectUrls: string - Redirect URLs
+			 *   type: string - Client type
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 */
 			PUT: async ({
 				request,
 				params,
@@ -107,6 +126,14 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 				});
 			},
 
+			/** @openapi
+			 * summary: Delete an OAuth client
+			 * auth: admin
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 404 Client not found
+			 */
 			DELETE: async ({
 				request,
 				params,

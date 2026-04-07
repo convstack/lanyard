@@ -4,6 +4,13 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/user/passkeys")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List current user passkeys
+			 * auth: user
+			 * response: 200
+			 *   data: array
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user) {

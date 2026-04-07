@@ -7,9 +7,16 @@ import {
 export const Route = createFileRoute("/api/users/$userId")({
 	server: {
 		handlers: {
-			/**
-			 * Public profile lookup — returns only non-sensitive fields (name, image).
-			 * Accessible to any authenticated service or admin.
+			/** @openapi
+			 * summary: Get a user public profile by ID
+			 * auth: user
+			 * response: 200
+			 *   id: string
+			 *   name: string
+			 *   image: string
+			 *   email: string (service-authenticated requests only)
+			 * error: 401 Unauthorized
+			 * error: 404 User not found
 			 */
 			GET: async ({
 				request,

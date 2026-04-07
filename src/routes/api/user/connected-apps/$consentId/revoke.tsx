@@ -6,6 +6,14 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Revoke an OAuth app consent
+			 * auth: user
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 404 Consent not found
+			 */
 			POST: async ({
 				request,
 				params,

@@ -5,6 +5,13 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/departments/$slug/actions")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get available actions for a department
+			 * auth: user
+			 * response: 200
+			 *   actions: array
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({
 				request,
 				params,

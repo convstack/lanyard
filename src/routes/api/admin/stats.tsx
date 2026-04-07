@@ -7,6 +7,14 @@ import {
 export const Route = createFileRoute("/api/admin/stats")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get admin dashboard statistics
+			 * auth: admin
+			 * response: 200
+			 *   value: number
+			 *   changeLabel: string
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const authedUser = await getAuthenticatedUser(request);
 				if (!authedUser || !hasAdminReadAccess(authedUser.role)) {

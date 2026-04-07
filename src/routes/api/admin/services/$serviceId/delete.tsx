@@ -4,6 +4,14 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/admin/services/$serviceId/delete")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Delete a service
+			 * auth: admin
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 404 Service not found
+			 */
 			POST: async ({
 				request,
 				params,

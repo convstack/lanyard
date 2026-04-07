@@ -5,6 +5,17 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/departments/$slug/members")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List members of a department
+			 * auth: user (department member)
+			 * response: 200
+			 *   columns: array
+			 *   rows: array
+			 *   total: number
+			 *   rowActions: array (admin only)
+			 * error: 401 Unauthorized
+			 * error: 403 Not a member
+			 */
 			GET: async ({
 				request,
 				params,
@@ -78,6 +89,20 @@ export const Route = createFileRoute("/api/departments/$slug/members")({
 				);
 			},
 
+			/** @openapi
+			 * summary: Add a member to a department
+			 * auth: user (department admin)
+			 * body:
+			 *   userId: string - User ID to add
+			 *   email: string - Or email to look up user
+			 *   role: string - Role to assign (default: member)
+			 * response: 200
+			 *   success: boolean
+			 * error: 400 User ID or email required
+			 * error: 401 Unauthorized
+			 * error: 403 Admin access required
+			 * error: 404 User not found
+			 */
 			POST: async ({
 				request,
 				params,

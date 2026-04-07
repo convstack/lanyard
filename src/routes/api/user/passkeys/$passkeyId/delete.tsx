@@ -4,6 +4,14 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/user/passkeys/$passkeyId/delete")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Delete a passkey
+			 * auth: user
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 404 Passkey not found
+			 */
 			POST: async ({
 				request,
 				params,

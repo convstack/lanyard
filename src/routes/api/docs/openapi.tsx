@@ -143,6 +143,14 @@ function addServerToMethods(
 export const Route = createFileRoute("/api/docs/openapi")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get aggregated OpenAPI spec from all registered services
+			 * response: 200
+			 *   openapi: string
+			 *   info: object
+			 *   tags: array
+			 *   paths: object
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const spec = await buildAggregatedSpec(request.url);
 				return new Response(spec, {

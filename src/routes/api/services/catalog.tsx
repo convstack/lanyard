@@ -8,6 +8,14 @@ import {
 export const Route = createFileRoute("/api/services/catalog")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List visible services for the authenticated user
+			 * auth: user
+			 * response: 200
+			 *   []: array of service objects (id, name, slug, type, description, version, baseUrl, uiManifest, status, lastHealthCheck, lastHealthStatus, visibility)
+			 * error: 401 Unauthorized
+			 * error: 429 Too many requests
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const ip =
 					request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||

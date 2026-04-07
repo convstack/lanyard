@@ -6,6 +6,14 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Delete a department and cascade remove members, teams
+			 * auth: admin
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 404 Department not found
+			 */
 			POST: async ({
 				request,
 				params,

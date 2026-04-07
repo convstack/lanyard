@@ -9,6 +9,15 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List department members (admin)
+			 * auth: admin
+			 * response: 200
+			 *   columns: array
+			 *   rows: array
+			 *   rowActions: array
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({
 				request,
 				params,
@@ -68,6 +77,19 @@ export const Route = createFileRoute(
 				);
 			},
 
+			/** @openapi
+			 * summary: Add a member to a department (admin)
+			 * auth: admin
+			 * body:
+			 *   userId: string - User ID to add
+			 *   email: string - Or email to look up user
+			 *   role: string - Role to assign (default: member)
+			 * response: 200
+			 *   success: boolean
+			 * error: 400 User ID or email is required
+			 * error: 401 Unauthorized
+			 * error: 404 User not found
+			 */
 			POST: async ({
 				request,
 				params,

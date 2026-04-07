@@ -6,6 +6,17 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Decline a data deletion request
+			 * auth: admin
+			 * body:
+			 *   note: string - Review note
+			 * response: 200
+			 *   success: boolean
+			 * error: 400 Request is not in pending status
+			 * error: 401 Unauthorized
+			 * error: 404 Request not found
+			 */
 			POST: async ({
 				request,
 				params,

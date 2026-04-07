@@ -7,6 +7,12 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get available actions for a team
+			 * auth: user (department admin)
+			 * response: 200
+			 *   actions: array
+			 */
 			GET: async ({
 				request,
 				params,

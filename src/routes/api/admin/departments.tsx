@@ -7,6 +7,15 @@ import {
 export const Route = createFileRoute("/api/admin/departments")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List all departments with member counts
+			 * auth: admin
+			 * response: 200
+			 *   columns: array
+			 *   rows: array
+			 *   total: number
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user || !hasAdminReadAccess(user.role)) {

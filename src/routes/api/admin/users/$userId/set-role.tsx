@@ -6,6 +6,16 @@ const VALID_ROLES = ["user", "staff", "admin"];
 export const Route = createFileRoute("/api/admin/users/$userId/set-role")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Set a user role
+			 * auth: admin
+			 * query:
+			 *   role: string (required) - New role (user, staff, or admin)
+			 * response: 200
+			 *   success: boolean
+			 * error: 400 Invalid role
+			 * error: 401 Unauthorized
+			 */
 			POST: async ({
 				request,
 				params,

@@ -7,6 +7,18 @@ import { uiManifestSchema } from "~/lib/validators/service-catalog";
 export const Route = createFileRoute("/api/services/heartbeat")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Report service heartbeat and optionally update manifest
+			 * auth: service
+			 * body:
+			 *   version: string - Current service version
+			 *   uiManifest: object - UI manifest with permissions
+			 * response: 200
+			 *   status: string
+			 * error: 401 Missing or invalid ServiceKey authorization
+			 * error: 403 Service is disabled
+			 * error: 429 Too many requests
+			 */
 			POST: async ({ request }: { request: Request }) => {
 				const ip =
 					request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||

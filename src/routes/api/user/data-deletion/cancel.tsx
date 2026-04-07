@@ -4,6 +4,14 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/user/data-deletion/cancel")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Cancel an active data deletion request
+			 * auth: user
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 404 No active deletion request found
+			 */
 			POST: async ({ request }: { request: Request }) => {
 				const authedUser = await getAuthenticatedUser(request);
 				if (!authedUser) {

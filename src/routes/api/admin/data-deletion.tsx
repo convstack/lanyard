@@ -7,6 +7,14 @@ import {
 export const Route = createFileRoute("/api/admin/data-deletion")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List all data deletion requests
+			 * auth: admin
+			 * response: 200
+			 *   columns: array
+			 *   rows: array
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const authedUser = await getAuthenticatedUser(request);
 				if (!authedUser || !hasAdminReadAccess(authedUser.role)) {

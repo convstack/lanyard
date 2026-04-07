@@ -7,6 +7,14 @@ import {
 export const Route = createFileRoute("/api/admin/clients/$clientId/actions")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get available actions for an OAuth client
+			 * auth: admin
+			 * response: 200
+			 *   actions: array
+			 * error: 401 Unauthorized
+			 * error: 404 Client not found
+			 */
 			GET: async ({
 				request,
 				params,

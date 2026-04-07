@@ -9,6 +9,14 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get available actions for a data deletion request
+			 * auth: admin
+			 * response: 200
+			 *   actions: array
+			 * error: 401 Unauthorized
+			 * error: 404 Request not found
+			 */
 			GET: async ({
 				request,
 				params,

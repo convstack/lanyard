@@ -7,6 +7,14 @@ import {
 export const Route = createFileRoute("/api/admin/departments/$departmentId")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get department details by ID (admin)
+			 * auth: admin
+			 * response: 200
+			 *   fields: array
+			 * error: 401 Unauthorized
+			 * error: 404 Department not found
+			 */
 			GET: async ({
 				request,
 				params,
@@ -60,6 +68,19 @@ export const Route = createFileRoute("/api/admin/departments/$departmentId")({
 				);
 			},
 
+			/** @openapi
+			 * summary: Update a department (admin)
+			 * auth: admin
+			 * body:
+			 *   name: string - Department name
+			 *   slug: string - URL slug
+			 *   logo: string - Logo URL
+			 *   metadata: string - Description
+			 * response: 200
+			 *   success: boolean
+			 * error: 400 No fields to update
+			 * error: 401 Unauthorized
+			 */
 			PUT: async ({
 				request,
 				params,

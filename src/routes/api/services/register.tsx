@@ -9,6 +9,30 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/services/register")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Register a new service in the catalog
+			 * auth: admin
+			 * body:
+			 *   name: string (required) - Service name
+			 *   slug: string (required) - Unique slug
+			 *   type: string (required) - Service type
+			 *   baseUrl: string (required) - Base URL
+			 *   description: string - Service description
+			 *   version: string - Version string
+			 *   healthCheckPath: string - Health check endpoint path
+			 *   uiManifest: object - UI manifest with permissions
+			 *   visibility: string - Visibility level (all, staff, admin)
+			 *   requiredOrganizationId: string - Restrict to a department
+			 * response: 201
+			 *   serviceId: string
+			 *   apiKey: string
+			 *   message: string
+			 *   redirect: string
+			 * error: 400 Invalid JSON or validation failed
+			 * error: 401 Unauthorized
+			 * error: 409 Slug already exists
+			 * error: 429 Too many requests
+			 */
 			POST: async ({ request }: { request: Request }) => {
 				// Rate limit
 				const ip =

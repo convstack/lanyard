@@ -4,6 +4,22 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/admin/clients/register")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Register a new OAuth client
+			 * auth: admin
+			 * body:
+			 *   name: string (required) - Client name
+			 *   redirectUrls: string (required) - Redirect URLs
+			 *   type: string - Client type (default: confidential)
+			 * response: 201
+			 *   success: boolean
+			 *   clientId: string
+			 *   clientSecret: string
+			 *   message: string
+			 *   redirect: string
+			 * error: 400 Name and redirect URLs are required
+			 * error: 401 Unauthorized
+			 */
 			POST: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user || user.role !== "admin") {

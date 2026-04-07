@@ -4,6 +4,22 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/admin/departments/create")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Create a new department
+			 * auth: admin
+			 * body:
+			 *   name: string (required) - Department name
+			 *   slug: string (required) - URL slug
+			 *   metadata: string - Description
+			 *   private: boolean - Whether department is private
+			 * response: 201
+			 *   success: boolean
+			 *   departmentId: string
+			 *   redirect: string
+			 * error: 400 Name and slug are required
+			 * error: 401 Unauthorized
+			 * error: 409 Slug already exists
+			 */
 			POST: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user || user.role !== "admin") {

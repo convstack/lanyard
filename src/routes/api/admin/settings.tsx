@@ -8,6 +8,13 @@ import {
 export const Route = createFileRoute("/api/admin/settings")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Get application settings
+			 * auth: admin
+			 * response: 200
+			 *   fields: array
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user || !hasAdminReadAccess(user.role)) {
@@ -77,6 +84,21 @@ export const Route = createFileRoute("/api/admin/settings")({
 				);
 			},
 
+			/** @openapi
+			 * summary: Update application settings
+			 * auth: admin
+			 * body:
+			 *   avatarMaxSizeMb: string - Max avatar file size in MB
+			 *   discordClientId: string - Discord OAuth client ID
+			 *   discordClientSecret: string - Discord OAuth client secret
+			 *   googleClientId: string - Google OAuth client ID
+			 *   googleClientSecret: string - Google OAuth client secret
+			 *   githubClientId: string - GitHub OAuth client ID
+			 *   githubClientSecret: string - GitHub OAuth client secret
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 */
 			PUT: async ({ request }: { request: Request }) => {
 				const user = await getAuthenticatedUser(request);
 				if (!user || user.role !== "admin") {

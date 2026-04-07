@@ -4,6 +4,14 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/admin/users/$userId/ban")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Ban a user and revoke all sessions
+			 * auth: admin
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 404 User not found
+			 */
 			POST: async ({
 				request,
 				params,

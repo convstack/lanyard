@@ -4,6 +4,14 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/admin/users/$userId/verify-email")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Manually verify a user email
+			 * auth: admin
+			 * response: 200
+			 *   success: boolean
+			 * error: 401 Unauthorized
+			 * error: 404 User not found
+			 */
 			POST: async ({
 				request,
 				params,

@@ -4,6 +4,21 @@ import { getAuthenticatedUser } from "~/lib/verify-access-token";
 export const Route = createFileRoute("/api/admin/users/create")({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Create a new user
+			 * auth: admin
+			 * body:
+			 *   name: string (required) - Display name
+			 *   email: string (required) - Email address
+			 *   password: string (required) - Password
+			 *   role: string - User role (default: user)
+			 * response: 201
+			 *   success: boolean
+			 *   userId: string
+			 *   redirect: string
+			 * error: 400 Missing required fields or creation failed
+			 * error: 401 Unauthorized
+			 */
 			POST: async ({ request }: { request: Request }) => {
 				const admin = await getAuthenticatedUser(request);
 				if (!admin || admin.role !== "admin") {

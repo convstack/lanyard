@@ -10,6 +10,17 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: List teams in a department (admin)
+			 * auth: admin
+			 * response: 200
+			 *   columns: array
+			 *   rows: array
+			 *   total: number
+			 *   rowActions: array
+			 *   rowLink: string
+			 * error: 401 Unauthorized
+			 */
 			GET: async ({
 				request,
 				params,
@@ -73,6 +84,16 @@ export const Route = createFileRoute(
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);
 			},
+			/** @openapi
+			 * summary: Create a team in a department (admin)
+			 * auth: admin
+			 * body:
+			 *   name: string (required) - Team name
+			 * response: 201
+			 *   success: boolean
+			 * error: 400 Name is required
+			 * error: 401 Unauthorized
+			 */
 			POST: async ({
 				request,
 				params,

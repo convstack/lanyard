@@ -6,6 +6,15 @@ export const Route = createFileRoute(
 )({
 	server: {
 		handlers: {
+			/** @openapi
+			 * summary: Accept a data deletion request and schedule deletion in 30 days
+			 * auth: admin
+			 * response: 200
+			 *   success: boolean
+			 * error: 400 Request is not in pending status
+			 * error: 401 Unauthorized
+			 * error: 404 Request not found
+			 */
 			POST: async ({
 				request,
 				params,
