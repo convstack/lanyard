@@ -71,7 +71,17 @@ function buildSocialProviders(): BetterAuthOptions["socialProviders"] {
 export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: "pg",
-		schema,
+		// Exclude OIDC tables — Better Auth's oauth-provider plugin manages them.
+		// Passing them in schema causes duplicate table/column errors.
+		schema: {
+			...schema,
+			oauthClient: undefined,
+			oauthApplication: undefined,
+			oauthAccessToken: undefined,
+			oauthRefreshToken: undefined,
+			oauthConsent: undefined,
+			oauthAuthorizationCode: undefined,
+		},
 	}),
 	baseURL: process.env.BETTER_AUTH_URL,
 	secret: process.env.BETTER_AUTH_SECRET,

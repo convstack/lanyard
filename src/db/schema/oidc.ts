@@ -1,24 +1,32 @@
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { user } from "./auth";
 
-export const oauthApplication = pgTable("oauth_application", {
+// Better Auth's oauth-provider plugin manages these tables internally.
+// They are excluded from drizzle-kit.ts (used for migrations) to avoid
+// duplicate column errors. They ARE exported from index.ts for runtime
+// Drizzle queries in our own code (bootstrap, verify-access-token, admin).
+
+export const oauthClient = pgTable("oauth_client", {
 	id: text("id").primaryKey(),
+	clientId: text("client_id").notNull().unique(),
+	clientSecret: text("client_secret"),
 	name: text("name"),
 	icon: text("icon"),
-	clientId: text("client_id").notNull().unique(),
-	clientSecret: text("client_secret").notNull(),
-	redirectUrls: text("redirect_ur_ls").notNull(),
-	type: text("type").notNull().default("confidential"),
-	metadata: text("metadata"),
+	type: text("type"),
 	disabled: boolean("disabled").default(false),
+	redirectUrls: text("redirect_ur_ls"),
 	userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
-	createdAt: timestamp("created_at").notNull().defaultNow(),
-	updatedAt: timestamp("updated_at").notNull().defaultNow(),
+	metadata: text("metadata"),
+	createdAt: timestamp("created_at").defaultNow(),
+	updatedAt: timestamp("updated_at").defaultNow(),
 });
+
+// Alias for backward compatibility
+export const oauthApplication = oauthClient;
 
 export const oauthAccessToken = pgTable("oauth_access_token", {
 	id: text("id").primaryKey(),
-	accessToken: text("access_token").notNull(),
+	accessToken: text("access_token"),
 	refreshToken: text("refresh_token"),
 	accessTokenExpiresAt: timestamp("access_token_expires_at").notNull(),
 	refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
@@ -29,6 +37,19 @@ export const oauthAccessToken = pgTable("oauth_access_token", {
 	scopes: text("scopes").notNull(),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const oauthRefreshToken = pgTable("oauth_refresh_token", {
+	id: text("id").primaryKey(),
+	token: text("token").notNull(),
+	clientId: text("client_id").notNull(),
+	userId: text("user_id")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	scopes: text("scopes").notNull(),
+	expiresAt: timestamp("expires_at"),
+	createdAt: timestamp("created_at").defaultNow(),
+	revoked: timestamp("revoked"),
 });
 
 export const oauthConsent = pgTable("oauth_consent", {
