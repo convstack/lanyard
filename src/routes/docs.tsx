@@ -44,7 +44,21 @@ function DocsPage() {
 	}, []);
 
 	return (
-		<div ref={containerRef} className="min-h-screen">
+		<div ref={containerRef} className="min-h-screen swagger-dark-overrides">
+			<style>
+				{`
+				.dark .swagger-dark-overrides .swagger-ui {
+					filter: invert(88%) hue-rotate(180deg);
+				}
+				.dark .swagger-dark-overrides .swagger-ui img,
+				.dark .swagger-dark-overrides .swagger-ui svg {
+					filter: invert(100%) hue-rotate(180deg);
+				}
+				.dark .swagger-dark-overrides .swagger-ui .topbar {
+					background-color: transparent;
+				}
+				`}
+			</style>
 			<div id="swagger-ui" />
 		</div>
 	);
