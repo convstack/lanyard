@@ -390,7 +390,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 								required: true,
 							},
 							{
-								key: "redirectUrls",
+								key: "redirectUris",
 								label: "Redirect URLs (comma separated)",
 								type: "text",
 								required: true,
@@ -442,7 +442,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 						fields: [
 							{ key: "name", label: "Name", type: "text" },
 							{
-								key: "redirectUrls",
+								key: "redirectUris",
 								label: "Redirect URLs (comma separated)",
 								type: "text",
 							},

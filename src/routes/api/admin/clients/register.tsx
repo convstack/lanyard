@@ -9,7 +9,7 @@ export const Route = createFileRoute("/api/admin/clients/register")({
 			 * auth: admin
 			 * body:
 			 *   name: string (required) - Client name
-			 *   redirectUrls: string (required) - Redirect URLs
+			 *   redirectUris: string (required) - Redirect URLs
 			 *   type: string - Client type (default: confidential)
 			 * response: 201
 			 *   success: boolean
@@ -30,9 +30,9 @@ export const Route = createFileRoute("/api/admin/clients/register")({
 				}
 
 				const body = await request.json();
-				const { name, redirectUrls, type } = body;
+				const { name, redirectUris, type } = body;
 
-				if (!name || !redirectUrls) {
+				if (!name || !redirectUris) {
 					return new Response(
 						JSON.stringify({ error: "Name and redirect URLs are required" }),
 						{ status: 400, headers: { "Content-Type": "application/json" } },
@@ -51,7 +51,7 @@ export const Route = createFileRoute("/api/admin/clients/register")({
 					name,
 					clientId,
 					clientSecret,
-					redirectUrls: redirectUrls,
+					redirectUris: redirectUris,
 					type: type || "confidential",
 					disabled: false,
 					userId: user.id,

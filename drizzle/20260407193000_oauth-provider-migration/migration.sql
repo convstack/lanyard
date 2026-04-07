@@ -5,6 +5,10 @@
 -- Rename oauth_application to oauth_client
 ALTER TABLE IF EXISTS "oauth_application" RENAME TO "oauth_client";
 
+-- Rename redirect column: old plugin used redirectUrls (redirect_ur_ls),
+-- new plugin uses redirectUris (redirect_uris)
+ALTER TABLE "oauth_client" RENAME COLUMN "redirect_ur_ls" TO "redirect_uris";
+
 -- Add new columns that the oauth-provider plugin expects on oauth_client
 ALTER TABLE "oauth_client" ADD COLUMN IF NOT EXISTS "skip_consent" boolean;
 ALTER TABLE "oauth_client" ADD COLUMN IF NOT EXISTS "enable_end_session" boolean;

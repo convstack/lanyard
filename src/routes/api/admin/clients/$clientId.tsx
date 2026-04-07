@@ -58,9 +58,9 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 							{ key: "clientId", label: "Client ID", value: found.clientId },
 							{ key: "type", label: "Type", value: found.type },
 							{
-								key: "redirectUrls",
+								key: "redirectUris",
 								label: "Redirect URLs",
-								value: found.redirectUrls,
+								value: found.redirectUris,
 							},
 							{
 								key: "disabled",
@@ -79,7 +79,7 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 			 * auth: admin
 			 * body:
 			 *   name: string - Client name
-			 *   redirectUrls: string - Redirect URLs
+			 *   redirectUris: string - Redirect URLs
 			 *   type: string - Client type
 			 * response: 200
 			 *   success: boolean
@@ -110,8 +110,8 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 				};
 				if (typeof body.name === "string" && body.name)
 					updates.name = body.name;
-				if (typeof body.redirectUrls === "string" && body.redirectUrls)
-					updates.redirectUrls = body.redirectUrls;
+				if (typeof body.redirectUris === "string" && body.redirectUris)
+					updates.redirectUris = body.redirectUris;
 				if (typeof body.type === "string" && body.type)
 					updates.type = body.type;
 

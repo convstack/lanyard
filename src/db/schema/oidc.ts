@@ -14,7 +14,7 @@ export const oauthClient = pgTable("oauth_client", {
 	icon: text("icon"),
 	type: text("type"),
 	disabled: boolean("disabled").default(false),
-	redirectUrls: text("redirect_ur_ls"),
+	redirectUris: text("redirect_uris"),
 	userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
 	metadata: text("metadata"),
 	createdAt: timestamp("created_at").defaultNow(),

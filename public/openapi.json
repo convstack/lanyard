@@ -5,65 +5,13 @@
     "version": "0.1.0"
   },
   "paths": {
-    "/api/health": {
+    "/api/admin/branding": {
       "get": {
-        "operationId": "get_api_health",
-        "tags": [
-          "health"
-        ],
-        "summary": "Health check",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/auth/$": {
-      "get": {
-        "operationId": "get_api_auth_$",
-        "tags": [
-          "auth"
-        ],
-        "summary": "Handle auth GET requests (Better Auth passthrough)",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "post": {
-        "operationId": "post_api_auth_$",
-        "tags": [
-          "auth"
-        ],
-        "summary": "Handle auth POST requests (Better Auth passthrough)",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/api/admin/settings": {
-      "get": {
-        "operationId": "get_api_admin_settings",
+        "operationId": "get_api_admin_branding",
         "tags": [
           "admin"
         ],
-        "summary": "Get application settings",
+        "summary": "Get branding configuration",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -98,11 +46,11 @@
         }
       },
       "put": {
-        "operationId": "put_api_admin_settings",
+        "operationId": "put_api_admin_branding",
         "tags": [
           "admin"
         ],
-        "summary": "Update application settings",
+        "summary": "Update branding configuration",
         "requestBody": {
           "required": true,
           "content": {
@@ -110,33 +58,49 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "avatarMaxSizeMb": {
+                  "appName": {
                     "type": "string",
-                    "description": "Max avatar file size in MB"
+                    "description": "Application name"
                   },
-                  "discordClientId": {
+                  "logoUrl": {
                     "type": "string",
-                    "description": "Discord OAuth client ID"
+                    "description": "Logo URL"
                   },
-                  "discordClientSecret": {
+                  "faviconUrl": {
                     "type": "string",
-                    "description": "Discord OAuth client secret"
+                    "description": "Favicon URL"
                   },
-                  "googleClientId": {
+                  "primaryColor": {
                     "type": "string",
-                    "description": "Google OAuth client ID"
+                    "description": "Primary color"
                   },
-                  "googleClientSecret": {
+                  "accentColor": {
                     "type": "string",
-                    "description": "Google OAuth client secret"
+                    "description": "Accent color"
                   },
-                  "githubClientId": {
+                  "backgroundColor": {
                     "type": "string",
-                    "description": "GitHub OAuth client ID"
+                    "description": "Background color"
                   },
-                  "githubClientSecret": {
+                  "foregroundColor": {
                     "type": "string",
-                    "description": "GitHub OAuth client secret"
+                    "description": "Foreground color"
+                  },
+                  "mutedColor": {
+                    "type": "string",
+                    "description": "Muted color"
+                  },
+                  "destructiveColor": {
+                    "type": "string",
+                    "description": "Destructive color"
+                  },
+                  "borderRadius": {
+                    "type": "string",
+                    "description": "Border radius"
+                  },
+                  "customCss": {
+                    "type": "string",
+                    "description": "Custom CSS"
                   }
                 }
               }
@@ -227,102 +191,6 @@
           },
           "404": {
             "description": "Client not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/clients/register": {
-      "post": {
-        "operationId": "post_api_admin_clients_register",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Register a new OAuth client",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Client name"
-                  },
-                  "redirectUrls": {
-                    "type": "string",
-                    "description": "Redirect URLs"
-                  },
-                  "type": {
-                    "type": "string",
-                    "description": "Client type (default: confidential)"
-                  }
-                },
-                "required": [
-                  "name",
-                  "redirectUrls"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "clientId": {
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "redirect": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Name and redirect URLs are required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -542,13 +410,479 @@
         }
       }
     },
-    "/api/admin/branding": {
-      "get": {
-        "operationId": "get_api_admin_branding",
+    "/api/admin/clients/register": {
+      "post": {
+        "operationId": "post_api_admin_clients_register",
         "tags": [
           "admin"
         ],
-        "summary": "Get branding configuration",
+        "summary": "Register a new OAuth client",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Client name"
+                  },
+                  "redirectUrls": {
+                    "type": "string",
+                    "description": "Redirect URLs"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Client type (default: confidential)"
+                  }
+                },
+                "required": [
+                  "name",
+                  "redirectUrls"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "clientId": {
+                      "type": "string"
+                    },
+                    "clientSecret": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "redirect": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Name and redirect URLs are required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/clients": {
+      "get": {
+        "operationId": "get_api_admin_clients",
+        "tags": [
+          "admin"
+        ],
+        "summary": "List all OAuth clients",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "columns": {
+                      "type": "array"
+                    },
+                    "rows": {
+                      "type": "array"
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/data-deletion/{requestId}/accept": {
+      "post": {
+        "operationId": "post_api_admin_data_deletion_requestId_accept",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Accept a data deletion request and schedule deletion in 30 days",
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request is not in pending status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/data-deletion/{requestId}/actions": {
+      "get": {
+        "operationId": "get_api_admin_data_deletion_requestId_actions",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get available actions for a data deletion request",
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actions": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/data-deletion/{requestId}/decline": {
+      "post": {
+        "operationId": "post_api_admin_data_deletion_requestId_decline",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Decline a data deletion request",
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "note": {
+                    "type": "string",
+                    "description": "Review note"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request is not in pending status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/data-deletion/{requestId}/execute": {
+      "post": {
+        "operationId": "post_api_admin_data_deletion_requestId_execute",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Execute a data deletion request immediately",
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "redirect": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Deletion failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/data-deletion/{requestId}": {
+      "get": {
+        "operationId": "get_api_admin_data_deletion_requestId",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get data deletion request details",
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -579,89 +913,9 @@
                 }
               }
             }
-          }
-        }
-      },
-      "put": {
-        "operationId": "put_api_admin_branding",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Update branding configuration",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "appName": {
-                    "type": "string",
-                    "description": "Application name"
-                  },
-                  "logoUrl": {
-                    "type": "string",
-                    "description": "Logo URL"
-                  },
-                  "faviconUrl": {
-                    "type": "string",
-                    "description": "Favicon URL"
-                  },
-                  "primaryColor": {
-                    "type": "string",
-                    "description": "Primary color"
-                  },
-                  "accentColor": {
-                    "type": "string",
-                    "description": "Accent color"
-                  },
-                  "backgroundColor": {
-                    "type": "string",
-                    "description": "Background color"
-                  },
-                  "foregroundColor": {
-                    "type": "string",
-                    "description": "Foreground color"
-                  },
-                  "mutedColor": {
-                    "type": "string",
-                    "description": "Muted color"
-                  },
-                  "destructiveColor": {
-                    "type": "string",
-                    "description": "Destructive color"
-                  },
-                  "borderRadius": {
-                    "type": "string",
-                    "description": "Border radius"
-                  },
-                  "customCss": {
-                    "type": "string",
-                    "description": "Custom CSS"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
           },
-          "401": {
-            "description": "Unauthorized",
+          "404": {
+            "description": "Request not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -722,169 +976,13 @@
         }
       }
     },
-    "/api/admin/services": {
+    "/api/admin/departments/{departmentId}/actions": {
       "get": {
-        "operationId": "get_api_admin_services",
+        "operationId": "get_api_admin_departments_departmentId_actions",
         "tags": [
           "admin"
         ],
-        "summary": "List all registered services",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "columns": {
-                      "type": "array"
-                    },
-                    "rows": {
-                      "type": "array"
-                    },
-                    "total": {
-                      "type": "integer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/departments/create": {
-      "post": {
-        "operationId": "post_api_admin_departments_create",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Create a new department",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Department name"
-                  },
-                  "slug": {
-                    "type": "string",
-                    "description": "URL slug"
-                  },
-                  "metadata": {
-                    "type": "string",
-                    "description": "Description"
-                  },
-                  "private": {
-                    "type": "boolean",
-                    "description": "Whether department is private"
-                  }
-                },
-                "required": [
-                  "name",
-                  "slug"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "departmentId": {
-                      "type": "string"
-                    },
-                    "redirect": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Name and slug are required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Slug already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/departments/{departmentId}": {
-      "get": {
-        "operationId": "get_api_admin_departments_departmentId",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Get department details by ID (admin)",
+        "summary": "Get available actions for a department (admin)",
         "parameters": [
           {
             "name": "departmentId",
@@ -903,8 +1001,59 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "fields": {
+                    "actions": {
                       "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/departments/{departmentId}/delete": {
+      "post": {
+        "operationId": "post_api_admin_departments_departmentId_delete",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Delete a department and cascade remove members, teams",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
                     }
                   }
                 }
@@ -942,13 +1091,15 @@
             }
           }
         }
-      },
-      "put": {
-        "operationId": "put_api_admin_departments_departmentId",
+      }
+    },
+    "/api/admin/departments/{departmentId}/members/{memberId}/remove": {
+      "post": {
+        "operationId": "post_api_admin_departments_departmentId_members_memberId_remove",
         "tags": [
           "admin"
         ],
-        "summary": "Update a department (admin)",
+        "summary": "Remove a member from a department (admin)",
         "parameters": [
           {
             "name": "departmentId",
@@ -957,36 +1108,16 @@
             "schema": {
               "type": "string"
             }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Department name"
-                  },
-                  "slug": {
-                    "type": "string",
-                    "description": "URL slug"
-                  },
-                  "logo": {
-                    "type": "string",
-                    "description": "Logo URL"
-                  },
-                  "metadata": {
-                    "type": "string",
-                    "description": "Description"
-                  }
-                }
-              }
+          },
+          {
+            "name": "memberId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -997,21 +1128,6 @@
                   "properties": {
                     "success": {
                       "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "No fields to update",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
                     }
                   }
                 }
@@ -1036,16 +1152,24 @@
         }
       }
     },
-    "/api/admin/departments/{departmentId}/actions": {
-      "get": {
-        "operationId": "get_api_admin_departments_departmentId_actions",
+    "/api/admin/departments/{departmentId}/members/{memberId}/role": {
+      "post": {
+        "operationId": "post_api_admin_departments_departmentId_members_memberId_role",
         "tags": [
           "admin"
         ],
-        "summary": "Get available actions for a department (admin)",
+        "summary": "Toggle a department member role between admin and member (admin)",
         "parameters": [
           {
             "name": "departmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "memberId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1061,8 +1185,8 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "actions": {
-                      "type": "array"
+                    "success": {
+                      "type": "boolean"
                     }
                   }
                 }
@@ -1071,6 +1195,21 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Member not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1247,16 +1386,24 @@
         }
       }
     },
-    "/api/admin/departments/{departmentId}/delete": {
+    "/api/admin/departments/{departmentId}/teams/{teamId}/delete": {
       "post": {
-        "operationId": "post_api_admin_departments_departmentId_delete",
+        "operationId": "post_api_admin_departments_departmentId_teams_teamId_delete",
         "tags": [
           "admin"
         ],
-        "summary": "Delete a department and cascade remove members, teams",
+        "summary": "Delete a team from a department (admin)",
         "parameters": [
           {
             "name": "departmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "teamId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1296,7 +1443,89 @@
             }
           },
           "404": {
-            "description": "Department not found",
+            "description": "Team not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/departments/{departmentId}/teams/{teamId}/members/{teamMemberId}/remove": {
+      "post": {
+        "operationId": "post_api_admin_departments_departmentId_teams_teamId_members_teamMemberId_remove",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Remove a member from a team (admin)",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "teamMemberId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Team member not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1472,295 +1701,6 @@
         }
       }
     },
-    "/api/admin/departments/{departmentId}/teams/{teamId}/delete": {
-      "post": {
-        "operationId": "post_api_admin_departments_departmentId_teams_teamId_delete",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Delete a team from a department (admin)",
-        "parameters": [
-          {
-            "name": "departmentId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "teamId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Team not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/departments/{departmentId}/teams/{teamId}/members/{teamMemberId}/remove": {
-      "post": {
-        "operationId": "post_api_admin_departments_departmentId_teams_teamId_members_teamMemberId_remove",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Remove a member from a team (admin)",
-        "parameters": [
-          {
-            "name": "departmentId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "teamId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "teamMemberId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Team member not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/departments/{departmentId}/members/{memberId}/role": {
-      "post": {
-        "operationId": "post_api_admin_departments_departmentId_members_memberId_role",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Toggle a department member role between admin and member (admin)",
-        "parameters": [
-          {
-            "name": "departmentId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "memberId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Member not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/departments/{departmentId}/members/{memberId}/remove": {
-      "post": {
-        "operationId": "post_api_admin_departments_departmentId_members_memberId_remove",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Remove a member from a department (admin)",
-        "parameters": [
-          {
-            "name": "departmentId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "memberId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/admin/departments/{departmentId}/teams": {
       "get": {
         "operationId": "get_api_admin_departments_departmentId_teams",
@@ -1907,6 +1847,273 @@
         }
       }
     },
+    "/api/admin/departments/{departmentId}": {
+      "get": {
+        "operationId": "get_api_admin_departments_departmentId",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get department details by ID (admin)",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Department not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "put_api_admin_departments_departmentId",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Update a department (admin)",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Department name"
+                  },
+                  "slug": {
+                    "type": "string",
+                    "description": "URL slug"
+                  },
+                  "logo": {
+                    "type": "string",
+                    "description": "Logo URL"
+                  },
+                  "metadata": {
+                    "type": "string",
+                    "description": "Description"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No fields to update",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/departments/create": {
+      "post": {
+        "operationId": "post_api_admin_departments_create",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Create a new department",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Department name"
+                  },
+                  "slug": {
+                    "type": "string",
+                    "description": "URL slug"
+                  },
+                  "metadata": {
+                    "type": "string",
+                    "description": "Description"
+                  },
+                  "private": {
+                    "type": "boolean",
+                    "description": "Whether department is private"
+                  }
+                },
+                "required": [
+                  "name",
+                  "slug"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "departmentId": {
+                      "type": "string"
+                    },
+                    "redirect": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Name and slug are required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Slug already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/admin/departments": {
       "get": {
         "operationId": "get_api_admin_departments",
@@ -1954,13 +2161,23 @@
         }
       }
     },
-    "/api/admin/stats": {
+    "/api/admin/services/{serviceId}/actions": {
       "get": {
-        "operationId": "get_api_admin_stats",
+        "operationId": "get_api_admin_services_serviceId_actions",
         "tags": [
           "admin"
         ],
-        "summary": "Get admin dashboard statistics",
+        "summary": "Get available actions for a service",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -1969,11 +2186,359 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "value": {
-                      "type": "integer"
-                    },
-                    "changeLabel": {
+                    "actions": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
                       "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Service not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/services/{serviceId}/delete": {
+      "post": {
+        "operationId": "post_api_admin_services_serviceId_delete",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Delete a service",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Service not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/services/{serviceId}/regenerate-key": {
+      "post": {
+        "operationId": "post_api_admin_services_serviceId_regenerate_key",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Regenerate a service API key",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiKey": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Service not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/services/{serviceId}/toggle": {
+      "post": {
+        "operationId": "post_api_admin_services_serviceId_toggle",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Toggle service enabled/disabled state",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "disabled": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Service not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/services/{serviceId}": {
+      "get": {
+        "operationId": "get_api_admin_services_serviceId",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get service details (admin view)",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Service not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "put_api_admin_services_serviceId",
+        "tags": [
+          "admin"
+        ],
+        "summary": "Update a service (admin)",
+        "description": "string - Description",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Service name"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
                     }
                   }
                 }
@@ -1998,13 +2563,13 @@
         }
       }
     },
-    "/api/admin/users": {
+    "/api/admin/services": {
       "get": {
-        "operationId": "get_api_admin_users",
+        "operationId": "get_api_admin_services",
         "tags": [
           "admin"
         ],
-        "summary": "List all users",
+        "summary": "List all registered services",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -2045,23 +2610,13 @@
         }
       }
     },
-    "/api/admin/users/{userId}": {
+    "/api/admin/settings": {
       "get": {
-        "operationId": "get_api_admin_users_userId",
+        "operationId": "get_api_admin_settings",
         "tags": [
           "admin"
         ],
-        "summary": "Get user details by ID",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Get application settings",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -2092,40 +2647,15 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       },
       "put": {
-        "operationId": "put_api_admin_users_userId",
+        "operationId": "put_api_admin_settings",
         "tags": [
           "admin"
         ],
-        "summary": "Update a user",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Update application settings",
         "requestBody": {
           "required": true,
           "content": {
@@ -2133,17 +2663,33 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
+                  "avatarMaxSizeMb": {
                     "type": "string",
-                    "description": "Display name"
+                    "description": "Max avatar file size in MB"
                   },
-                  "email": {
+                  "discordClientId": {
                     "type": "string",
-                    "description": "Email address"
+                    "description": "Discord OAuth client ID"
                   },
-                  "role": {
+                  "discordClientSecret": {
                     "type": "string",
-                    "description": "User role"
+                    "description": "Discord OAuth client secret"
+                  },
+                  "googleClientId": {
+                    "type": "string",
+                    "description": "Google OAuth client ID"
+                  },
+                  "googleClientSecret": {
+                    "type": "string",
+                    "description": "Google OAuth client secret"
+                  },
+                  "githubClientId": {
+                    "type": "string",
+                    "description": "GitHub OAuth client ID"
+                  },
+                  "githubClientSecret": {
+                    "type": "string",
+                    "description": "GitHub OAuth client secret"
                   }
                 }
               }
@@ -2184,24 +2730,13 @@
         }
       }
     },
-    "/api/admin/users/search": {
+    "/api/admin/stats": {
       "get": {
-        "operationId": "get_api_admin_users_search",
+        "operationId": "get_api_admin_stats",
         "tags": [
           "admin"
         ],
-        "summary": "Search users by name or email (admin)",
-        "parameters": [
-          {
-            "name": "q",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Search query (min 2 chars)"
-          }
-        ],
+        "summary": "Get admin dashboard statistics",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -2210,102 +2745,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "results": {
-                      "type": "array"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/users/create": {
-      "post": {
-        "operationId": "post_api_admin_users_create",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Create a new user",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Display name"
-                  },
-                  "email": {
-                    "type": "string",
-                    "description": "Email address"
-                  },
-                  "password": {
-                    "type": "string",
-                    "description": "Password"
-                  },
-                  "role": {
-                    "type": "string",
-                    "description": "User role (default: user)"
-                  }
-                },
-                "required": [
-                  "name",
-                  "email",
-                  "password"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
+                    "value": {
+                      "type": "integer"
                     },
-                    "userId": {
-                      "type": "string"
-                    },
-                    "redirect": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Missing required fields or creation failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
+                    "changeLabel": {
                       "type": "string"
                     }
                   }
@@ -2754,329 +3197,16 @@
         }
       }
     },
-    "/api/admin/data-deletion/{requestId}/actions": {
+    "/api/admin/users/{userId}": {
       "get": {
-        "operationId": "get_api_admin_data_deletion_requestId_actions",
+        "operationId": "get_api_admin_users_userId",
         "tags": [
           "admin"
         ],
-        "summary": "Get available actions for a data deletion request",
+        "summary": "Get user details by ID",
         "parameters": [
           {
-            "name": "requestId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "actions": {
-                      "type": "array"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Request not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/data-deletion/{requestId}/decline": {
-      "post": {
-        "operationId": "post_api_admin_data_deletion_requestId_decline",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Decline a data deletion request",
-        "parameters": [
-          {
-            "name": "requestId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "note": {
-                    "type": "string",
-                    "description": "Review note"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Request is not in pending status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Request not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/data-deletion/{requestId}/execute": {
-      "post": {
-        "operationId": "post_api_admin_data_deletion_requestId_execute",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Execute a data deletion request immediately",
-        "parameters": [
-          {
-            "name": "requestId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "redirect": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Deletion failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/data-deletion/{requestId}/accept": {
-      "post": {
-        "operationId": "post_api_admin_data_deletion_requestId_accept",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Accept a data deletion request and schedule deletion in 30 days",
-        "parameters": [
-          {
-            "name": "requestId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Request is not in pending status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Request not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/data-deletion/{requestId}": {
-      "get": {
-        "operationId": "get_api_admin_data_deletion_requestId",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Get data deletion request details",
-        "parameters": [
-          {
-            "name": "requestId",
+            "name": "userId",
             "in": "path",
             "required": true,
             "schema": {
@@ -3116,120 +3246,7 @@
             }
           },
           "404": {
-            "description": "Request not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/clients": {
-      "get": {
-        "operationId": "get_api_admin_clients",
-        "tags": [
-          "admin"
-        ],
-        "summary": "List all OAuth clients",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "columns": {
-                      "type": "array"
-                    },
-                    "rows": {
-                      "type": "array"
-                    },
-                    "total": {
-                      "type": "integer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/services/{serviceId}": {
-      "get": {
-        "operationId": "get_api_admin_services_serviceId",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Get service details (admin view)",
-        "parameters": [
-          {
-            "name": "serviceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "fields": {
-                      "type": "array"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Service not found",
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -3246,15 +3263,14 @@
         }
       },
       "put": {
-        "operationId": "put_api_admin_services_serviceId",
+        "operationId": "put_api_admin_users_userId",
         "tags": [
           "admin"
         ],
-        "summary": "Update a service (admin)",
-        "description": "string - Description",
+        "summary": "Update a user",
         "parameters": [
           {
-            "name": "serviceId",
+            "name": "userId",
             "in": "path",
             "required": true,
             "schema": {
@@ -3271,7 +3287,15 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "description": "Service name"
+                    "description": "Display name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email address"
+                  },
+                  "role": {
+                    "type": "string",
+                    "description": "User role"
                   }
                 }
               }
@@ -3312,226 +3336,48 @@
         }
       }
     },
-    "/api/admin/services/{serviceId}/actions": {
-      "get": {
-        "operationId": "get_api_admin_services_serviceId_actions",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Get available actions for a service",
-        "parameters": [
-          {
-            "name": "serviceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "actions": {
-                      "type": "array"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Service not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/services/{serviceId}/delete": {
+    "/api/admin/users/create": {
       "post": {
-        "operationId": "post_api_admin_services_serviceId_delete",
+        "operationId": "post_api_admin_users_create",
         "tags": [
           "admin"
         ],
-        "summary": "Delete a service",
-        "parameters": [
-          {
-            "name": "serviceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
+        "summary": "Create a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Display name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email address"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password"
+                  },
+                  "role": {
+                    "type": "string",
+                    "description": "User role (default: user)"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ]
+              }
             }
           }
-        ],
+        },
         "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Service not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/services/{serviceId}/regenerate-key": {
-      "post": {
-        "operationId": "post_api_admin_services_serviceId_regenerate_key",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Regenerate a service API key",
-        "parameters": [
-          {
-            "name": "serviceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "apiKey": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Service not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/admin/services/{serviceId}/toggle": {
-      "post": {
-        "operationId": "post_api_admin_services_serviceId_toggle",
-        "tags": [
-          "admin"
-        ],
-        "summary": "Toggle service enabled/disabled state",
-        "parameters": [
-          {
-            "name": "serviceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
+          "201": {
             "description": "Successful response",
             "content": {
               "application/json": {
@@ -3541,8 +3387,26 @@
                     "success": {
                       "type": "boolean"
                     },
-                    "disabled": {
-                      "type": "boolean"
+                    "userId": {
+                      "type": "string"
+                    },
+                    "redirect": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required fields or creation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     }
                   }
                 }
@@ -3563,32 +3427,17 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "Service not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }
     },
-    "/api/departments/users-search": {
+    "/api/admin/users/search": {
       "get": {
-        "operationId": "get_api_departments_users_search",
+        "operationId": "get_api_admin_users_search",
         "tags": [
-          "departments"
+          "admin"
         ],
-        "summary": "Search users by name or email for department member lookup",
+        "summary": "Search users by name or email (admin)",
         "parameters": [
           {
             "name": "q",
@@ -3634,13 +3483,86 @@
         }
       }
     },
-    "/api/departments/{slug}": {
+    "/api/admin/users": {
       "get": {
-        "operationId": "get_api_departments_slug",
+        "operationId": "get_api_admin_users",
+        "tags": [
+          "admin"
+        ],
+        "summary": "List all users",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "columns": {
+                      "type": "array"
+                    },
+                    "rows": {
+                      "type": "array"
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/$": {
+      "get": {
+        "operationId": "get_api_auth_$",
+        "tags": [
+          "auth"
+        ],
+        "summary": "Handle auth GET requests (Better Auth passthrough)",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "operationId": "post_api_auth_$",
+        "tags": [
+          "auth"
+        ],
+        "summary": "Handle auth POST requests (Better Auth passthrough)",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/departments/{slug}/actions": {
+      "get": {
+        "operationId": "get_api_departments_slug_actions",
         "tags": [
           "departments"
         ],
-        "summary": "Get department details by slug",
+        "summary": "Get available actions for a department",
         "parameters": [
           {
             "name": "slug",
@@ -3659,7 +3581,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "fields": {
+                    "actions": {
                       "type": "array"
                     }
                   }
@@ -3681,30 +3603,17 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "Department not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
           }
         }
-      },
-      "put": {
-        "operationId": "put_api_departments_slug",
+      }
+    },
+    "/api/departments/{slug}/members/{memberId}/remove": {
+      "post": {
+        "operationId": "post_api_departments_slug_members_memberId_remove",
         "tags": [
           "departments"
         ],
-        "summary": "Update department details",
+        "summary": "Remove a member from a department",
         "parameters": [
           {
             "name": "slug",
@@ -3713,28 +3622,16 @@
             "schema": {
               "type": "string"
             }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Department name"
-                  },
-                  "metadata": {
-                    "type": "string",
-                    "description": "Department description"
-                  }
-                }
-              }
+          },
+          {
+            "name": "memberId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -3784,16 +3681,24 @@
         }
       }
     },
-    "/api/departments/{slug}/actions": {
-      "get": {
-        "operationId": "get_api_departments_slug_actions",
+    "/api/departments/{slug}/members/{memberId}/role": {
+      "post": {
+        "operationId": "post_api_departments_slug_members_memberId_role",
         "tags": [
           "departments"
         ],
-        "summary": "Get available actions for a department",
+        "summary": "Toggle a department member role between admin and member",
         "parameters": [
           {
             "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "memberId",
             "in": "path",
             "required": true,
             "schema": {
@@ -3809,8 +3714,8 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "actions": {
-                      "type": "array"
+                    "success": {
+                      "type": "boolean"
                     }
                   }
                 }
@@ -3819,6 +3724,36 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Admin access required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Member not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -4025,13 +3960,13 @@
         }
       }
     },
-    "/api/departments/{slug}/teams/{teamId}": {
+    "/api/departments/{slug}/teams/{teamId}/actions": {
       "get": {
-        "operationId": "get_api_departments_slug_teams_teamId",
+        "operationId": "get_api_departments_slug_teams_teamId_actions",
         "tags": [
           "departments"
         ],
-        "summary": "Get team details",
+        "summary": "Get available actions for a team",
         "parameters": [
           {
             "name": "slug",
@@ -4058,53 +3993,8 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "fields": {
+                    "actions": {
                       "type": "array"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not a member",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Team not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
                     }
                   }
                 }
@@ -4112,14 +4002,15 @@
             }
           }
         }
-      },
-      "put": {
-        "operationId": "put_api_departments_slug_teams_teamId",
+      }
+    },
+    "/api/departments/{slug}/teams/{teamId}/delete": {
+      "post": {
+        "operationId": "post_api_departments_slug_teams_teamId_delete",
         "tags": [
           "departments"
         ],
-        "summary": "Update a team",
-        "description": "string - Team description",
+        "summary": "Delete a team from a department",
         "parameters": [
           {
             "name": "slug",
@@ -4138,22 +4029,6 @@
             }
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Team name"
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Successful response",
@@ -4203,13 +4078,13 @@
         }
       }
     },
-    "/api/departments/{slug}/teams/{teamId}/actions": {
-      "get": {
-        "operationId": "get_api_departments_slug_teams_teamId_actions",
+    "/api/departments/{slug}/teams/{teamId}/members/{teamMemberId}/remove": {
+      "post": {
+        "operationId": "post_api_departments_slug_teams_teamId_members_teamMemberId_remove",
         "tags": [
           "departments"
         ],
-        "summary": "Get available actions for a team",
+        "summary": "Remove a member from a team",
         "parameters": [
           {
             "name": "slug",
@@ -4226,6 +4101,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "teamMemberId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4236,8 +4119,38 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "actions": {
-                      "type": "array"
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Admin access required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     }
                   }
                 }
@@ -4418,13 +4331,13 @@
         }
       }
     },
-    "/api/departments/{slug}/teams/{teamId}/delete": {
-      "post": {
-        "operationId": "post_api_departments_slug_teams_teamId_delete",
+    "/api/departments/{slug}/teams/{teamId}": {
+      "get": {
+        "operationId": "get_api_departments_slug_teams_teamId",
         "tags": [
           "departments"
         ],
-        "summary": "Delete a team from a department",
+        "summary": "Get team details",
         "parameters": [
           {
             "name": "slug",
@@ -4451,8 +4364,8 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean"
+                    "fields": {
+                      "type": "array"
                     }
                   }
                 }
@@ -4475,163 +4388,7 @@
             }
           },
           "403": {
-            "description": "Admin access required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/departments/{slug}/teams/{teamId}/members/{teamMemberId}/remove": {
-      "post": {
-        "operationId": "post_api_departments_slug_teams_teamId_members_teamMemberId_remove",
-        "tags": [
-          "departments"
-        ],
-        "summary": "Remove a member from a team",
-        "parameters": [
-          {
-            "name": "slug",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "teamId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "teamMemberId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Admin access required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/departments/{slug}/members/{memberId}/role": {
-      "post": {
-        "operationId": "post_api_departments_slug_members_memberId_role",
-        "tags": [
-          "departments"
-        ],
-        "summary": "Toggle a department member role between admin and member",
-        "parameters": [
-          {
-            "name": "slug",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "memberId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Admin access required",
+            "description": "Not a member",
             "content": {
               "application/json": {
                 "schema": {
@@ -4646,7 +4403,7 @@
             }
           },
           "404": {
-            "description": "Member not found",
+            "description": "Team not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -4661,15 +4418,14 @@
             }
           }
         }
-      }
-    },
-    "/api/departments/{slug}/members/{memberId}/remove": {
-      "post": {
-        "operationId": "post_api_departments_slug_members_memberId_remove",
+      },
+      "put": {
+        "operationId": "put_api_departments_slug_teams_teamId",
         "tags": [
           "departments"
         ],
-        "summary": "Remove a member from a department",
+        "summary": "Update a team",
+        "description": "string - Team description",
         "parameters": [
           {
             "name": "slug",
@@ -4680,7 +4436,7 @@
             }
           },
           {
-            "name": "memberId",
+            "name": "teamId",
             "in": "path",
             "required": true,
             "schema": {
@@ -4688,6 +4444,22 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Team name"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful response",
@@ -4893,398 +4665,16 @@
         }
       }
     },
-    "/api/user/sessions": {
+    "/api/departments/{slug}": {
       "get": {
-        "operationId": "get_api_user_sessions",
+        "operationId": "get_api_departments_slug",
         "tags": [
-          "user"
+          "departments"
         ],
-        "summary": "List current user sessions",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "columns": {
-                      "type": "array"
-                    },
-                    "rows": {
-                      "type": "array"
-                    },
-                    "total": {
-                      "type": "integer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/connected-apps/{consentId}/revoke": {
-      "post": {
-        "operationId": "post_api_user_connected_apps_consentId_revoke",
-        "tags": [
-          "user"
-        ],
-        "summary": "Revoke an OAuth app consent",
+        "summary": "Get department details by slug",
         "parameters": [
           {
-            "name": "consentId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Consent not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/connected-apps": {
-      "get": {
-        "operationId": "get_api_user_connected_apps",
-        "tags": [
-          "user"
-        ],
-        "summary": "List OAuth apps the user has authorized",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "columns": {
-                      "type": "array"
-                    },
-                    "rows": {
-                      "type": "array"
-                    },
-                    "total": {
-                      "type": "integer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/security-status": {
-      "get": {
-        "operationId": "get_api_user_security_status",
-        "tags": [
-          "user"
-        ],
-        "summary": "Get current user security status (2FA, passkeys)",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "fields": {
-                      "type": "array"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/data-deletion": {
-      "get": {
-        "operationId": "get_api_user_data_deletion",
-        "tags": [
-          "user"
-        ],
-        "summary": "Get current user data deletion request status",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "fields": {
-                      "type": "array"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "operationId": "post_api_user_data_deletion",
-        "tags": [
-          "user"
-        ],
-        "summary": "Submit a data deletion request",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "reason": {
-                    "type": "string",
-                    "description": "Reason for deletion"
-                  },
-                  "additionalInfo": {
-                    "type": "string",
-                    "description": "Additional details"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "A pending or accepted deletion request already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/passkeys/{passkeyId}/delete": {
-      "post": {
-        "operationId": "post_api_user_passkeys_passkeyId_delete",
-        "tags": [
-          "user"
-        ],
-        "summary": "Delete a passkey",
-        "parameters": [
-          {
-            "name": "passkeyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Passkey not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/departments/{departmentId}": {
-      "get": {
-        "operationId": "get_api_user_departments_departmentId",
-        "tags": [
-          "user"
-        ],
-        "summary": "Get department details for the current user",
-        "parameters": [
-          {
-            "name": "departmentId",
+            "name": "slug",
             "in": "path",
             "required": true,
             "schema": {
@@ -5324,362 +4714,7 @@
             }
           },
           "404": {
-            "description": "Department not found or not a member",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/departments/{departmentId}/teams": {
-      "get": {
-        "operationId": "get_api_user_departments_departmentId_teams",
-        "tags": [
-          "user"
-        ],
-        "summary": "List teams the current user belongs to in a department",
-        "parameters": [
-          {
-            "name": "departmentId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "columns": {
-                      "type": "array"
-                    },
-                    "rows": {
-                      "type": "array"
-                    },
-                    "total": {
-                      "type": "integer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Department not found or not a member",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/passkeys": {
-      "get": {
-        "operationId": "get_api_user_passkeys",
-        "tags": [
-          "user"
-        ],
-        "summary": "List current user passkeys",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/organizations": {
-      "get": {
-        "operationId": "get_api_user_organizations",
-        "tags": [
-          "user"
-        ],
-        "summary": "List organizations the current user belongs to",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "columns": {
-                      "type": "array"
-                    },
-                    "rows": {
-                      "type": "array"
-                    },
-                    "total": {
-                      "type": "integer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/departments": {
-      "get": {
-        "operationId": "get_api_user_departments",
-        "tags": [
-          "user"
-        ],
-        "summary": "List departments the current user belongs to",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "columns": {
-                      "type": "array"
-                    },
-                    "rows": {
-                      "type": "array"
-                    },
-                    "total": {
-                      "type": "integer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/sessions/{sessionId}/revoke": {
-      "post": {
-        "operationId": "post_api_user_sessions_sessionId_revoke",
-        "tags": [
-          "user"
-        ],
-        "summary": "Revoke a specific user session",
-        "parameters": [
-          {
-            "name": "sessionId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Session not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/2fa/status": {
-      "get": {
-        "operationId": "get_api_user_2fa_status",
-        "tags": [
-          "user"
-        ],
-        "summary": "Get two-factor authentication status",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "enabled": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/user/profile": {
-      "get": {
-        "operationId": "get_api_user_profile",
-        "tags": [
-          "user"
-        ],
-        "summary": "Get current user profile fields",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "fields": {
-                      "type": "array"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
+            "description": "Department not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -5696,11 +4731,21 @@
         }
       },
       "put": {
-        "operationId": "put_api_user_profile",
+        "operationId": "put_api_departments_slug",
         "tags": [
-          "user"
+          "departments"
         ],
-        "summary": "Update current user profile",
+        "summary": "Update department details",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -5710,11 +4755,11 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "description": "Display name"
+                    "description": "Department name"
                   },
-                  "image": {
+                  "metadata": {
                     "type": "string",
-                    "description": "Avatar URL"
+                    "description": "Department description"
                   }
                 }
               }
@@ -5751,17 +4796,43 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Admin access required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/user/data-deletion/actions": {
+    "/api/departments/users-search": {
       "get": {
-        "operationId": "get_api_user_data_deletion_actions",
+        "operationId": "get_api_departments_users_search",
         "tags": [
-          "user"
+          "departments"
         ],
-        "summary": "Get available actions for the user data deletion request",
+        "summary": "Search users by name or email for department member lookup",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search query (min 2 chars)"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -5770,39 +4841,13 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "actions": {
+                    "results": {
                       "type": "array"
                     }
                   }
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/api/user/data-deletion/cancel": {
-      "post": {
-        "operationId": "post_api_user_data_deletion_cancel",
-        "tags": [
-          "user"
-        ],
-        "summary": "Cancel an active data deletion request",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
           },
           "401": {
             "description": "Unauthorized",
@@ -5818,56 +4863,17 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "No active deletion request found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }
     },
-    "/api/user/password": {
-      "post": {
-        "operationId": "post_api_user_password",
+    "/api/departments": {
+      "get": {
+        "operationId": "get_api_departments",
         "tags": [
-          "user"
+          "departments"
         ],
-        "summary": "Change current user password",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "currentPassword": {
-                    "type": "string",
-                    "description": "Current password"
-                  },
-                  "newPassword": {
-                    "type": "string",
-                    "description": "New password"
-                  }
-                },
-                "required": [
-                  "currentPassword",
-                  "newPassword"
-                ]
-              }
-            }
-          }
-        },
+        "summary": "List departments visible to the current user",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -5876,23 +4882,14 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Password change failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
+                    "columns": {
+                      "type": "array"
+                    },
+                    "rows": {
+                      "type": "array"
+                    },
+                    "total": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -5952,13 +4949,13 @@
         }
       }
     },
-    "/api/departments": {
+    "/api/health": {
       "get": {
-        "operationId": "get_api_departments",
+        "operationId": "get_api_health",
         "tags": [
-          "departments"
+          "health"
         ],
-        "summary": "List departments visible to the current user",
+        "summary": "Health check",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -5967,28 +4964,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "columns": {
-                      "type": "array"
-                    },
-                    "rows": {
-                      "type": "array"
-                    },
-                    "total": {
-                      "type": "integer"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
+                    "status": {
                       "type": "string"
                     }
                   }
@@ -5999,23 +4975,13 @@
         }
       }
     },
-    "/api/users/{userId}": {
+    "/api/openapi": {
       "get": {
-        "operationId": "get_api_users_userId",
+        "operationId": "get_api_openapi",
         "tags": [
-          "users"
+          "openapi"
         ],
-        "summary": "Get a user public profile by ID",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Get the OpenAPI specification for this service",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -6024,43 +4990,13 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
+                    "openapi": {
                       "type": "string"
                     },
-                    "name": {
+                    "info": {
                       "type": "string"
                     },
-                    "image": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
+                    "paths": {
                       "type": "string"
                     }
                   }
@@ -6360,6 +5296,97 @@
         }
       }
     },
+    "/api/services/heartbeat": {
+      "post": {
+        "operationId": "post_api_services_heartbeat",
+        "tags": [
+          "services"
+        ],
+        "summary": "Report service heartbeat and optionally update manifest",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "string",
+                    "description": "Current service version"
+                  },
+                  "uiManifest": {
+                    "type": "string",
+                    "description": "UI manifest with permissions"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid ServiceKey authorization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Service is disabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/services/register": {
       "post": {
         "operationId": "post_api_services_register",
@@ -6459,97 +5486,6 @@
           },
           "409": {
             "description": "Slug already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too many requests",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/services/heartbeat": {
-      "post": {
-        "operationId": "post_api_services_heartbeat",
-        "tags": [
-          "services"
-        ],
-        "summary": "Report service heartbeat and optionally update manifest",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "version": {
-                    "type": "string",
-                    "description": "Current service version"
-                  },
-                  "uiManifest": {
-                    "type": "string",
-                    "description": "UI manifest with permissions"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing or invalid ServiceKey authorization",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Service is disabled",
             "content": {
               "application/json": {
                 "schema": {
@@ -6686,13 +5622,13 @@
         }
       }
     },
-    "/api/openapi": {
+    "/api/user/2fa/status": {
       "get": {
-        "operationId": "get_api_openapi",
+        "operationId": "get_api_user_2fa_status",
         "tags": [
-          "openapi"
+          "user"
         ],
-        "summary": "Get the OpenAPI specification for this service",
+        "summary": "Get two-factor authentication status",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -6701,13 +5637,1077 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "openapi": {
+                    "enabled": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/connected-apps/{consentId}/revoke": {
+      "post": {
+        "operationId": "post_api_user_connected_apps_consentId_revoke",
+        "tags": [
+          "user"
+        ],
+        "summary": "Revoke an OAuth app consent",
+        "parameters": [
+          {
+            "name": "consentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Consent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/connected-apps": {
+      "get": {
+        "operationId": "get_api_user_connected_apps",
+        "tags": [
+          "user"
+        ],
+        "summary": "List OAuth apps the user has authorized",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "columns": {
+                      "type": "array"
+                    },
+                    "rows": {
+                      "type": "array"
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/data-deletion/actions": {
+      "get": {
+        "operationId": "get_api_user_data_deletion_actions",
+        "tags": [
+          "user"
+        ],
+        "summary": "Get available actions for the user data deletion request",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actions": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/data-deletion/cancel": {
+      "post": {
+        "operationId": "post_api_user_data_deletion_cancel",
+        "tags": [
+          "user"
+        ],
+        "summary": "Cancel an active data deletion request",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No active deletion request found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/data-deletion": {
+      "get": {
+        "operationId": "get_api_user_data_deletion",
+        "tags": [
+          "user"
+        ],
+        "summary": "Get current user data deletion request status",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "post_api_user_data_deletion",
+        "tags": [
+          "user"
+        ],
+        "summary": "Submit a data deletion request",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "description": "Reason for deletion"
+                  },
+                  "additionalInfo": {
+                    "type": "string",
+                    "description": "Additional details"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "A pending or accepted deletion request already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/departments/{departmentId}/teams": {
+      "get": {
+        "operationId": "get_api_user_departments_departmentId_teams",
+        "tags": [
+          "user"
+        ],
+        "summary": "List teams the current user belongs to in a department",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "columns": {
+                      "type": "array"
+                    },
+                    "rows": {
+                      "type": "array"
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Department not found or not a member",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/departments/{departmentId}": {
+      "get": {
+        "operationId": "get_api_user_departments_departmentId",
+        "tags": [
+          "user"
+        ],
+        "summary": "Get department details for the current user",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Department not found or not a member",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/departments": {
+      "get": {
+        "operationId": "get_api_user_departments",
+        "tags": [
+          "user"
+        ],
+        "summary": "List departments the current user belongs to",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "columns": {
+                      "type": "array"
+                    },
+                    "rows": {
+                      "type": "array"
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/organizations": {
+      "get": {
+        "operationId": "get_api_user_organizations",
+        "tags": [
+          "user"
+        ],
+        "summary": "List organizations the current user belongs to",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "columns": {
+                      "type": "array"
+                    },
+                    "rows": {
+                      "type": "array"
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/passkeys/{passkeyId}/delete": {
+      "post": {
+        "operationId": "post_api_user_passkeys_passkeyId_delete",
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete a passkey",
+        "parameters": [
+          {
+            "name": "passkeyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Passkey not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/passkeys": {
+      "get": {
+        "operationId": "get_api_user_passkeys",
+        "tags": [
+          "user"
+        ],
+        "summary": "List current user passkeys",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/password": {
+      "post": {
+        "operationId": "post_api_user_password",
+        "tags": [
+          "user"
+        ],
+        "summary": "Change current user password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currentPassword": {
+                    "type": "string",
+                    "description": "Current password"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "description": "New password"
+                  }
+                },
+                "required": [
+                  "currentPassword",
+                  "newPassword"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Password change failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/profile": {
+      "get": {
+        "operationId": "get_api_user_profile",
+        "tags": [
+          "user"
+        ],
+        "summary": "Get current user profile fields",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "put_api_user_profile",
+        "tags": [
+          "user"
+        ],
+        "summary": "Update current user profile",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Display name"
+                  },
+                  "image": {
+                    "type": "string",
+                    "description": "Avatar URL"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/security-status": {
+      "get": {
+        "operationId": "get_api_user_security_status",
+        "tags": [
+          "user"
+        ],
+        "summary": "Get current user security status (2FA, passkeys)",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/sessions/{sessionId}/revoke": {
+      "post": {
+        "operationId": "post_api_user_sessions_sessionId_revoke",
+        "tags": [
+          "user"
+        ],
+        "summary": "Revoke a specific user session",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Session not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/sessions": {
+      "get": {
+        "operationId": "get_api_user_sessions",
+        "tags": [
+          "user"
+        ],
+        "summary": "List current user sessions",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "columns": {
+                      "type": "array"
+                    },
+                    "rows": {
+                      "type": "array"
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{userId}": {
+      "get": {
+        "operationId": "get_api_users_userId",
+        "tags": [
+          "users"
+        ],
+        "summary": "Get a user public profile by ID",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
                       "type": "string"
                     },
-                    "info": {
+                    "name": {
                       "type": "string"
                     },
-                    "paths": {
+                    "image": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
                       "type": "string"
                     }
                   }

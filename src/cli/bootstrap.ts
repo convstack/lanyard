@@ -35,10 +35,10 @@ async function main() {
 
 			if (existing) {
 				// Update redirect URLs in case they changed
-				const redirectUrls = `${dashboardUrl}/callback,${dashboardUrl}/login`;
+				const redirectUris = `${dashboardUrl}/callback,${dashboardUrl}/login`;
 				await db
 					.update(oauthApplication)
-					.set({ redirectUrls })
+					.set({ redirectUris })
 					.where(eq(oauthApplication.clientId, clientId));
 				console.log(
 					`Dashboard OIDC client "${clientId}" already registered (redirect URLs updated).\n`,
@@ -53,7 +53,7 @@ async function main() {
 					name: "Convention Dashboard",
 					clientId,
 					clientSecret,
-					redirectUrls: `${dashboardUrl}/callback,${dashboardUrl}/login`,
+					redirectUris: `${dashboardUrl}/callback,${dashboardUrl}/login`,
 					type: "confidential",
 					disabled: false,
 					createdAt: new Date(),
