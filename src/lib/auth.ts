@@ -1,10 +1,10 @@
+import { oauthProvider } from "@better-auth/oauth-provider";
 import { passkey } from "@better-auth/passkey";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import {
 	admin,
 	jwt,
-	oidcProvider,
 	organization,
 	twoFactor,
 	username,
@@ -107,16 +107,11 @@ export const auth = betterAuth({
 
 	plugins: [
 		jwt(),
-		oidcProvider({
+		oauthProvider({
 			loginPage: "/login",
 			consentPage: "/oauth/consent",
 			accessTokenExpiresIn: 86400, // 24 hours
 			refreshTokenExpiresIn: 30 * 86400, // 30 days
-			getAdditionalUserInfoClaim: async (user) => ({
-				role: (user as { role?: string }).role ?? "user",
-				deletionPending:
-					(user as { deletionPending?: boolean }).deletionPending ?? false,
-			}),
 		}),
 		admin(),
 		twoFactor({

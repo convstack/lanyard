@@ -31,7 +31,6 @@ const getConsentInfoFn = createServerFn({ method: "GET" })
 
 export const Route = createFileRoute("/oauth/consent")({
 	validateSearch: (search: Record<string, unknown>) => ({
-		consent_code: (search.consent_code as string) || "",
 		client_id: (search.client_id as string) || "",
 		scope: (search.scope as string) || "",
 	}),
@@ -54,8 +53,9 @@ function ConsentPage() {
 		setLoading(true);
 		setError("");
 		const result = await authClient.oauth2.consent({
-			consent_code: search.consent_code,
 			accept,
+			scope: search.scope,
+			oauth_query: window.location.search,
 		});
 		if (result.error) {
 			setError(
@@ -65,8 +65,8 @@ function ConsentPage() {
 			setLoading(false);
 			return;
 		}
-		if (result.data?.redirectURI) {
-			window.location.href = result.data.redirectURI;
+		if (result.data?.url) {
+			window.location.href = result.data.url;
 		} else {
 			setError("Authorization failed. Please try signing in again.");
 			setLoading(false);
