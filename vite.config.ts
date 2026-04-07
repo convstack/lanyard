@@ -11,6 +11,18 @@ export default defineConfig({
 		tsconfigPaths: true,
 	},
 	plugins: [
+		{
+			name: "lanyard-openapi",
+			buildStart() {
+				import("node:child_process").then(({ execSync }) => {
+					try {
+						execSync("bun run openapi:generate", { stdio: "inherit" });
+					} catch {
+						console.warn("Failed to generate OpenAPI spec");
+					}
+				});
+			},
+		},
 		// RFC 8414: .well-known OAuth discovery endpoints
 		// These are SERVER_ONLY in Better Auth and must be served manually
 		{

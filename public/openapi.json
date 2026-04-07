@@ -1562,6 +1562,19 @@
         }
       }
     },
+    "/api/docs/openapi": {
+      "get": {
+        "operationId": "get_api_docs_openapi",
+        "tags": [
+          "docs"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
     "/api/health": {
       "get": {
         "operationId": "get_api_health",
