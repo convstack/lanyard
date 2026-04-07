@@ -9,9 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DocsRouteImport } from './routes/docs'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OauthConsentRouteImport } from './routes/oauth/consent'
+import { Route as ApiOpenapiRouteImport } from './routes/api/openapi'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ApiDepartmentsRouteImport } from './routes/api/departments'
 import { Route as PublicResetPasswordRouteImport } from './routes/_public/reset-password'
@@ -33,6 +35,7 @@ import { Route as ApiServicesRegisterRouteImport } from './routes/api/services/r
 import { Route as ApiServicesHeartbeatRouteImport } from './routes/api/services/heartbeat'
 import { Route as ApiServicesCatalogRouteImport } from './routes/api/services/catalog'
 import { Route as ApiServicesServiceIdRouteImport } from './routes/api/services/$serviceId'
+import { Route as ApiDocsOpenapiRouteImport } from './routes/api/docs/openapi'
 import { Route as ApiDepartmentsUsersSearchRouteImport } from './routes/api/departments/users-search'
 import { Route as ApiDepartmentsSlugRouteImport } from './routes/api/departments/$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
@@ -96,6 +99,11 @@ import { Route as ApiAdminDepartmentsDepartmentIdMembersMemberIdRemoveRouteImpor
 import { Route as ApiDepartmentsSlugTeamsTeamIdMembersTeamMemberIdRemoveRouteImport } from './routes/api/departments/$slug/teams/$teamId/members/$teamMemberId/remove'
 import { Route as ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRouteImport } from './routes/api/admin/departments/$departmentId/teams/$teamId/members/$teamMemberId/remove'
 
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
   getParentRoute: () => rootRouteImport,
@@ -108,6 +116,11 @@ const IndexRoute = IndexRouteImport.update({
 const OauthConsentRoute = OauthConsentRouteImport.update({
   id: '/oauth/consent',
   path: '/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiOpenapiRoute = ApiOpenapiRouteImport.update({
+  id: '/api/openapi',
+  path: '/api/openapi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiHealthRoute = ApiHealthRouteImport.update({
@@ -213,6 +226,11 @@ const ApiServicesCatalogRoute = ApiServicesCatalogRouteImport.update({
 const ApiServicesServiceIdRoute = ApiServicesServiceIdRouteImport.update({
   id: '/api/services/$serviceId',
   path: '/api/services/$serviceId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDocsOpenapiRoute = ApiDocsOpenapiRouteImport.update({
+  id: '/api/docs/openapi',
+  path: '/api/docs/openapi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiDepartmentsUsersSearchRoute =
@@ -575,12 +593,14 @@ const ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersTeamMemberIdRemoveRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/docs': typeof DocsRoute
   '/forgot-password': typeof PublicForgotPasswordRoute
   '/login': typeof PublicLoginRoute
   '/register': typeof PublicRegisterRoute
   '/reset-password': typeof PublicResetPasswordRoute
   '/api/departments': typeof ApiDepartmentsRouteWithChildren
   '/api/health': typeof ApiHealthRoute
+  '/api/openapi': typeof ApiOpenapiRoute
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
@@ -593,6 +613,7 @@ export interface FileRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/departments/$slug': typeof ApiDepartmentsSlugRouteWithChildren
   '/api/departments/users-search': typeof ApiDepartmentsUsersSearchRoute
+  '/api/docs/openapi': typeof ApiDocsOpenapiRoute
   '/api/services/$serviceId': typeof ApiServicesServiceIdRoute
   '/api/services/catalog': typeof ApiServicesCatalogRoute
   '/api/services/heartbeat': typeof ApiServicesHeartbeatRoute
@@ -662,12 +683,14 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/docs': typeof DocsRoute
   '/forgot-password': typeof PublicForgotPasswordRoute
   '/login': typeof PublicLoginRoute
   '/register': typeof PublicRegisterRoute
   '/reset-password': typeof PublicResetPasswordRoute
   '/api/departments': typeof ApiDepartmentsRouteWithChildren
   '/api/health': typeof ApiHealthRoute
+  '/api/openapi': typeof ApiOpenapiRoute
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
@@ -680,6 +703,7 @@ export interface FileRoutesByTo {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/departments/$slug': typeof ApiDepartmentsSlugRouteWithChildren
   '/api/departments/users-search': typeof ApiDepartmentsUsersSearchRoute
+  '/api/docs/openapi': typeof ApiDocsOpenapiRoute
   '/api/services/$serviceId': typeof ApiServicesServiceIdRoute
   '/api/services/catalog': typeof ApiServicesCatalogRoute
   '/api/services/heartbeat': typeof ApiServicesHeartbeatRoute
@@ -751,12 +775,14 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_public': typeof PublicRouteWithChildren
+  '/docs': typeof DocsRoute
   '/_public/forgot-password': typeof PublicForgotPasswordRoute
   '/_public/login': typeof PublicLoginRoute
   '/_public/register': typeof PublicRegisterRoute
   '/_public/reset-password': typeof PublicResetPasswordRoute
   '/api/departments': typeof ApiDepartmentsRouteWithChildren
   '/api/health': typeof ApiHealthRoute
+  '/api/openapi': typeof ApiOpenapiRoute
   '/oauth/consent': typeof OauthConsentRoute
   '/api/admin/branding': typeof ApiAdminBrandingRoute
   '/api/admin/clients': typeof ApiAdminClientsRouteWithChildren
@@ -769,6 +795,7 @@ export interface FileRoutesById {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/departments/$slug': typeof ApiDepartmentsSlugRouteWithChildren
   '/api/departments/users-search': typeof ApiDepartmentsUsersSearchRoute
+  '/api/docs/openapi': typeof ApiDocsOpenapiRoute
   '/api/services/$serviceId': typeof ApiServicesServiceIdRoute
   '/api/services/catalog': typeof ApiServicesCatalogRoute
   '/api/services/heartbeat': typeof ApiServicesHeartbeatRoute
@@ -840,12 +867,14 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/docs'
     | '/forgot-password'
     | '/login'
     | '/register'
     | '/reset-password'
     | '/api/departments'
     | '/api/health'
+    | '/api/openapi'
     | '/oauth/consent'
     | '/api/admin/branding'
     | '/api/admin/clients'
@@ -858,6 +887,7 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/api/departments/$slug'
     | '/api/departments/users-search'
+    | '/api/docs/openapi'
     | '/api/services/$serviceId'
     | '/api/services/catalog'
     | '/api/services/heartbeat'
@@ -927,12 +957,14 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/docs'
     | '/forgot-password'
     | '/login'
     | '/register'
     | '/reset-password'
     | '/api/departments'
     | '/api/health'
+    | '/api/openapi'
     | '/oauth/consent'
     | '/api/admin/branding'
     | '/api/admin/clients'
@@ -945,6 +977,7 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/api/departments/$slug'
     | '/api/departments/users-search'
+    | '/api/docs/openapi'
     | '/api/services/$serviceId'
     | '/api/services/catalog'
     | '/api/services/heartbeat'
@@ -1015,12 +1048,14 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_public'
+    | '/docs'
     | '/_public/forgot-password'
     | '/_public/login'
     | '/_public/register'
     | '/_public/reset-password'
     | '/api/departments'
     | '/api/health'
+    | '/api/openapi'
     | '/oauth/consent'
     | '/api/admin/branding'
     | '/api/admin/clients'
@@ -1033,6 +1068,7 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/api/departments/$slug'
     | '/api/departments/users-search'
+    | '/api/docs/openapi'
     | '/api/services/$serviceId'
     | '/api/services/catalog'
     | '/api/services/heartbeat'
@@ -1104,8 +1140,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PublicRoute: typeof PublicRouteWithChildren
+  DocsRoute: typeof DocsRoute
   ApiDepartmentsRoute: typeof ApiDepartmentsRouteWithChildren
   ApiHealthRoute: typeof ApiHealthRoute
+  ApiOpenapiRoute: typeof ApiOpenapiRoute
   OauthConsentRoute: typeof OauthConsentRoute
   ApiAdminBrandingRoute: typeof ApiAdminBrandingRoute
   ApiAdminClientsRoute: typeof ApiAdminClientsRouteWithChildren
@@ -1116,6 +1154,7 @@ export interface RootRouteChildren {
   ApiAdminStatsRoute: typeof ApiAdminStatsRoute
   ApiAdminUsersRoute: typeof ApiAdminUsersRouteWithChildren
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiDocsOpenapiRoute: typeof ApiDocsOpenapiRoute
   ApiServicesServiceIdRoute: typeof ApiServicesServiceIdRoute
   ApiServicesCatalogRoute: typeof ApiServicesCatalogRoute
   ApiServicesHeartbeatRoute: typeof ApiServicesHeartbeatRoute
@@ -1136,6 +1175,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_public': {
       id: '/_public'
       path: ''
@@ -1155,6 +1201,13 @@ declare module '@tanstack/react-router' {
       path: '/oauth/consent'
       fullPath: '/oauth/consent'
       preLoaderRoute: typeof OauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/openapi': {
+      id: '/api/openapi'
+      path: '/api/openapi'
+      fullPath: '/api/openapi'
+      preLoaderRoute: typeof ApiOpenapiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/health': {
@@ -1302,6 +1355,13 @@ declare module '@tanstack/react-router' {
       path: '/api/services/$serviceId'
       fullPath: '/api/services/$serviceId'
       preLoaderRoute: typeof ApiServicesServiceIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/docs/openapi': {
+      id: '/api/docs/openapi'
+      path: '/api/docs/openapi'
+      fullPath: '/api/docs/openapi'
+      preLoaderRoute: typeof ApiDocsOpenapiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/departments/users-search': {
@@ -2158,8 +2218,10 @@ const ApiUserSessionsRouteWithChildren = ApiUserSessionsRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PublicRoute: PublicRouteWithChildren,
+  DocsRoute: DocsRoute,
   ApiDepartmentsRoute: ApiDepartmentsRouteWithChildren,
   ApiHealthRoute: ApiHealthRoute,
+  ApiOpenapiRoute: ApiOpenapiRoute,
   OauthConsentRoute: OauthConsentRoute,
   ApiAdminBrandingRoute: ApiAdminBrandingRoute,
   ApiAdminClientsRoute: ApiAdminClientsRouteWithChildren,
@@ -2170,6 +2232,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminStatsRoute: ApiAdminStatsRoute,
   ApiAdminUsersRoute: ApiAdminUsersRouteWithChildren,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiDocsOpenapiRoute: ApiDocsOpenapiRoute,
   ApiServicesServiceIdRoute: ApiServicesServiceIdRoute,
   ApiServicesCatalogRoute: ApiServicesCatalogRoute,
   ApiServicesHeartbeatRoute: ApiServicesHeartbeatRoute,
