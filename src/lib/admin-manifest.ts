@@ -569,6 +569,68 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			],
 		},
 		{
+			path: "/services/:serviceId/permissions",
+			title: "Service Permissions",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "data-table",
+					endpoint: "/api/admin/services/:serviceId/role-permissions",
+					config: {
+						title: "Role → Permission Mappings",
+						createLink: "/services/:serviceId/permissions/new",
+						createLabel: "Add Mapping",
+						rowLink: "/services/:serviceId/permissions/:id/edit",
+						rowActions: [
+							{
+								label: "Remove",
+								endpoint: "/api/admin/services/:serviceId/role-permissions/:id",
+								method: "DELETE",
+								variant: "danger",
+								confirm: "Remove this permission mapping?",
+							},
+						],
+					},
+				},
+			],
+		},
+		{
+			path: "/services/:serviceId/permissions/new",
+			title: "Add Permission Mapping",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "form",
+					endpoint: "/api/admin/services/:serviceId/role-permissions/new",
+					config: {
+						submitEndpoint: "/api/admin/services/:serviceId/role-permissions",
+						fields: [{ key: "_", label: "_", type: "text" }],
+						submitLabel: "Add Mapping",
+					},
+				},
+			],
+		},
+		{
+			path: "/services/:serviceId/permissions/:id/edit",
+			title: "Edit Permission Mapping",
+			layout: "default",
+			showBack: true,
+			sections: [
+				{
+					type: "form",
+					endpoint:
+						"/api/admin/services/:serviceId/role-permissions/:id",
+					config: {
+						fields: [{ key: "_", label: "_", type: "text" }],
+						submitLabel: "Save Changes",
+						method: "PUT",
+					},
+				},
+			],
+		},
+		{
 			path: "/services/:serviceId/edit",
 			title: "Edit Service",
 			layout: "default",

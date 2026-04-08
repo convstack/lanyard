@@ -37,6 +37,7 @@ import { Route as ApiServicesCatalogRouteImport } from './routes/api/services/ca
 import { Route as ApiServicesServiceIdRouteImport } from './routes/api/services/$serviceId'
 import { Route as ApiDocsOpenapiRouteImport } from './routes/api/docs/openapi'
 import { Route as ApiDepartmentsUsersSearchRouteImport } from './routes/api/departments/users-search'
+import { Route as ApiDepartmentsSearchRouteImport } from './routes/api/departments/search'
 import { Route as ApiDepartmentsSlugRouteImport } from './routes/api/departments/$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiAdminUsersRouteImport } from './routes/api/admin/users'
@@ -51,6 +52,7 @@ import { Route as ApiUserDepartmentsDepartmentIdRouteImport } from './routes/api
 import { Route as ApiUserDataDeletionCancelRouteImport } from './routes/api/user/data-deletion/cancel'
 import { Route as ApiUserDataDeletionActionsRouteImport } from './routes/api/user/data-deletion/actions'
 import { Route as ApiUser2faStatusRouteImport } from './routes/api/user/2fa/status'
+import { Route as ApiServicesServiceSlugPermissionsRouteImport } from './routes/api/services/$serviceSlug/permissions'
 import { Route as ApiDepartmentsSlugTeamsRouteImport } from './routes/api/departments/$slug/teams'
 import { Route as ApiDepartmentsSlugMembersRouteImport } from './routes/api/departments/$slug/members'
 import { Route as ApiDepartmentsSlugActionsRouteImport } from './routes/api/departments/$slug/actions'
@@ -75,8 +77,10 @@ import { Route as ApiAdminUsersUserIdDeleteRouteImport } from './routes/api/admi
 import { Route as ApiAdminUsersUserIdBanRouteImport } from './routes/api/admin/users/$userId/ban'
 import { Route as ApiAdminUsersUserIdActionsRouteImport } from './routes/api/admin/users/$userId/actions'
 import { Route as ApiAdminServicesServiceIdToggleRouteImport } from './routes/api/admin/services/$serviceId/toggle'
+import { Route as ApiAdminServicesServiceIdRolePermissionsRouteImport } from './routes/api/admin/services/$serviceId/role-permissions'
 import { Route as ApiAdminServicesServiceIdRegenerateKeyRouteImport } from './routes/api/admin/services/$serviceId/regenerate-key'
 import { Route as ApiAdminServicesServiceIdDeleteRouteImport } from './routes/api/admin/services/$serviceId/delete'
+import { Route as ApiAdminServicesServiceIdDeclaredPermissionsRouteImport } from './routes/api/admin/services/$serviceId/declared-permissions'
 import { Route as ApiAdminServicesServiceIdActionsRouteImport } from './routes/api/admin/services/$serviceId/actions'
 import { Route as ApiAdminDepartmentsDepartmentIdTeamsRouteImport } from './routes/api/admin/departments/$departmentId/teams'
 import { Route as ApiAdminDepartmentsDepartmentIdMembersRouteImport } from './routes/api/admin/departments/$departmentId/members'
@@ -92,6 +96,8 @@ import { Route as ApiDepartmentsSlugTeamsTeamIdDeleteRouteImport } from './route
 import { Route as ApiDepartmentsSlugTeamsTeamIdActionsRouteImport } from './routes/api/departments/$slug/teams/$teamId/actions'
 import { Route as ApiDepartmentsSlugMembersMemberIdRoleRouteImport } from './routes/api/departments/$slug/members/$memberId/role'
 import { Route as ApiDepartmentsSlugMembersMemberIdRemoveRouteImport } from './routes/api/departments/$slug/members/$memberId/remove'
+import { Route as ApiAdminServicesServiceIdRolePermissionsNewRouteImport } from './routes/api/admin/services/$serviceId/role-permissions/new'
+import { Route as ApiAdminServicesServiceIdRolePermissionsIdRouteImport } from './routes/api/admin/services/$serviceId/role-permissions/$id'
 import { Route as ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRouteImport } from './routes/api/admin/departments/$departmentId/teams/$teamId/members'
 import { Route as ApiAdminDepartmentsDepartmentIdTeamsTeamIdDeleteRouteImport } from './routes/api/admin/departments/$departmentId/teams/$teamId/delete'
 import { Route as ApiAdminDepartmentsDepartmentIdMembersMemberIdRoleRouteImport } from './routes/api/admin/departments/$departmentId/members/$memberId/role'
@@ -239,6 +245,11 @@ const ApiDepartmentsUsersSearchRoute =
     path: '/users-search',
     getParentRoute: () => ApiDepartmentsRoute,
   } as any)
+const ApiDepartmentsSearchRoute = ApiDepartmentsSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => ApiDepartmentsRoute,
+} as any)
 const ApiDepartmentsSlugRoute = ApiDepartmentsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -312,6 +323,12 @@ const ApiUser2faStatusRoute = ApiUser2faStatusRouteImport.update({
   path: '/api/user/2fa/status',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiServicesServiceSlugPermissionsRoute =
+  ApiServicesServiceSlugPermissionsRouteImport.update({
+    id: '/api/services/$serviceSlug/permissions',
+    path: '/api/services/$serviceSlug/permissions',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiDepartmentsSlugTeamsRoute = ApiDepartmentsSlugTeamsRouteImport.update({
   id: '/teams',
   path: '/teams',
@@ -449,6 +466,12 @@ const ApiAdminServicesServiceIdToggleRoute =
     path: '/toggle',
     getParentRoute: () => ApiAdminServicesServiceIdRoute,
   } as any)
+const ApiAdminServicesServiceIdRolePermissionsRoute =
+  ApiAdminServicesServiceIdRolePermissionsRouteImport.update({
+    id: '/role-permissions',
+    path: '/role-permissions',
+    getParentRoute: () => ApiAdminServicesServiceIdRoute,
+  } as any)
 const ApiAdminServicesServiceIdRegenerateKeyRoute =
   ApiAdminServicesServiceIdRegenerateKeyRouteImport.update({
     id: '/regenerate-key',
@@ -459,6 +482,12 @@ const ApiAdminServicesServiceIdDeleteRoute =
   ApiAdminServicesServiceIdDeleteRouteImport.update({
     id: '/delete',
     path: '/delete',
+    getParentRoute: () => ApiAdminServicesServiceIdRoute,
+  } as any)
+const ApiAdminServicesServiceIdDeclaredPermissionsRoute =
+  ApiAdminServicesServiceIdDeclaredPermissionsRouteImport.update({
+    id: '/declared-permissions',
+    path: '/declared-permissions',
     getParentRoute: () => ApiAdminServicesServiceIdRoute,
   } as any)
 const ApiAdminServicesServiceIdActionsRoute =
@@ -551,6 +580,18 @@ const ApiDepartmentsSlugMembersMemberIdRemoveRoute =
     path: '/$memberId/remove',
     getParentRoute: () => ApiDepartmentsSlugMembersRoute,
   } as any)
+const ApiAdminServicesServiceIdRolePermissionsNewRoute =
+  ApiAdminServicesServiceIdRolePermissionsNewRouteImport.update({
+    id: '/new',
+    path: '/new',
+    getParentRoute: () => ApiAdminServicesServiceIdRolePermissionsRoute,
+  } as any)
+const ApiAdminServicesServiceIdRolePermissionsIdRoute =
+  ApiAdminServicesServiceIdRolePermissionsIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => ApiAdminServicesServiceIdRolePermissionsRoute,
+  } as any)
 const ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRoute =
   ApiAdminDepartmentsDepartmentIdTeamsTeamIdMembersRouteImport.update({
     id: '/$teamId/members',
@@ -612,6 +653,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/departments/$slug': typeof ApiDepartmentsSlugRouteWithChildren
+  '/api/departments/search': typeof ApiDepartmentsSearchRoute
   '/api/departments/users-search': typeof ApiDepartmentsUsersSearchRoute
   '/api/docs/openapi': typeof ApiDocsOpenapiRoute
   '/api/services/$serviceId': typeof ApiServicesServiceIdRoute
@@ -641,6 +683,7 @@ export interface FileRoutesByFullPath {
   '/api/departments/$slug/actions': typeof ApiDepartmentsSlugActionsRoute
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
+  '/api/services/$serviceSlug/permissions': typeof ApiServicesServiceSlugPermissionsRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/data-deletion/actions': typeof ApiUserDataDeletionActionsRoute
   '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
@@ -655,8 +698,10 @@ export interface FileRoutesByFullPath {
   '/api/admin/departments/$departmentId/members': typeof ApiAdminDepartmentsDepartmentIdMembersRouteWithChildren
   '/api/admin/departments/$departmentId/teams': typeof ApiAdminDepartmentsDepartmentIdTeamsRouteWithChildren
   '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
+  '/api/admin/services/$serviceId/declared-permissions': typeof ApiAdminServicesServiceIdDeclaredPermissionsRoute
   '/api/admin/services/$serviceId/delete': typeof ApiAdminServicesServiceIdDeleteRoute
   '/api/admin/services/$serviceId/regenerate-key': typeof ApiAdminServicesServiceIdRegenerateKeyRoute
+  '/api/admin/services/$serviceId/role-permissions': typeof ApiAdminServicesServiceIdRolePermissionsRouteWithChildren
   '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
@@ -669,6 +714,8 @@ export interface FileRoutesByFullPath {
   '/api/user/departments/$departmentId/teams': typeof ApiUserDepartmentsDepartmentIdTeamsRoute
   '/api/user/passkeys/$passkeyId/delete': typeof ApiUserPasskeysPasskeyIdDeleteRoute
   '/api/user/sessions/$sessionId/revoke': typeof ApiUserSessionsSessionIdRevokeRoute
+  '/api/admin/services/$serviceId/role-permissions/$id': typeof ApiAdminServicesServiceIdRolePermissionsIdRoute
+  '/api/admin/services/$serviceId/role-permissions/new': typeof ApiAdminServicesServiceIdRolePermissionsNewRoute
   '/api/departments/$slug/members/$memberId/remove': typeof ApiDepartmentsSlugMembersMemberIdRemoveRoute
   '/api/departments/$slug/members/$memberId/role': typeof ApiDepartmentsSlugMembersMemberIdRoleRoute
   '/api/departments/$slug/teams/$teamId/actions': typeof ApiDepartmentsSlugTeamsTeamIdActionsRoute
@@ -702,6 +749,7 @@ export interface FileRoutesByTo {
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/departments/$slug': typeof ApiDepartmentsSlugRouteWithChildren
+  '/api/departments/search': typeof ApiDepartmentsSearchRoute
   '/api/departments/users-search': typeof ApiDepartmentsUsersSearchRoute
   '/api/docs/openapi': typeof ApiDocsOpenapiRoute
   '/api/services/$serviceId': typeof ApiServicesServiceIdRoute
@@ -731,6 +779,7 @@ export interface FileRoutesByTo {
   '/api/departments/$slug/actions': typeof ApiDepartmentsSlugActionsRoute
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
+  '/api/services/$serviceSlug/permissions': typeof ApiServicesServiceSlugPermissionsRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/data-deletion/actions': typeof ApiUserDataDeletionActionsRoute
   '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
@@ -745,8 +794,10 @@ export interface FileRoutesByTo {
   '/api/admin/departments/$departmentId/members': typeof ApiAdminDepartmentsDepartmentIdMembersRouteWithChildren
   '/api/admin/departments/$departmentId/teams': typeof ApiAdminDepartmentsDepartmentIdTeamsRouteWithChildren
   '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
+  '/api/admin/services/$serviceId/declared-permissions': typeof ApiAdminServicesServiceIdDeclaredPermissionsRoute
   '/api/admin/services/$serviceId/delete': typeof ApiAdminServicesServiceIdDeleteRoute
   '/api/admin/services/$serviceId/regenerate-key': typeof ApiAdminServicesServiceIdRegenerateKeyRoute
+  '/api/admin/services/$serviceId/role-permissions': typeof ApiAdminServicesServiceIdRolePermissionsRouteWithChildren
   '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
@@ -759,6 +810,8 @@ export interface FileRoutesByTo {
   '/api/user/departments/$departmentId/teams': typeof ApiUserDepartmentsDepartmentIdTeamsRoute
   '/api/user/passkeys/$passkeyId/delete': typeof ApiUserPasskeysPasskeyIdDeleteRoute
   '/api/user/sessions/$sessionId/revoke': typeof ApiUserSessionsSessionIdRevokeRoute
+  '/api/admin/services/$serviceId/role-permissions/$id': typeof ApiAdminServicesServiceIdRolePermissionsIdRoute
+  '/api/admin/services/$serviceId/role-permissions/new': typeof ApiAdminServicesServiceIdRolePermissionsNewRoute
   '/api/departments/$slug/members/$memberId/remove': typeof ApiDepartmentsSlugMembersMemberIdRemoveRoute
   '/api/departments/$slug/members/$memberId/role': typeof ApiDepartmentsSlugMembersMemberIdRoleRoute
   '/api/departments/$slug/teams/$teamId/actions': typeof ApiDepartmentsSlugTeamsTeamIdActionsRoute
@@ -794,6 +847,7 @@ export interface FileRoutesById {
   '/api/admin/users': typeof ApiAdminUsersRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/departments/$slug': typeof ApiDepartmentsSlugRouteWithChildren
+  '/api/departments/search': typeof ApiDepartmentsSearchRoute
   '/api/departments/users-search': typeof ApiDepartmentsUsersSearchRoute
   '/api/docs/openapi': typeof ApiDocsOpenapiRoute
   '/api/services/$serviceId': typeof ApiServicesServiceIdRoute
@@ -823,6 +877,7 @@ export interface FileRoutesById {
   '/api/departments/$slug/actions': typeof ApiDepartmentsSlugActionsRoute
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
+  '/api/services/$serviceSlug/permissions': typeof ApiServicesServiceSlugPermissionsRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/data-deletion/actions': typeof ApiUserDataDeletionActionsRoute
   '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
@@ -837,8 +892,10 @@ export interface FileRoutesById {
   '/api/admin/departments/$departmentId/members': typeof ApiAdminDepartmentsDepartmentIdMembersRouteWithChildren
   '/api/admin/departments/$departmentId/teams': typeof ApiAdminDepartmentsDepartmentIdTeamsRouteWithChildren
   '/api/admin/services/$serviceId/actions': typeof ApiAdminServicesServiceIdActionsRoute
+  '/api/admin/services/$serviceId/declared-permissions': typeof ApiAdminServicesServiceIdDeclaredPermissionsRoute
   '/api/admin/services/$serviceId/delete': typeof ApiAdminServicesServiceIdDeleteRoute
   '/api/admin/services/$serviceId/regenerate-key': typeof ApiAdminServicesServiceIdRegenerateKeyRoute
+  '/api/admin/services/$serviceId/role-permissions': typeof ApiAdminServicesServiceIdRolePermissionsRouteWithChildren
   '/api/admin/services/$serviceId/toggle': typeof ApiAdminServicesServiceIdToggleRoute
   '/api/admin/users/$userId/actions': typeof ApiAdminUsersUserIdActionsRoute
   '/api/admin/users/$userId/ban': typeof ApiAdminUsersUserIdBanRoute
@@ -851,6 +908,8 @@ export interface FileRoutesById {
   '/api/user/departments/$departmentId/teams': typeof ApiUserDepartmentsDepartmentIdTeamsRoute
   '/api/user/passkeys/$passkeyId/delete': typeof ApiUserPasskeysPasskeyIdDeleteRoute
   '/api/user/sessions/$sessionId/revoke': typeof ApiUserSessionsSessionIdRevokeRoute
+  '/api/admin/services/$serviceId/role-permissions/$id': typeof ApiAdminServicesServiceIdRolePermissionsIdRoute
+  '/api/admin/services/$serviceId/role-permissions/new': typeof ApiAdminServicesServiceIdRolePermissionsNewRoute
   '/api/departments/$slug/members/$memberId/remove': typeof ApiDepartmentsSlugMembersMemberIdRemoveRoute
   '/api/departments/$slug/members/$memberId/role': typeof ApiDepartmentsSlugMembersMemberIdRoleRoute
   '/api/departments/$slug/teams/$teamId/actions': typeof ApiDepartmentsSlugTeamsTeamIdActionsRoute
@@ -886,6 +945,7 @@ export interface FileRouteTypes {
     | '/api/admin/users'
     | '/api/auth/$'
     | '/api/departments/$slug'
+    | '/api/departments/search'
     | '/api/departments/users-search'
     | '/api/docs/openapi'
     | '/api/services/$serviceId'
@@ -915,6 +975,7 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/actions'
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
+    | '/api/services/$serviceSlug/permissions'
     | '/api/user/2fa/status'
     | '/api/user/data-deletion/actions'
     | '/api/user/data-deletion/cancel'
@@ -929,8 +990,10 @@ export interface FileRouteTypes {
     | '/api/admin/departments/$departmentId/members'
     | '/api/admin/departments/$departmentId/teams'
     | '/api/admin/services/$serviceId/actions'
+    | '/api/admin/services/$serviceId/declared-permissions'
     | '/api/admin/services/$serviceId/delete'
     | '/api/admin/services/$serviceId/regenerate-key'
+    | '/api/admin/services/$serviceId/role-permissions'
     | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
@@ -943,6 +1006,8 @@ export interface FileRouteTypes {
     | '/api/user/departments/$departmentId/teams'
     | '/api/user/passkeys/$passkeyId/delete'
     | '/api/user/sessions/$sessionId/revoke'
+    | '/api/admin/services/$serviceId/role-permissions/$id'
+    | '/api/admin/services/$serviceId/role-permissions/new'
     | '/api/departments/$slug/members/$memberId/remove'
     | '/api/departments/$slug/members/$memberId/role'
     | '/api/departments/$slug/teams/$teamId/actions'
@@ -976,6 +1041,7 @@ export interface FileRouteTypes {
     | '/api/admin/users'
     | '/api/auth/$'
     | '/api/departments/$slug'
+    | '/api/departments/search'
     | '/api/departments/users-search'
     | '/api/docs/openapi'
     | '/api/services/$serviceId'
@@ -1005,6 +1071,7 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/actions'
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
+    | '/api/services/$serviceSlug/permissions'
     | '/api/user/2fa/status'
     | '/api/user/data-deletion/actions'
     | '/api/user/data-deletion/cancel'
@@ -1019,8 +1086,10 @@ export interface FileRouteTypes {
     | '/api/admin/departments/$departmentId/members'
     | '/api/admin/departments/$departmentId/teams'
     | '/api/admin/services/$serviceId/actions'
+    | '/api/admin/services/$serviceId/declared-permissions'
     | '/api/admin/services/$serviceId/delete'
     | '/api/admin/services/$serviceId/regenerate-key'
+    | '/api/admin/services/$serviceId/role-permissions'
     | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
@@ -1033,6 +1102,8 @@ export interface FileRouteTypes {
     | '/api/user/departments/$departmentId/teams'
     | '/api/user/passkeys/$passkeyId/delete'
     | '/api/user/sessions/$sessionId/revoke'
+    | '/api/admin/services/$serviceId/role-permissions/$id'
+    | '/api/admin/services/$serviceId/role-permissions/new'
     | '/api/departments/$slug/members/$memberId/remove'
     | '/api/departments/$slug/members/$memberId/role'
     | '/api/departments/$slug/teams/$teamId/actions'
@@ -1067,6 +1138,7 @@ export interface FileRouteTypes {
     | '/api/admin/users'
     | '/api/auth/$'
     | '/api/departments/$slug'
+    | '/api/departments/search'
     | '/api/departments/users-search'
     | '/api/docs/openapi'
     | '/api/services/$serviceId'
@@ -1096,6 +1168,7 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/actions'
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
+    | '/api/services/$serviceSlug/permissions'
     | '/api/user/2fa/status'
     | '/api/user/data-deletion/actions'
     | '/api/user/data-deletion/cancel'
@@ -1110,8 +1183,10 @@ export interface FileRouteTypes {
     | '/api/admin/departments/$departmentId/members'
     | '/api/admin/departments/$departmentId/teams'
     | '/api/admin/services/$serviceId/actions'
+    | '/api/admin/services/$serviceId/declared-permissions'
     | '/api/admin/services/$serviceId/delete'
     | '/api/admin/services/$serviceId/regenerate-key'
+    | '/api/admin/services/$serviceId/role-permissions'
     | '/api/admin/services/$serviceId/toggle'
     | '/api/admin/users/$userId/actions'
     | '/api/admin/users/$userId/ban'
@@ -1124,6 +1199,8 @@ export interface FileRouteTypes {
     | '/api/user/departments/$departmentId/teams'
     | '/api/user/passkeys/$passkeyId/delete'
     | '/api/user/sessions/$sessionId/revoke'
+    | '/api/admin/services/$serviceId/role-permissions/$id'
+    | '/api/admin/services/$serviceId/role-permissions/new'
     | '/api/departments/$slug/members/$memberId/remove'
     | '/api/departments/$slug/members/$memberId/role'
     | '/api/departments/$slug/teams/$teamId/actions'
@@ -1170,6 +1247,7 @@ export interface RootRouteChildren {
   ApiUserSecurityStatusRoute: typeof ApiUserSecurityStatusRoute
   ApiUserSessionsRoute: typeof ApiUserSessionsRouteWithChildren
   ApiUsersUserIdRoute: typeof ApiUsersUserIdRoute
+  ApiServicesServiceSlugPermissionsRoute: typeof ApiServicesServiceSlugPermissionsRoute
   ApiUser2faStatusRoute: typeof ApiUser2faStatusRoute
 }
 
@@ -1371,6 +1449,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiDepartmentsUsersSearchRouteImport
       parentRoute: typeof ApiDepartmentsRoute
     }
+    '/api/departments/search': {
+      id: '/api/departments/search'
+      path: '/search'
+      fullPath: '/api/departments/search'
+      preLoaderRoute: typeof ApiDepartmentsSearchRouteImport
+      parentRoute: typeof ApiDepartmentsRoute
+    }
     '/api/departments/$slug': {
       id: '/api/departments/$slug'
       path: '/$slug'
@@ -1467,6 +1552,13 @@ declare module '@tanstack/react-router' {
       path: '/api/user/2fa/status'
       fullPath: '/api/user/2fa/status'
       preLoaderRoute: typeof ApiUser2faStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/services/$serviceSlug/permissions': {
+      id: '/api/services/$serviceSlug/permissions'
+      path: '/api/services/$serviceSlug/permissions'
+      fullPath: '/api/services/$serviceSlug/permissions'
+      preLoaderRoute: typeof ApiServicesServiceSlugPermissionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/departments/$slug/teams': {
@@ -1637,6 +1729,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminServicesServiceIdToggleRouteImport
       parentRoute: typeof ApiAdminServicesServiceIdRoute
     }
+    '/api/admin/services/$serviceId/role-permissions': {
+      id: '/api/admin/services/$serviceId/role-permissions'
+      path: '/role-permissions'
+      fullPath: '/api/admin/services/$serviceId/role-permissions'
+      preLoaderRoute: typeof ApiAdminServicesServiceIdRolePermissionsRouteImport
+      parentRoute: typeof ApiAdminServicesServiceIdRoute
+    }
     '/api/admin/services/$serviceId/regenerate-key': {
       id: '/api/admin/services/$serviceId/regenerate-key'
       path: '/regenerate-key'
@@ -1649,6 +1748,13 @@ declare module '@tanstack/react-router' {
       path: '/delete'
       fullPath: '/api/admin/services/$serviceId/delete'
       preLoaderRoute: typeof ApiAdminServicesServiceIdDeleteRouteImport
+      parentRoute: typeof ApiAdminServicesServiceIdRoute
+    }
+    '/api/admin/services/$serviceId/declared-permissions': {
+      id: '/api/admin/services/$serviceId/declared-permissions'
+      path: '/declared-permissions'
+      fullPath: '/api/admin/services/$serviceId/declared-permissions'
+      preLoaderRoute: typeof ApiAdminServicesServiceIdDeclaredPermissionsRouteImport
       parentRoute: typeof ApiAdminServicesServiceIdRoute
     }
     '/api/admin/services/$serviceId/actions': {
@@ -1755,6 +1861,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/departments/$slug/members/$memberId/remove'
       preLoaderRoute: typeof ApiDepartmentsSlugMembersMemberIdRemoveRouteImport
       parentRoute: typeof ApiDepartmentsSlugMembersRoute
+    }
+    '/api/admin/services/$serviceId/role-permissions/new': {
+      id: '/api/admin/services/$serviceId/role-permissions/new'
+      path: '/new'
+      fullPath: '/api/admin/services/$serviceId/role-permissions/new'
+      preLoaderRoute: typeof ApiAdminServicesServiceIdRolePermissionsNewRouteImport
+      parentRoute: typeof ApiAdminServicesServiceIdRolePermissionsRoute
+    }
+    '/api/admin/services/$serviceId/role-permissions/$id': {
+      id: '/api/admin/services/$serviceId/role-permissions/$id'
+      path: '/$id'
+      fullPath: '/api/admin/services/$serviceId/role-permissions/$id'
+      preLoaderRoute: typeof ApiAdminServicesServiceIdRolePermissionsIdRouteImport
+      parentRoute: typeof ApiAdminServicesServiceIdRolePermissionsRoute
     }
     '/api/admin/departments/$departmentId/teams/$teamId/members': {
       id: '/api/admin/departments/$departmentId/teams/$teamId/members'
@@ -1904,11 +2024,13 @@ const ApiDepartmentsSlugRouteWithChildren =
 
 interface ApiDepartmentsRouteChildren {
   ApiDepartmentsSlugRoute: typeof ApiDepartmentsSlugRouteWithChildren
+  ApiDepartmentsSearchRoute: typeof ApiDepartmentsSearchRoute
   ApiDepartmentsUsersSearchRoute: typeof ApiDepartmentsUsersSearchRoute
 }
 
 const ApiDepartmentsRouteChildren: ApiDepartmentsRouteChildren = {
   ApiDepartmentsSlugRoute: ApiDepartmentsSlugRouteWithChildren,
+  ApiDepartmentsSearchRoute: ApiDepartmentsSearchRoute,
   ApiDepartmentsUsersSearchRoute: ApiDepartmentsUsersSearchRoute,
 }
 
@@ -2069,10 +2191,30 @@ const ApiAdminDepartmentsRouteChildren: ApiAdminDepartmentsRouteChildren = {
 const ApiAdminDepartmentsRouteWithChildren =
   ApiAdminDepartmentsRoute._addFileChildren(ApiAdminDepartmentsRouteChildren)
 
+interface ApiAdminServicesServiceIdRolePermissionsRouteChildren {
+  ApiAdminServicesServiceIdRolePermissionsIdRoute: typeof ApiAdminServicesServiceIdRolePermissionsIdRoute
+  ApiAdminServicesServiceIdRolePermissionsNewRoute: typeof ApiAdminServicesServiceIdRolePermissionsNewRoute
+}
+
+const ApiAdminServicesServiceIdRolePermissionsRouteChildren: ApiAdminServicesServiceIdRolePermissionsRouteChildren =
+  {
+    ApiAdminServicesServiceIdRolePermissionsIdRoute:
+      ApiAdminServicesServiceIdRolePermissionsIdRoute,
+    ApiAdminServicesServiceIdRolePermissionsNewRoute:
+      ApiAdminServicesServiceIdRolePermissionsNewRoute,
+  }
+
+const ApiAdminServicesServiceIdRolePermissionsRouteWithChildren =
+  ApiAdminServicesServiceIdRolePermissionsRoute._addFileChildren(
+    ApiAdminServicesServiceIdRolePermissionsRouteChildren,
+  )
+
 interface ApiAdminServicesServiceIdRouteChildren {
   ApiAdminServicesServiceIdActionsRoute: typeof ApiAdminServicesServiceIdActionsRoute
+  ApiAdminServicesServiceIdDeclaredPermissionsRoute: typeof ApiAdminServicesServiceIdDeclaredPermissionsRoute
   ApiAdminServicesServiceIdDeleteRoute: typeof ApiAdminServicesServiceIdDeleteRoute
   ApiAdminServicesServiceIdRegenerateKeyRoute: typeof ApiAdminServicesServiceIdRegenerateKeyRoute
+  ApiAdminServicesServiceIdRolePermissionsRoute: typeof ApiAdminServicesServiceIdRolePermissionsRouteWithChildren
   ApiAdminServicesServiceIdToggleRoute: typeof ApiAdminServicesServiceIdToggleRoute
 }
 
@@ -2080,9 +2222,13 @@ const ApiAdminServicesServiceIdRouteChildren: ApiAdminServicesServiceIdRouteChil
   {
     ApiAdminServicesServiceIdActionsRoute:
       ApiAdminServicesServiceIdActionsRoute,
+    ApiAdminServicesServiceIdDeclaredPermissionsRoute:
+      ApiAdminServicesServiceIdDeclaredPermissionsRoute,
     ApiAdminServicesServiceIdDeleteRoute: ApiAdminServicesServiceIdDeleteRoute,
     ApiAdminServicesServiceIdRegenerateKeyRoute:
       ApiAdminServicesServiceIdRegenerateKeyRoute,
+    ApiAdminServicesServiceIdRolePermissionsRoute:
+      ApiAdminServicesServiceIdRolePermissionsRouteWithChildren,
     ApiAdminServicesServiceIdToggleRoute: ApiAdminServicesServiceIdToggleRoute,
   }
 
@@ -2248,6 +2394,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiUserSecurityStatusRoute: ApiUserSecurityStatusRoute,
   ApiUserSessionsRoute: ApiUserSessionsRouteWithChildren,
   ApiUsersUserIdRoute: ApiUsersUserIdRoute,
+  ApiServicesServiceSlugPermissionsRoute:
+    ApiServicesServiceSlugPermissionsRoute,
   ApiUser2faStatusRoute: ApiUser2faStatusRoute,
 }
 export const routeTree = rootRouteImport

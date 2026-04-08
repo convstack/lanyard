@@ -58,6 +58,12 @@ export const Route = createFileRoute("/api/admin/services/$serviceId/actions")({
 						link: `/services/${params.serviceId}/edit`,
 					},
 					{
+						label: "Manage Permissions",
+						endpoint: "",
+						method: "POST",
+						link: `/services/${params.serviceId}/permissions`,
+					},
+					{
 						label: "Regenerate API Key",
 						endpoint: `/api/admin/services/${params.serviceId}/regenerate-key`,
 						method: "POST",

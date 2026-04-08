@@ -2227,6 +2227,29 @@
         }
       }
     },
+    "/api/admin/services/{serviceId}/declared-permissions": {
+      "get": {
+        "operationId": "get_api_admin_services_serviceId_declared_permissions",
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
     "/api/admin/services/{serviceId}/delete": {
       "post": {
         "operationId": "post_api_admin_services_serviceId_delete",
@@ -2358,6 +2381,162 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/admin/services/{serviceId}/role-permissions/{id}": {
+      "get": {
+        "operationId": "get_api_admin_services_serviceId_role_permissions_id",
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "put": {
+        "operationId": "put_api_admin_services_serviceId_role_permissions_id",
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "delete_api_admin_services_serviceId_role_permissions_id",
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/admin/services/{serviceId}/role-permissions/new": {
+      "get": {
+        "operationId": "get_api_admin_services_serviceId_role_permissions_new",
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/admin/services/{serviceId}/role-permissions": {
+      "get": {
+        "operationId": "get_api_admin_services_serviceId_role_permissions",
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "operationId": "post_api_admin_services_serviceId_role_permissions",
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
           }
         }
       }
@@ -4815,6 +4994,19 @@
         }
       }
     },
+    "/api/departments/search": {
+      "get": {
+        "operationId": "get_api_departments_search",
+        "tags": [
+          "departments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
     "/api/departments/users-search": {
       "get": {
         "operationId": "get_api_departments_users_search",
@@ -5248,6 +5440,29 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/services/{serviceSlug}/permissions": {
+      "get": {
+        "operationId": "get_api_services_serviceSlug_permissions",
+        "tags": [
+          "services"
+        ],
+        "parameters": [
+          {
+            "name": "serviceSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
           }
         }
       }
