@@ -36,8 +36,25 @@ export const Route = createFileRoute(
 				}
 
 				const { db } = await import("~/db");
-				const { teamMember, user: userTable } = await import("~/db/schema");
+				const {
+					organization,
+					team,
+					teamMember,
+					user: userTable,
+				} = await import("~/db/schema");
 				const { eq } = await import("drizzle-orm");
+
+				const [dept] = await db
+					.select({ id: organization.id, name: organization.name })
+					.from(organization)
+					.where(eq(organization.id, params.departmentId))
+					.limit(1);
+
+				const [teamRow] = await db
+					.select({ id: team.id, name: team.name })
+					.from(team)
+					.where(eq(team.id, params.teamId))
+					.limit(1);
 
 				const members = await db
 					.select({
@@ -54,6 +71,21 @@ export const Route = createFileRoute(
 					name: m.name,
 					email: m.email,
 				}));
+
+				const topBar = {
+					breadcrumbs: [
+						{ label: "Departments", href: "/departments" },
+						{
+							label: dept?.name ?? "Department",
+							href: `/departments/${params.departmentId}`,
+						},
+						{
+							label: teamRow?.name ?? "Team",
+							href: `/departments/${params.departmentId}/teams`,
+						},
+						{ label: "Members" },
+					],
+				};
 
 				return new Response(
 					JSON.stringify({
@@ -72,6 +104,7 @@ export const Route = createFileRoute(
 								confirm: "Remove from team?",
 							},
 						],
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

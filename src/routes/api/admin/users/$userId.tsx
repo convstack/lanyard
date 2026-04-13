@@ -51,6 +51,13 @@ export const Route = createFileRoute("/api/admin/users/$userId")({
 					? found.createdAt.toISOString().replace("T", " ").slice(0, 19)
 					: "";
 
+				const topBar = {
+					breadcrumbs: [
+						{ label: "Users", href: "/users" },
+						{ label: found.name ?? found.email },
+					],
+				};
+
 				return new Response(
 					JSON.stringify({
 						fields: [
@@ -65,6 +72,7 @@ export const Route = createFileRoute("/api/admin/users/$userId")({
 							{ key: "banned", label: "Banned", value: found.banned ?? false },
 							{ key: "createdAt", label: "Created", value: createdAtStr },
 						],
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

@@ -47,6 +47,10 @@ export const Route = createFileRoute("/api/admin/data-deletion")({
 					_link: `/data-deletion/${r.id}`,
 				}));
 
+				const topBar = {
+					breadcrumbs: [{ label: "Data Deletion" }],
+				};
+
 				return new Response(
 					JSON.stringify({
 						columns: [
@@ -57,6 +61,7 @@ export const Route = createFileRoute("/api/admin/data-deletion")({
 							{ key: "createdAt", label: "Requested" },
 						],
 						rows,
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

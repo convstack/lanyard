@@ -59,6 +59,10 @@ export const Route = createFileRoute("/api/admin/users")({
 					joined: u.createdAt ? u.createdAt.toISOString().slice(0, 10) : "",
 				}));
 
+				const topBar = {
+					breadcrumbs: [{ label: "Users" }],
+				};
+
 				return new Response(
 					JSON.stringify({
 						columns: [
@@ -70,6 +74,7 @@ export const Route = createFileRoute("/api/admin/users")({
 						],
 						rows,
 						total,
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

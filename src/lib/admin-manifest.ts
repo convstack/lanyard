@@ -620,8 +620,7 @@ export const LANYARD_ADMIN_MANIFEST: UIManifest = {
 			sections: [
 				{
 					type: "form",
-					endpoint:
-						"/api/admin/services/:serviceId/role-permissions/:id",
+					endpoint: "/api/admin/services/:serviceId/role-permissions/:id",
 					config: {
 						fields: [{ key: "_", label: "_", type: "text" }],
 						submitLabel: "Save Changes",

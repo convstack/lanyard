@@ -15,18 +15,9 @@ spec:
       labels:
         app: lanyard
     spec:
-      initContainers:
-        - name: migrate
-          image: ghcr.io/headpat/lanyard:latest
-          command: ["node", "src/db/migrate.ts"]
-          envFrom:
-            - configMapRef:
-                name: lanyard-config
-            - secretRef:
-                name: lanyard-secret
       containers:
         - name: lanyard
-          image: ghcr.io/headpat/lanyard:latest
+          image: ghcr.io/convstack/lanyard:latest
           ports:
             - containerPort: 3000
           envFrom:

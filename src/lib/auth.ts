@@ -115,8 +115,7 @@ export const auth = betterAuth({
 			customUserInfoClaims: ({ user }) => ({
 				role: (user as { role?: string }).role ?? "user",
 				deletionPending:
-					(user as { deletionPending?: boolean }).deletionPending ??
-					false,
+					(user as { deletionPending?: boolean }).deletionPending ?? false,
 			}),
 			silenceWarnings: {
 				oauthAuthServerConfig: true,

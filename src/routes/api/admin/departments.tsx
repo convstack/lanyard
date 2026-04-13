@@ -52,6 +52,10 @@ export const Route = createFileRoute("/api/admin/departments")({
 					memberCount: String(d.memberCount),
 				}));
 
+				const topBar = {
+					breadcrumbs: [{ label: "Departments" }],
+				};
+
 				return new Response(
 					JSON.stringify({
 						columns: [
@@ -61,6 +65,7 @@ export const Route = createFileRoute("/api/admin/departments")({
 						],
 						rows,
 						total,
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

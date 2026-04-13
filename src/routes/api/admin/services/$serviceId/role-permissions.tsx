@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import { db } from "~/db";
 import {
 	organization,
+	serviceCatalogEntry,
 	servicePermission,
 	serviceRolePermission,
 } from "~/db/schema";
@@ -34,6 +35,15 @@ export const Route = createFileRoute(
 
 				const { eq } = await import("drizzle-orm");
 
+				const [service] = await db
+					.select({
+						id: serviceCatalogEntry.id,
+						name: serviceCatalogEntry.name,
+					})
+					.from(serviceCatalogEntry)
+					.where(eq(serviceCatalogEntry.id, params.serviceId))
+					.limit(1);
+
 				// Get all role-permission mappings for this service
 				const mappings = await db
 					.select({
@@ -60,6 +70,17 @@ export const Route = createFileRoute(
 					.from(servicePermission)
 					.where(eq(servicePermission.serviceId, params.serviceId));
 
+				const topBar = {
+					breadcrumbs: [
+						{ label: "Services", href: "/services" },
+						{
+							label: service?.name ?? "Service",
+							href: `/services/${params.serviceId}`,
+						},
+						{ label: "Permissions" },
+					],
+				};
+
 				return new Response(
 					JSON.stringify({
 						columns: [
@@ -76,6 +97,7 @@ export const Route = createFileRoute(
 						})),
 						total: mappings.length,
 						declaredPermissions: declared,
+						topBar,
 					}),
 					{
 						status: 200,
@@ -115,13 +137,14 @@ export const Route = createFileRoute(
 				}
 
 				// Support both single permission and array of permissions
-				const perms = body.permissions ??
-					(body.permission ? [body.permission] : []);
+				const perms =
+					body.permissions ?? (body.permission ? [body.permission] : []);
 
 				if (!body.organizationId || !body.role || perms.length === 0) {
 					return new Response(
 						JSON.stringify({
-							error: "organizationId, role, and at least one permission are required",
+							error:
+								"organizationId, role, and at least one permission are required",
 						}),
 						{
 							status: 400,

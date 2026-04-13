@@ -22,7 +22,7 @@ import {
 export interface ResolvedPermissions {
 	userId: string;
 	permissions: string[];
-	orgRoles: Array<{ orgId: string; slug: string; role: string }>;
+	orgRoles: Array<{ orgId: string; name: string; slug: string; role: string }>;
 }
 
 // Cache resolved permissions for 2 minutes
@@ -68,6 +68,7 @@ export async function resolveUserPermissions(
 	const memberships = await db
 		.select({
 			orgId: member.organizationId,
+			orgName: organization.name,
 			orgSlug: organization.slug,
 			role: member.role,
 		})
@@ -77,6 +78,7 @@ export async function resolveUserPermissions(
 
 	const orgRoles = memberships.map((m) => ({
 		orgId: m.orgId,
+		name: m.orgName,
 		slug: m.orgSlug,
 		role: m.role,
 	}));

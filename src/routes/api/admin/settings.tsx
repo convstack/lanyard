@@ -33,6 +33,10 @@ export const Route = createFileRoute("/api/admin/settings")({
 					// Table may not exist yet
 				}
 
+				const topBar = {
+					breadcrumbs: [{ label: "Settings" }],
+				};
+
 				return new Response(
 					JSON.stringify({
 						fields: [
@@ -79,6 +83,7 @@ export const Route = createFileRoute("/api/admin/settings")({
 								),
 							},
 						],
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

@@ -51,6 +51,13 @@ export const Route = createFileRoute("/api/admin/services/$serviceId")({
 					? found.createdAt.toISOString().replace("T", " ").slice(0, 16)
 					: "";
 
+				const topBar = {
+					breadcrumbs: [
+						{ label: "Services", href: "/services" },
+						{ label: found.name },
+					],
+				};
+
 				return new Response(
 					JSON.stringify({
 						fields: [
@@ -92,6 +99,7 @@ export const Route = createFileRoute("/api/admin/services/$serviceId")({
 								value: found.requiredOrganizationId ?? "All (no restriction)",
 							},
 						],
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

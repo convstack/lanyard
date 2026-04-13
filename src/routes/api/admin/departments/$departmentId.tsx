@@ -51,6 +51,13 @@ export const Route = createFileRoute("/api/admin/departments/$departmentId")({
 					? found.createdAt.toISOString().replace("T", " ").slice(0, 16)
 					: "";
 
+				const topBar = {
+					breadcrumbs: [
+						{ label: "Departments", href: "/departments" },
+						{ label: found.name },
+					],
+				};
+
 				return new Response(
 					JSON.stringify({
 						fields: [
@@ -63,6 +70,7 @@ export const Route = createFileRoute("/api/admin/departments/$departmentId")({
 							},
 							{ key: "createdAt", label: "Created", value: createdAtStr },
 						],
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

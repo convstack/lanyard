@@ -55,6 +55,10 @@ export const Route = createFileRoute("/api/admin/services")({
 					baseUrl: s.baseUrl,
 				}));
 
+				const topBar = {
+					breadcrumbs: [{ label: "Services" }],
+				};
+
 				return new Response(
 					JSON.stringify({
 						columns: [
@@ -66,6 +70,7 @@ export const Route = createFileRoute("/api/admin/services")({
 						],
 						rows,
 						total: total?.count ?? 0,
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

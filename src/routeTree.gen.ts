@@ -52,6 +52,7 @@ import { Route as ApiUserDepartmentsDepartmentIdRouteImport } from './routes/api
 import { Route as ApiUserDataDeletionCancelRouteImport } from './routes/api/user/data-deletion/cancel'
 import { Route as ApiUserDataDeletionActionsRouteImport } from './routes/api/user/data-deletion/actions'
 import { Route as ApiUser2faStatusRouteImport } from './routes/api/user/2fa/status'
+import { Route as ApiServicesDepartmentsDepartmentIdRouteImport } from './routes/api/services/departments/$departmentId'
 import { Route as ApiServicesServiceSlugPermissionsRouteImport } from './routes/api/services/$serviceSlug/permissions'
 import { Route as ApiDepartmentsSlugTeamsRouteImport } from './routes/api/departments/$slug/teams'
 import { Route as ApiDepartmentsSlugMembersRouteImport } from './routes/api/departments/$slug/members'
@@ -323,6 +324,12 @@ const ApiUser2faStatusRoute = ApiUser2faStatusRouteImport.update({
   path: '/api/user/2fa/status',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiServicesDepartmentsDepartmentIdRoute =
+  ApiServicesDepartmentsDepartmentIdRouteImport.update({
+    id: '/api/services/departments/$departmentId',
+    path: '/api/services/departments/$departmentId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiServicesServiceSlugPermissionsRoute =
   ApiServicesServiceSlugPermissionsRouteImport.update({
     id: '/api/services/$serviceSlug/permissions',
@@ -684,6 +691,7 @@ export interface FileRoutesByFullPath {
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/services/$serviceSlug/permissions': typeof ApiServicesServiceSlugPermissionsRoute
+  '/api/services/departments/$departmentId': typeof ApiServicesDepartmentsDepartmentIdRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/data-deletion/actions': typeof ApiUserDataDeletionActionsRoute
   '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
@@ -780,6 +788,7 @@ export interface FileRoutesByTo {
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/services/$serviceSlug/permissions': typeof ApiServicesServiceSlugPermissionsRoute
+  '/api/services/departments/$departmentId': typeof ApiServicesDepartmentsDepartmentIdRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/data-deletion/actions': typeof ApiUserDataDeletionActionsRoute
   '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
@@ -878,6 +887,7 @@ export interface FileRoutesById {
   '/api/departments/$slug/members': typeof ApiDepartmentsSlugMembersRouteWithChildren
   '/api/departments/$slug/teams': typeof ApiDepartmentsSlugTeamsRouteWithChildren
   '/api/services/$serviceSlug/permissions': typeof ApiServicesServiceSlugPermissionsRoute
+  '/api/services/departments/$departmentId': typeof ApiServicesDepartmentsDepartmentIdRoute
   '/api/user/2fa/status': typeof ApiUser2faStatusRoute
   '/api/user/data-deletion/actions': typeof ApiUserDataDeletionActionsRoute
   '/api/user/data-deletion/cancel': typeof ApiUserDataDeletionCancelRoute
@@ -976,6 +986,7 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
     | '/api/services/$serviceSlug/permissions'
+    | '/api/services/departments/$departmentId'
     | '/api/user/2fa/status'
     | '/api/user/data-deletion/actions'
     | '/api/user/data-deletion/cancel'
@@ -1072,6 +1083,7 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
     | '/api/services/$serviceSlug/permissions'
+    | '/api/services/departments/$departmentId'
     | '/api/user/2fa/status'
     | '/api/user/data-deletion/actions'
     | '/api/user/data-deletion/cancel'
@@ -1169,6 +1181,7 @@ export interface FileRouteTypes {
     | '/api/departments/$slug/members'
     | '/api/departments/$slug/teams'
     | '/api/services/$serviceSlug/permissions'
+    | '/api/services/departments/$departmentId'
     | '/api/user/2fa/status'
     | '/api/user/data-deletion/actions'
     | '/api/user/data-deletion/cancel'
@@ -1248,6 +1261,7 @@ export interface RootRouteChildren {
   ApiUserSessionsRoute: typeof ApiUserSessionsRouteWithChildren
   ApiUsersUserIdRoute: typeof ApiUsersUserIdRoute
   ApiServicesServiceSlugPermissionsRoute: typeof ApiServicesServiceSlugPermissionsRoute
+  ApiServicesDepartmentsDepartmentIdRoute: typeof ApiServicesDepartmentsDepartmentIdRoute
   ApiUser2faStatusRoute: typeof ApiUser2faStatusRoute
 }
 
@@ -1552,6 +1566,13 @@ declare module '@tanstack/react-router' {
       path: '/api/user/2fa/status'
       fullPath: '/api/user/2fa/status'
       preLoaderRoute: typeof ApiUser2faStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/services/departments/$departmentId': {
+      id: '/api/services/departments/$departmentId'
+      path: '/api/services/departments/$departmentId'
+      fullPath: '/api/services/departments/$departmentId'
+      preLoaderRoute: typeof ApiServicesDepartmentsDepartmentIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/services/$serviceSlug/permissions': {
@@ -2396,6 +2417,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiUsersUserIdRoute: ApiUsersUserIdRoute,
   ApiServicesServiceSlugPermissionsRoute:
     ApiServicesServiceSlugPermissionsRoute,
+  ApiServicesDepartmentsDepartmentIdRoute:
+    ApiServicesDepartmentsDepartmentIdRoute,
   ApiUser2faStatusRoute: ApiUser2faStatusRoute,
 }
 export const routeTree = rootRouteImport

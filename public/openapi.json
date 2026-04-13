@@ -5511,6 +5511,29 @@
         }
       }
     },
+    "/api/services/departments/{departmentId}": {
+      "get": {
+        "operationId": "get_api_services_departments_departmentId",
+        "tags": [
+          "services"
+        ],
+        "parameters": [
+          {
+            "name": "departmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
     "/api/services/heartbeat": {
       "post": {
         "operationId": "post_api_services_heartbeat",

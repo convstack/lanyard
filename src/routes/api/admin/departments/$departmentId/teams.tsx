@@ -37,8 +37,14 @@ export const Route = createFileRoute(
 				}
 
 				const { db } = await import("~/db");
-				const { team, teamMember } = await import("~/db/schema");
+				const { organization, team, teamMember } = await import("~/db/schema");
 				const { eq, count } = await import("drizzle-orm");
+
+				const [dept] = await db
+					.select({ id: organization.id, name: organization.name })
+					.from(organization)
+					.where(eq(organization.id, params.departmentId))
+					.limit(1);
 
 				const teams = await db
 					.select({
@@ -62,6 +68,17 @@ export const Route = createFileRoute(
 					}),
 				);
 
+				const topBar = {
+					breadcrumbs: [
+						{ label: "Departments", href: "/departments" },
+						{
+							label: dept?.name ?? "Department",
+							href: `/departments/${params.departmentId}`,
+						},
+						{ label: "Teams" },
+					],
+				};
+
 				return new Response(
 					JSON.stringify({
 						columns: [
@@ -80,6 +97,7 @@ export const Route = createFileRoute(
 							},
 						],
 						rowLink: `/departments/${params.departmentId}/teams/:id/members`,
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

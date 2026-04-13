@@ -31,7 +31,9 @@ export const Route = createFileRoute("/api/admin/services/$serviceId/actions")({
 				}
 
 				const { db } = await import("~/db");
-				const { serviceCatalogEntry } = await import("~/db/schema");
+				const { serviceCatalogEntry, servicePermission } = await import(
+					"~/db/schema"
+				);
 				const { eq } = await import("drizzle-orm");
 
 				const [found] = await db
@@ -50,6 +52,15 @@ export const Route = createFileRoute("/api/admin/services/$serviceId/actions")({
 					});
 				}
 
+				// Check if the service has any declared permissions — only show
+				// "Manage Permissions" if there's something to map.
+				const declaredPerms = await db
+					.select({ id: servicePermission.id })
+					.from(servicePermission)
+					.where(eq(servicePermission.serviceId, params.serviceId))
+					.limit(1);
+				const hasPermissions = declaredPerms.length > 0;
+
 				const actions = [
 					{
 						label: "Edit Service",
@@ -57,12 +68,16 @@ export const Route = createFileRoute("/api/admin/services/$serviceId/actions")({
 						method: "POST",
 						link: `/services/${params.serviceId}/edit`,
 					},
-					{
-						label: "Manage Permissions",
-						endpoint: "",
-						method: "POST",
-						link: `/services/${params.serviceId}/permissions`,
-					},
+					...(hasPermissions
+						? [
+								{
+									label: "Manage Permissions",
+									endpoint: "",
+									method: "POST",
+									link: `/services/${params.serviceId}/permissions`,
+								},
+							]
+						: []),
 					{
 						label: "Regenerate API Key",
 						endpoint: `/api/admin/services/${params.serviceId}/regenerate-key`,

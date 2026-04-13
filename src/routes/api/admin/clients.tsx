@@ -52,6 +52,10 @@ export const Route = createFileRoute("/api/admin/clients")({
 					status: c.disabled ? "Disabled" : "Active",
 				}));
 
+				const topBar = {
+					breadcrumbs: [{ label: "OIDC Clients" }],
+				};
+
 				return new Response(
 					JSON.stringify({
 						columns: [
@@ -62,6 +66,7 @@ export const Route = createFileRoute("/api/admin/clients")({
 						],
 						rows,
 						total,
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

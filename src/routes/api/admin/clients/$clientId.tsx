@@ -51,6 +51,13 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 					? found.createdAt.toISOString().replace("T", " ").slice(0, 16)
 					: "";
 
+				const topBar = {
+					breadcrumbs: [
+						{ label: "OIDC Clients", href: "/clients" },
+						{ label: found.name ?? found.clientId },
+					],
+				};
+
 				return new Response(
 					JSON.stringify({
 						fields: [
@@ -71,6 +78,7 @@ export const Route = createFileRoute("/api/admin/clients/$clientId")({
 							},
 							{ key: "createdAt", label: "Created", value: createdAtStr },
 						],
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

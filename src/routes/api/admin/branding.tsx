@@ -47,6 +47,10 @@ export const Route = createFileRoute("/api/admin/branding")({
 					customCss: null,
 				};
 
+				const topBar = {
+					breadcrumbs: [{ label: "Branding" }],
+				};
+
 				return new Response(
 					JSON.stringify({
 						fields: [
@@ -102,6 +106,7 @@ export const Route = createFileRoute("/api/admin/branding")({
 								value: record.customCss ?? "",
 							},
 						],
+						topBar,
 					}),
 					{ status: 200, headers: { "Content-Type": "application/json" } },
 				);

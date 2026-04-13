@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import { db } from "~/db";
 import {
 	organization,
+	serviceCatalogEntry,
 	servicePermission,
 	serviceRolePermission,
 } from "~/db/schema";
@@ -76,6 +77,28 @@ export const Route = createFileRoute(
 					.from(servicePermission)
 					.where(eq(servicePermission.serviceId, params.serviceId));
 
+				// Parent service lookup for breadcrumb
+				const [service] = await db
+					.select({ name: serviceCatalogEntry.name })
+					.from(serviceCatalogEntry)
+					.where(eq(serviceCatalogEntry.id, params.serviceId))
+					.limit(1);
+
+				const topBar = {
+					breadcrumbs: [
+						{ label: "Services", href: "/services" },
+						{
+							label: service?.name ?? "Service",
+							href: `/services/${params.serviceId}`,
+						},
+						{
+							label: "Permissions",
+							href: `/services/${params.serviceId}/role-permissions`,
+						},
+						{ label: "Edit Permission" },
+					],
+				};
+
 				return new Response(
 					JSON.stringify({
 						fields: [
@@ -113,6 +136,7 @@ export const Route = createFileRoute(
 								value: currentPerms,
 							},
 						],
+						topBar,
 					}),
 					{
 						status: 200,
@@ -154,11 +178,7 @@ export const Route = createFileRoute(
 					});
 				}
 
-				if (
-					!body.organizationId ||
-					!body.role ||
-					!body.permissions?.length
-				) {
+				if (!body.organizationId || !body.role || !body.permissions?.length) {
 					return new Response(
 						JSON.stringify({
 							error:

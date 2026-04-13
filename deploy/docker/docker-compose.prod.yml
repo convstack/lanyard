@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/headpat/lanyard:latest
+    image: ghcr.io/convstack/lanyard:latest
     restart: unless-stopped
     ports:
       - "3000:3000"
