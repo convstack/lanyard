@@ -1,3 +1,5 @@
+<img width="1400" height="400" alt="1400x400" src="https://github.com/user-attachments/assets/d6d673c4-5ce8-4899-8f9d-592841e962d2" />
+
 > **Warning**
 > This project is under active development and not yet ready for production use. APIs, database schemas, and features may change without notice.
 
